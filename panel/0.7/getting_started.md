@@ -6,29 +6,29 @@ meta:
 # 開始使用
 
 ::: danger 此版本已終止支援
-本文件適用於**已終止支援的軟體**，不再提供任何安全性更新或社群支援。
-基於歷史原因，本文件仍保留供查閱。
+本文件適用於**已終止支援的軟體**，不再提供任何安全性更新或社群支援。基於歷史原因，本文件仍保留供查閱。
 
-在正式環境中，你應搭配 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md) 使用 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md)。
+在正式環境中，您應使用 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md)。
 :::
 
-Pterodactyl Panel 設計為在你自己的網頁伺服器上執行。你需要具備伺服器的 root 存取權，才能執行和使用此控制面板。
+Pterodactyl Panel 設計為在您自己的 Web 伺服器上執行。您需要具備伺服器的 Root 存取權限，才能安裝與使用此控制面板。
 
-此控制面板不是可以用拖放方式執行伺服器的服務，而是一個需要多個相依套件的複雜系統，並要求管理員投入時間學習如何使用。
-**如果你不具備基本 Linux 系統管理知識，卻期望能直接完成安裝，請現在停止操作。**
+此控制面板不是能以拖放方式執行伺服器的服務，而是一個需要多個相依套件的複雜系統，並要求管理員投入時間學習如何使用。  
+**如果您不具備基本的 Linux 系統管理知識，卻期望能直接完成安裝，請現在停止操作。**
 
 [[toc]]
 
 ## 選擇伺服器作業系統
-Pterodactyl 支援多種作業系統，請選擇你最熟悉的系統。
+
+Pterodactyl 支援多種作業系統，請選擇您最熟悉的系統。
 
 ::: warning
-由於 Docker 相容性問題，Pterodactyl 不支援大多數 OpenVZ 系統。如果打算在 OpenVZ 系統上執行此軟體，成功的可能性很低。
+由於 Docker 相容性問題，Pterodactyl 不支援大多數 OpenVZ 系統。如果您打算在 OpenVZ 系統上執行此軟體，成功的可能性很低。
 :::
 
 | 作業系統 | 版本 | 支援狀態 | 備註 |
 | --- | --- | :---: | --- |
-| **Ubuntu** | 18.04 | :white_check_mark: | 文件以 Ubuntu 18.04 為基礎作業系統撰寫。 |
+| **Ubuntu** | 18.04 | :white_check_mark: | 本文件以 Ubuntu 18.04 作為基礎作業系統撰寫。 |
 | | [20.04](/community/installation-guides/panel/ubuntu2004.html) | :white_check_mark: | |
 | **CentOS** | [7](/community/installation-guides/panel/centos7.html) | :white_check_mark: | 需要額外的套件庫。 |
 | | [8](/community/installation-guides/panel/centos8.html) | :white_check_mark: | 所有必要套件都包含在基礎套件庫中。 |
@@ -36,171 +36,172 @@ Pterodactyl 支援多種作業系統，請選擇你最熟悉的系統。
 | | [10](/community/installation-guides/panel/debian10.html) | :white_check_mark: | 所有必要套件都包含在基礎套件庫中。 |
 
 ## 相依套件
-* PHP `7.2` 及以下擴充功能：`cli`、`openssl`、`gd`、`mysql`、`PDO`、`mbstring`、`tokenizer`、`bcmath`、`xml` 或 `dom`、`curl`、`zip`；若使用 nginx，還需要 `fpm`
-* MySQL `5.7` **或** MariaDB `10.1.3` 以上
-    最後啟用服務，並設定為機器啟動時自動執行。
-* 網頁伺服器（Apache、NGINX、Caddy 等）
-* `curl`
-* `tar`
-* `unzip`
-* `git`
-* `composer`
 
-### 相依套件安裝範例
-下方命令只是安裝這些相依套件的範例。請參閱作業系統的套件管理器，以確認應安裝的正確套件。
+- PHP `7.2`，以及以下擴充功能：`cli`、`openssl`、`gd`、`mysql`、`PDO`、`mbstring`、`tokenizer`、`bcmath`、`xml` 或 `dom`、`curl`、`zip`。如果使用 Nginx，還需要 `fpm`。
+- MySQL `5.7` **或** MariaDB `10.1.3` 以上版本。
+- Web 伺服器（Apache、Nginx、Caddy 等）。
+- `curl`
+- `tar`
+- `unzip`
+- `git`
+- `composer`
 
-``` bash
-# Add "add-apt-repository" command
+### 安裝相依套件範例
+
+以下指令僅為安裝這些相依套件的範例。請參閱您所使用作業系統的套件管理工具，以確認正確的安裝套件名稱。
+
+```bash
+# 新增「add-apt-repository」指令
 apt -y install software-properties-common curl
 
-# Add additional repositories for PHP, Redis, and MariaDB
+# 新增 PHP、Redis 與 MariaDB 的額外套件庫
 LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 add-apt-repository -y ppa:chris-lea/redis-server
 curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash
 
-# Update repositories list
+# 更新套件庫清單
 apt update
 
-# Add universe repository if you are on Ubuntu 18.04
+# 如果使用 Ubuntu 18.04，請新增 universe 套件庫
 apt-add-repository universe
 
-# Install Dependencies
+# 安裝相依套件
 apt -y install php7.2 php7.2-cli php7.2-gd php7.2-mysql php7.2-pdo php7.2-mbstring php7.2-tokenizer php7.2-bcmath php7.2-xml php7.2-fpm php7.2-curl php7.2-zip mariadb-server nginx tar unzip git redis-server
 ```
 
-### Installing Composer
-Composer is a dependency manager for PHP that allows us to ship everything you'll need code wise to operate the Panel. You'll
-need composer installed before continuing in this process.
+### 安裝 Composer
 
-``` bash
+Composer 是 PHP 的相依套件管理工具，可用來提供執行控制面板所需的程式碼相依套件。在繼續此安裝流程之前，您需要先安裝 Composer。
+
+```bash
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer --1
 ```
 
-## Download Files
-The first step in this process is to create the folder where the panel will live and then move ourselves into that
-newly created folder. Below is an example of how to perform this operation.
+## 下載檔案
 
-``` bash
+首先，建立控制面板所需的資料夾，然後切換至該資料夾。以下是範例操作方式：
+
+```bash
 mkdir -p /var/www/pterodactyl
 cd /var/www/pterodactyl
 ```
 
-Once you have created a new directory for the Panel and moved into it you'll need to download the Panel files. This
-is as simple as using `curl` to download our pre-packaged content. Once it is downloaded you'll need to unpack the archive
-and then set the correct permissions on the `storage/` and `bootstrap/cache/` directories. These directories
-allow us to store files as well as keep a speedy cache available to reduce load times.
+建立控制面板目錄並切換進入後，您需要下載控制面板檔案。只要使用 `curl` 下載預先打包的檔案即可。下載完成後，解壓縮套件，並為 `storage/` 與 `bootstrap/cache/` 目錄設定正確權限。這些目錄用於儲存檔案，以及保存快取以縮短載入時間。
 
-``` bash
+```bash
 curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/download/v0.7.19/panel.tar.gz
 tar --strip-components=1 -xzvf panel.tar.gz
 chmod -R 755 storage/* bootstrap/cache/
 ```
 
-## Installation
-::: danger This Version is End-of-Life
-This documentation is for **end-of-life software** which does not recieve any security updates or support
-from the community. This documentation has been left accessible for historial reasons.
+## 安裝
 
-You should be installing and using [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md) in production environments.
+::: danger 此版本已終止支援
+本文件適用於**已終止支援的軟體**，不再提供任何安全性更新或社群支援。基於歷史原因，本文件仍保留供查閱。
+
+在正式環境中，您應安裝並使用 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md)。
 :::
 
-Now that all of the files have been downloaded we need to configure some core aspects of the Panel.
+現在所有檔案都已下載完成，接著需要設定控制面板的一些核心項目。
 
-::: tip Database Configuration
-You will need a database setup and a user with the correct permissions created for that database before
-continuing any further. See below to quickly create a user and database for your Pterodactyl panel, if you are unsure how to do this or want more information, please have a look at [Setting up MySQL](/tutorials/mysql_setup.html).
-```
+::: tip 資料庫設定
+在繼續之前，您需要先建立資料庫，以及一個具備正確權限的資料庫使用者。如果您不確定如何操作，或想了解更多資訊，請參閱[設定 MySQL](/tutorials/mysql_setup.html)。
+
+以下指令可快速建立 Pterodactyl 控制面板所需的資料庫與使用者：
+
+```sql
 $ mysql -u root -p
 
 mysql> CREATE USER 'pterodactyl'@'localhost' IDENTIFIED WITH mysql_native_password BY 'A secure password';
 mysql> CREATE DATABASE panel;
 mysql> GRANT ALL ON panel.* TO 'pterodactyl'@'localhost' WITH GRANT OPTION;
-
 ```
+
 :::
 
-First we will copy over our default environment settings file, install core dependencies, and then generate a
-new application encryption key.
+首先，複製預設的環境設定檔、安裝核心相依套件，然後產生新的應用程式加密金鑰。
 
-``` bash
+```bash
 cp .env.example .env
 composer install --no-dev --optimize-autoloader
 
-# Only run the command below if you are installing this Panel for
-# the first time and do not have any Pterodactyl Panel data in the database.
+# 只有在首次安裝控制面板，且資料庫中沒有任何
+# Pterodactyl Panel 資料時，才需要執行以下指令。
 php artisan key:generate --force
 ```
 
 ::: danger
-Back up your encryption key (APP_KEY in the `.env` file). It is used as an encryption key for all data that needs to be stored securely (e.g. api keys).
-Store it somewhere safe - not just on your server. If you lose it, all encrypted data is useless and can't be restored, even if you have database backups.
+請備份您的加密金鑰（`.env` 檔案中的 `APP_KEY`）。此金鑰會用來加密所有需要安全儲存的資料，例如 API 金鑰。
+
+請將它儲存在安全的位置，而不只是伺服器上。如果遺失此金鑰，所有已加密的資料都將無法使用且無法復原，即使您擁有資料庫備份也一樣。
 :::
 
-### Environment Configuration
-Pterodactyl's core environment is easily configured using a few different CLI commands built into the app. This step
-will cover setting up things such as sessions, caching, database credentials, and email sending.
+### 環境設定
 
-``` bash
+Pterodactyl 的核心環境可以透過應用程式內建的數個 CLI 指令輕鬆設定。本步驟將設定工作階段、快取、資料庫憑證與電子郵件傳送等項目。
+
+```bash
 php artisan p:environment:setup
 php artisan p:environment:database
 
-# To use PHP's internal mail sending (not recommended), select "mail". To use a
-# custom SMTP server, select "smtp".
+# 若要使用 PHP 內建的郵件傳送功能（不建議），請選擇「mail」。
+# 若要使用自訂 SMTP 伺服器，請選擇「smtp」。
 php artisan p:environment:mail
 ```
 
-### Database Setup
-Now we need to setup all of the base data for the Panel in the database you created earlier. **The command below
-may take some time to run depending on your machine. Please _DO NOT_ exit the process until it is completed!** This
-command will setup the database tables and then add all of the Nests & Eggs that power Pterodactyl.
+### 設定資料庫
 
-``` bash
+現在需要將控制面板的所有基本資料寫入先前建立的資料庫。**以下指令可能需要一段時間才能完成，實際時間取決於您的機器效能。請勿在程序完成前退出！**
+
+此指令會建立資料庫資料表，並加入運作 Pterodactyl 所需的所有 Nest 與 Egg。
+
+```bash
 php artisan migrate --seed
 ```
 
-### Add The First User
-You'll then need to create an administrative user so that you can log into the panel. To do so, run the command below.
-At this time passwords **must** meet the following requirements: 8 characters, mixed case, at least one number.
+### 新增第一位使用者
 
-``` bash
+接著，您需要建立一名管理員使用者，才能登入控制面板。請執行以下指令。目前密碼**必須**符合以下要求：至少 8 個字元、包含大小寫字母，並至少包含一個數字。
+
+```bash
 php artisan p:user:make
 ```
 
-### Set Permissions
-The last step in the installation process is to set the correct permissions on the Panel files so that the webserver can
-use them correctly.
+### 設定權限
 
-``` bash
-# If using NGINX or Apache (not on CentOS):
-chown -R www-data:www-data * 
+安裝流程的最後一步，是為控制面板檔案設定正確的擁有者，讓 Web 伺服器可以正常使用這些檔案。
 
-# If using NGINX on CentOS:
+```bash
+# 使用 Nginx 或 Apache（CentOS 除外）
+chown -R www-data:www-data *
+
+# 在 CentOS 上使用 Nginx
 chown -R nginx:nginx *
 
-# If using Apache on CentOS
+# 在 CentOS 上使用 Apache
 chown -R apache:apache *
 ```
 
-## Queue Listeners
-We make use of queues to make the application faster and handle sending emails and other actions in the background.
-You will need to setup the queue worker for these actions to be processed.
+## 佇列監聽器
 
-### Crontab Configuration
-The first thing we need to do is create a new cronjob that runs every minute to process specific Pterodactyl tasks, such
-as session cleanup and sending scheduled tasks to daemons. You'll want to open your crontab using `sudo crontab -e` and
-then paste the line below.
+我們使用佇列讓應用程式執行得更快，並在背景處理電子郵件傳送與其他工作。您需要設定佇列工作程序，才能處理這些工作。
+
+### Crontab 設定
+
+首先，需要建立一項每分鐘執行一次的 Cron 工作，用於處理特定的 Pterodactyl 工作，例如清理工作階段，以及將排程工作傳送至 Daemon。請使用 `sudo crontab -e` 開啟 Crontab，然後貼上以下內容：
 
 ```bash
 * * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1
 ```
 
-### Create Queue Worker
-Next you need to create a new systemd worker to keep our queue process running in the background. This queue is responsible
-for sending emails and handling many other background tasks for Pterodactyl.
+### 建立佇列工作程序
 
-Create a file called `pteroq.service` in `/etc/systemd/system` with the contents below.
-``` text
-# Pterodactyl Queue Worker File
+接著，需要建立新的 systemd 工作程序，讓佇列程序持續在背景執行。此佇列負責傳送電子郵件，以及處理 Pterodactyl 的許多其他背景工作。
+
+在 `/etc/systemd/system` 中建立名為 `pteroq.service` 的檔案，內容如下：
+
+```text
+# Pterodactyl 佇列工作程序檔案
 # ----------------------------------
 
 [Unit]
@@ -208,8 +209,8 @@ Description=Pterodactyl Queue Worker
 After=redis-server.service
 
 [Service]
-# On some systems the user and group might be different.
-# Some systems use `apache` or `nginx` as the user and group.
+# 在部分系統中，使用者與群組可能不同。
+# 某些系統使用 apache 或 nginx 作為使用者與群組。
 User=www-data
 Group=www-data
 Restart=always
@@ -219,24 +220,24 @@ ExecStart=/usr/bin/php /var/www/pterodactyl/artisan queue:work --queue=high,stan
 WantedBy=multi-user.target
 ```
 
-::: tip Redis on CentOS
-If you are using CentOS, you will need to replace `redis-server.service` with `redis.service` at the `After=` line in order to ensure `redis` starts before the queue worker.
+::: tip CentOS 上的 Redis
+如果您使用 CentOS，需要將 `After=` 行中的 `redis-server.service` 替換為 `redis.service`，以確保 Redis 會在佇列工作程序之前啟動。
 :::
 
 ::: tip
-If you are not using `redis` for anything you should remove the `After=` line, otherwise you will encounter errors
-when the service starts.
+如果您沒有將 Redis 用於任何用途，應移除 `After=` 行，否則服務啟動時可能會發生錯誤。
 :::
 
-If you are are using redis for your system, you will want to make sure to enable that it will start on boot. You can do that by running the following command: 
+如果您的系統使用 Redis，請確認已將 Redis 設定為開機時自動啟動。執行以下指令即可：
+
 ```bash
 sudo systemctl enable --now redis-server
 ```
 
-Finally, enable the service and set it to boot on machine start.
+最後，啟用服務，並將其設定為在機器啟動時自動執行：
 
-``` bash
+```bash
 sudo systemctl enable --now pteroq.service
 ```
 
-#### Next Step: [Webserver Configuration](./webserver_configuration)
+#### 下一步：[Web 伺服器設定](./webserver_configuration)
