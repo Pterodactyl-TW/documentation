@@ -1,58 +1,53 @@
-# Creating a New Node
+# 建立新的節點
 
 [[toc]]
- 
-## Location
-Head to the admin panel and click the Nodes tab on the left sidebar. After that, click 'Create New' on the
-top right side to open the page to add a node.
+
+## 位置
+
+前往管理控制面板，點選左側側邊欄中的 `Nodes` 分頁。接著點選右上角的 `Create New`，開啟新增節點的頁面。
 
 ![](../../../.vuepress/public/community/config/nodes/pterodactyl_add_node_create_button.png)
 
-## Information Required
+## 必要資訊
 
 ![](../../../.vuepress/public/community/config/nodes/pterodactyl_add_node_new_page.png)
 
-* **Name**: a quick identifiable name for the node.
-* **Description**: a long description that is used to help you identify the node.
-* **Location**: the location you want the node in. These are configured in the 'Locations' section of the panel and one
-must be created before a node can be created. These simply act as categories for nodes and serve no other purpose at
-this time.
-* **FQDN**: the fully qualified domain name for the node — for example: `node.pterodactyl.io`
-* **Communicate over SSL**: if the panel is using SSL the Daemon is required to use SSL as well.
-* **Behind Proxy**: if you have the Daemon behind a proxy that terminates SSL connections before arriving at the Daemon
-then this option should be selected. If none of that sentence made sense, this doesn't affect you.
-* **Server File Directory**: the location on the physical server where the daemon is to store the files the servers
-generate. By default this is `/var/lib/pterodactyl/volumes`.
+- **Name**：用於快速識別節點的名稱。
+- **Description**：用於協助識別節點的詳細描述。
+- **Location**：節點所在的位置。這些位置是在控制面板的 `Locations` 區段中設定，且必須先建立位置，才能建立節點。目前，位置僅用作節點的分類，沒有其他用途。
+- **FQDN**：節點的完整網域名稱，例如：`node.pterodactyl.io`
+- **Communicate over SSL**：如果控制面板使用 SSL，Daemon 也必須使用 SSL。
+- **Behind Proxy**：如果 Daemon 位於 Proxy 後方，且 SSL 連線會在抵達 Daemon 前由 Proxy 終止，則應選取此選項。如果您不了解這段說明，通常不需要啟用此選項。
+- **Server File Directory**：實體伺服器上用於儲存伺服器產生檔案的位置。預設為 `/var/lib/pterodactyl/volumes`。
 
-::: tip OVH Users
-Some OVH users regularly have their `/home` folder be the largest filesystem. You may want to change to use
-`/home/pterodactyl/volumes` if you are on a default OVH box.
+::: tip OVH 使用者
+部分 OVH 使用者的 `/home` 資料夾通常是容量最大的檔案系統。如果您使用的是預設的 OVH 伺服器環境，可以考慮改用 `/home/pterodactyl/volumes`。
 :::
 
-* **Total Memory**: the total amount of RAM the node should be able to allocate automatically.
-* **Memory Overallocate**: the percentage of RAM to over-allocate on a node. For example, if you have set a 10GB memory
-limit, with a 20% overallocation, the Panel will allocate up to 12GB of memory on this node in total.
-* **Total Disk Space**: the total amount of disk space the node should be able to allocate automatically.
-* **Disk Overallocate**: works the same way as memory overallocation.
+- **Total Memory**：節點可自動配置的總記憶體容量。
+- **Memory Overallocate**：節點記憶體超額配置的百分比。例如，若設定記憶體上限為 10 GB，並設定 20% 的超額配置，控制面板最多會在此節點上配置總共 12 GB 的記憶體。
+- **Total Disk Space**：節點可自動配置的總磁碟空間。
+- **Disk Overallocate**：運作方式與記憶體超額配置相同。
 
 ::: danger
-Don't forget to account for OS overhead and other software requirements on machines.
-::: 
+請勿忘記將作業系統本身與其他軟體所需的資源納入考量。
+:::
 
-* **Daemon Port**: the port that the Daemon should listen on.
-* **Daemon SFTP Port**: the port the Daemon sftp-server or standalone SFTP server should listen on.
+- **Daemon Port**：Daemon 監聽連線時使用的連接埠。
+- **Daemon SFTP Port**：Daemon 的 SFTP 伺服器或獨立 SFTP 伺服器監聽連線時使用的連接埠。
 
-## Install the Daemon
-At this point you'll need to have the Daemon installed on your machine. Check out the [documentation](/wings/installing.html)
-for more information, or try one of the community guides for [CentOS](/community/installation-guides/wings/centos7.html),
-or [Debian](/community/installation-guides/wings/debian.html).
+## 安裝 Daemon
 
-## Configuring the Node
-Go to the Node Configuration page
+此時，您需要先在伺服器上安裝 Daemon。如需更多資訊，請參閱[相關文件](/wings/installing.html)，或參考社群提供的 [CentOS](/community/installation-guides/wings/centos7.html) 或 [Debian](/community/installation-guides/wings/debian.html) 安裝指南。
+
+## 設定節點
+
+前往節點的設定頁面。
 
 ![](../../../.vuepress/public/community/config/nodes/pterodactyl_add_node_config.png)
 
-Copy and paste the config into the `config.yml` file. (Default location is `/etc/pterodactyl/config.yml`)
+將設定內容複製並貼到 `config.yml` 檔案中。（預設位置為 `/etc/pterodactyl/config.yml`。）
 
-### Auto-Deploy
-This will generate a command to run on the node server to configure the daemon for you.
+### 自動部署
+
+此功能會產生一組指令，供您在節點伺服器上執行，以自動完成 Daemon 的設定。

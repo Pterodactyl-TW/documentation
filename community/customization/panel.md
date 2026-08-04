@@ -1,48 +1,47 @@
-# Building Panel Assets
+# 建置控制面板資源
 
 :::warning
-Do **not** run the following steps on your production nodes.
+**請勿在正式環境的節點上執行以下步驟。**
 :::
 
-Instructions on how to build the panel are also available in the [BUILDING.md](https://github.com/pterodactyl/panel/blob/1.0-develop/BUILDING.md) file.
+建置控制面板的相關說明也可以參閱 [BUILDING.md](https://github.com/pterodactyl/panel/blob/1.0-develop/BUILDING.md) 檔案。
 
-The frontend of the Panel is built with React. Any changes to the source files require to recompile it.
-This also applies to style sheets. The following sections explain how to do so.
+控制面板的前端使用 React 建置。任何原始檔案的變更都需要重新編譯，樣式表的變更也同樣如此。以下章節將說明如何進行操作。
 
-## Install Dependencies
+## 安裝相依套件
 
-The following commands will install the necessary dependencies for building the Panel assets.
+以下指令將安裝建置控制面板資源所需的相依套件。
 
-The build tools require NodeJS, yarn is used as the package manager.
+建置工具需要 Node.js，並使用 Yarn 作為套件管理工具。
 
 ```bash
-# Ubuntu/Debian
-curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash - 
+# Ubuntu／Debian
+curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
 
 # CentOS
 curl -sL https://rpm.nodesource.com/setup_22.x | sudo -E bash -
 sudo yum install -y nodejs yarn # CentOS 7
-sudo dnf install -y nodejs yarn # CentOS 8, Rocky Linux 8, AlmaLinux 8
+sudo dnf install -y nodejs yarn # CentOS 8、Rocky Linux 8、AlmaLinux 8
 ```
 
-Install required javascript packages.
+安裝必要的 JavaScript 套件：
 
 ```bash
-npm i -g yarn # Install Yarn
+npm i -g yarn # 安裝 Yarn
 
 cd /var/www/pterodactyl
-yarn # Installs panel build dependencies
+yarn # 安裝控制面板的建置相依套件
 ```
 
-## Build Panel Assets
+## 建置控制面板資源
 
-The following command will rebuild the Panel frontend. For NodeJS version 17 and above, you must enable the `--openssl-legacy-provider` option before building.
+以下指令會重新建置控制面板前端。Node.js 17 及以上版本必須在建置前啟用 `--openssl-legacy-provider` 選項。
 
 ```bash
 cd /var/www/pterodactyl
-export NODE_OPTIONS=--openssl-legacy-provider # for NodeJS v17+
-yarn build:production # Build panel
+export NODE_OPTIONS=--openssl-legacy-provider # 適用於 Node.js v17 以上版本
+yarn build:production # 建置控制面板
 ```
 
-You can use command `yarn run watch` to view the progress of your changes in almost real-time for easier development. Once you're satisfied with your changes build the panel using the previously mentioned `yarn build:production` command. 
+您可以使用 `yarn run watch` 指令，以接近即時的方式查看變更進度，方便進行開發。完成變更後，請使用前述的 `yarn build:production` 指令建置控制面板。

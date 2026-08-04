@@ -3,18 +3,17 @@ meta:
     - name: robots
       content: noindex
 ---
-# Kernel Modifications
+# 核心修改
 
 [[toc]]
 
 ::: tip
-In most cases, only users with a server provided by OVH will need to make any modifications to their kernel.
+大多數情況下，只有使用 OVH 提供伺服器的使用者需要修改核心。
 :::
 
-## Update Kernel
-Install the new kernels using apt-get. In this case we are installing the latest version of the kernel,
-but feel free to browse using apt-cache search linux-image-extra to find all possible image versions you can
-install. You'll want to install the latest.
+## 更新核心
+使用 apt-get 安裝新核心。本例會安裝最新版本的核心，也可以使用 `apt-cache search linux-image-extra` 瀏覽所有可安裝的映像版本。
+建議安裝最新版本。
 
 ``` bash
 apt-get install linux-image-generic linux-image-extra-virtual
@@ -29,17 +28,15 @@ sudo update-grub
 sudo reboot
 ```
 
-## Confirm Kernel
-Once you've rebooted, check that the latest kernel is installed using `uname -r`, it should output `4.4.0-131-generic`
-(in this case) or similar.
+## 確認核心
+重新啟動後，使用 `uname -r` 確認已安裝最新核心；本例應輸出 `4.4.0-131-generic` 或類似版本。
 
 ::: warning
 If it still includes `-xxxx-grs-ipv6-64` or similar, it didn't work and you should move on top the steps below.
 :::
 
-## Set Default Boot
-Ok, so unfortunately the easiest way didn't work, but don't worry, we can still fix this. Firstly, lets run a quick
-command to list potential kernels, just look at the output and make sure you see your newly installed kernel listed.
+## 設定預設開機核心
+很遺憾，最簡單的方法沒有成功，但仍然可以修正。首先執行快速命令列出可能的核心，確認輸出中有新安裝的核心。
 
 ``` bash
 grep "menuentry '" /boot/grub/grub.cfg
@@ -80,5 +77,6 @@ sudo update-grub
 sudo reboot
 ```
 
-## Boot from hard disk
-It's possible that even after you modified the GRUB configuration the server's still booted into a OVH kernel. If this happens to you, go to the OVH control panel and check the server's booting settings and make sure it's booting from hard disk instead of network boot.
+## 從硬碟開機
+即使修改 GRUB 設定，伺服器仍可能使用 OVH 核心開機。如果發生此情況，請前往 OVH 控制面板檢查開機設定，
+確認使用硬碟開機，而不是網路開機。

@@ -1,65 +1,64 @@
-# Building Wings
+# 建置 Wings
 
 :::warning
-Do **not** run the following steps on your production nodes.
+**請勿在正式環境的節點上執行以下步驟。**
 :::
 
-Wings is written in Go. This makes it very easy to modify and compile it on your own, and distribute your own binaries.
-This guide will cover the steps necessary to build it yourself.
+Wings 使用 Go 語言編寫，因此您可以輕鬆地自行修改、編譯，並發布自訂的執行檔。本指南將說明自行建置 Wings 所需的步驟。
 
-It will not, however, explain where to look for certain aspects of Wings and which changes are necessary to achieve specific results. Knowledge of the Go language is required if you want to modify it.
+不過，本指南不會說明 Wings 各項功能的程式碼位置，也不會介紹為了達成特定結果所需進行的修改。如果您想修改 Wings，必須具備 Go 語言的相關知識。
 
-Building Go programs is very easy, and the same also applies to Wings. Go is cross-platform, but Wings only supports Linux at the moment. The easiest way to compile it for Linux is to run the commands on a Linux machine.
+建置 Go 程式相當簡單，Wings 也是如此。Go 支援跨平台，但目前 Wings 僅支援 Linux。要為 Linux 編譯 Wings，最簡單的方法是在 Linux 電腦上執行相關指令。
 
-## Build Requirements
+## 建置需求
 
-An up to date version of Go is required to compile Wings. The minimum version can be found at the top of the [go.mod](https://github.com/pterodactyl/wings/blob/develop/go.mod) file. See the [official instructions](https://golang.org/doc/install) for help with installing Go.
+編譯 Wings 需要使用最新版本的 Go。最低支援版本可在 [go.mod](https://github.com/pterodactyl/wings/blob/develop/go.mod) 檔案頂部找到。如需安裝 Go 的協助，請參閱[官方安裝說明](https://golang.org/doc/install)。
 
-## Building
+## 建置
 
-Execute the following command in your local clone of the repository to compile Wings into a binary.
+在本機複製的 Wings 儲存庫目錄中執行以下指令，將 Wings 編譯成執行檔：
 
 ```bash
 go build
 ```
 
-You should now have a `wings` binary file in your wings directory.
+完成後，您應該會在 Wings 目錄中看到名為 `wings` 的執行檔。
 
-## Install the new binary
+## 安裝新的執行檔
 
-:::tip Root required
-Some the following commands require root permissions. Prepend them with `sudo` if you are not logged in as root.
+:::tip 需要 Root 權限
+以下部分指令需要 Root 權限。如果您目前不是以 Root 身分登入，請在指令前加上 `sudo`。
 :::
 
-1. Backup the current installation of wings
+1. 備份目前安裝的 Wings
 
 ```bash
 mv /usr/local/bin/wings /usr/local/bin/wings-backup
 ```
 
-2. Place the new binary in `/usr/local/bin`
+2. 將新的執行檔放置到 `/usr/local/bin`
 
-```
+```bash
 cp ./wings /usr/local/bin
 ```
 
-3. Restart wings 
+3. 重新啟動 Wings
 
-```
+```bash
 systemctl restart wings
 ```
 
-## Troubleshooting
+## 疑難排解
 
-If the wings service does not start properly, you can try to start Wings in a console window.
+如果 Wings 服務無法正常啟動，您可以嘗試在主控台中直接啟動 Wings：
 
-```
+```bash
 wings --debug
 ```
 
-Remember to stop the system service before, and re-enable it afterwards.
+請記得先停止系統服務，完成測試後再重新啟用。
 
-```
+```bash
 systemctl stop wings
 
 systemctl start wings

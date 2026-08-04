@@ -40,7 +40,7 @@
                     const routes = this.$router.options.routes;
                     const themeLocales = this.$site.themeConfig.locales || {};
                     const languageDropdown = {
-                        text: this.$themeLocaleConfig.selectText || 'Languages',
+                        text: this.$themeLocaleConfig.selectText || '語言',
                         items: Object.keys(locales).map(path => {
                             const locale = locales[path];
                             const text = themeLocales[path] && themeLocales[path].label || locale.lang;
@@ -93,7 +93,7 @@
                     }
                 }
 
-                return 'Source';
+                return '原始碼';
             }
         }
     };

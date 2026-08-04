@@ -1,8 +1,7 @@
-# Community Guides and Tutorials
+# 社群指南與教學
 
-## About
-This section of Pterodactyl's site is dedicated to more complex topics, tutorials, and features that we
-feel are important to share with the community, but do not fit into the theme of our core documentation.
+## 關於
 
-Here you'll find in-depth OS-specific installation guides, advanced network configurations, individual game
-setup instructions, and so much more.
+Pterodactyl 網站的此區域專門介紹較複雜的主題、教學與功能。這些內容對社群而言相當重要，但不適合納入核心文件的架構中。
+
+在這裡，您可以找到針對特定作業系統的詳細安裝指南、進階網路設定、個別遊戲的設定說明，以及更多實用內容。

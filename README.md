@@ -1,14 +1,14 @@
 ---
 home: true
 heroImage: /doc_pterry.png
-actionText: Get Started →
+actionText: 開始使用 →
 actionLink: /project/introduction
 features:
-- title: Security First
-  details: Security is a first-class citizen on this platform with bcrypt hashing, AES-256-CBC encryption, and HTTPS support out of the box.
-- title: Modern Tooling
-  details: Built on a modern stack utilizing the best design practices that make it easy to jump in and make modifications.
-- title: Docker to the Core
-  details: All servers run in isolated Docker containers that limit attack vectors, provide strict resource limits, and provide environments tailored to each specific game.
-footer: MIT Licensed | Copyright © Dane Everitt and contributors
+- title: 安全至上
+  details: 本平台將安全性視為核心功能，提供 bcrypt 雜湊、AES-256-CBC 加密，以及開箱即用的 HTTPS 支援。
+- title: 現代化工具
+  details: 採用現代技術堆疊與最佳設計實務，讓你能輕鬆開始使用並進行修改。
+- title: 以 Docker 為核心
+  details: 所有伺服器都在隔離的 Docker 容器中執行，以限制攻擊面、提供嚴格的資源限制，並為每款遊戲提供量身打造的執行環境。
+footer: 採用 MIT 授權條款 | Copyright © Dane Everitt 與貢獻者
 ---

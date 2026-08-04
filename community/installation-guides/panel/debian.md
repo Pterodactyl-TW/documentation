@@ -1,55 +1,55 @@
-# Debian 11, 12 & 13
+# Debian 11、12 與 13
 
 [[toc]]
 
 ::: tip
-This guide is based off the [official installation documentation](/panel/1.0/getting_started.md) but is tailored specifically for Debian 11, 12 and 13.
+本指南以[官方安裝文件](/panel/1.0/getting_started.md)為基礎，並針對 Debian 11、12 與 13 進行調整。
 :::
 
-| Operating System                   | Version |     Supported      | Notes                                                       |
-| ---------------------------------- | ------- | :----------------: | ----------------------------------------------------------- |
-| **Debian**                         | 11      | :white_check_mark: |                                                             |
-|                                    | 12      | :white_check_mark: |                                                             |
-|                                    | 13      | :white_check_mark: | - MariaDB can be installed without the repo setup script<br> - Redis can be installed without the Redis APT repository |
+| 作業系統                         | 版本 |     支援狀態      | 備註                                                         |
+| -------------------------------- | ---- | :----------------: | ------------------------------------------------------------ |
+| **Debian**                       | 11   | :white_check_mark: |                                                              |
+|                                  | 12   | :white_check_mark: |                                                              |
+|                                  | 13   | :white_check_mark: | - 無需執行套件庫設定指令碼即可安裝 MariaDB<br> - 無需使用 Redis APT 套件庫即可安裝 Redis |
 
-## Dependency Installation
+## 安裝相依套件
 
-In this guide, we will install the required dependencies for the Pterodactyl panel. After that, you can follow the official installation documentation.
+本指南將安裝 Pterodactyl 控制面板所需的相依套件。完成後，您可以繼續依照官方安裝文件進行操作。
 
 ```bash
-# Install necessary packages
+# 安裝必要套件
 apt install -y curl ca-certificates gnupg2 sudo lsb-release
 
-# Add additional repositories for PHP
+# 新增 PHP 的額外套件庫
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/sury-php.list
 curl -fsSL https://packages.sury.org/php/apt.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/sury-keyring.gpg
 
-# Add Redis official APT repository (Debian 11 & 12)
+# 新增 Redis 官方 APT 套件庫（Debian 11 與 12）
 curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
 
-# MariaDB repo setup script (Debian 11 & 12)
+# MariaDB 套件庫設定指令碼（Debian 11 與 12）
 curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash
 
-# Update repositories list
+# 更新套件庫清單
 apt update
 
-# Install Dependencies
+# 安裝相依套件
 apt install -y php8.3 php8.3-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx tar unzip git redis-server
 ```
 
-### Installing Composer
+### 安裝 Composer
 
-Composer is a dependency manager for PHP that allows us to ship everything you'll need code wise to operate the Panel. You'll need composer installed before continuing in this process.
+Composer 是 PHP 的相依套件管理工具，可讓我們提供執行控制面板所需的所有程式碼相依套件。在繼續此安裝流程之前，您需要先安裝 Composer。
 
-``` bash
+```bash
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 ```
 
-### Download Files
+### 下載檔案
 
-Great, now all of the dependencies have been dealt with. Continue the installation by following the [official documentation Download Files section](/panel/1.0/getting_started.md#download-files).
+很好，現在所有相依套件都已處理完畢。請繼續依照[官方文件中的「下載檔案」章節](/panel/1.0/getting_started.md#download-files)完成安裝。
 
 ### Wings
 
-There is no additional configuration required for Wings on Debian 11, 12 or 13. You can follow the [official Wings install documentation](/wings/1.0/installing.md), which covers Docker installation for Debian.
+在 Debian 11、12 或 13 上，Wings 不需要額外設定。您可以依照[官方 Wings 安裝文件](/wings/1.0/installing.md)進行操作，該文件包含 Debian 的 Docker 安裝說明。

@@ -3,17 +3,16 @@ meta:
     - name: robots
       content: noindex
 ---
-# Upgrading
+# 升級
 
-::: danger This Software is Abandoned
-This documentation is for **abandoned software** which does not recieve any security updates or support
-from the community. This documentation has been left accessible for historial reasons.
+::: danger 此軟體已遭棄用
+本文件適用於**已遭棄用的軟體**，不再提供任何安全性更新或社群支援。
+基於歷史原因，本文件仍保留供查閱。
 
-You should be installing and using [Wings](/wings/1.0/installing.md) in production environments with
-[Pterodactyl Panel 1.0](/panel/1.0/getting_started.md).
+在正式環境中，你應搭配 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md) 安裝並使用 [Wings](/wings/1.0/installing.md)。
 :::
 
-## Version Specific Guides
+## 各版本指南
 * [0.4.X to 0.5.X](upgrade/0.4_to_0.5.md)
 * [0.5.X series](upgrade/0.5.md)
 * [0.5.X to 0.6.X](upgrade/0.5_to_0.6.md)

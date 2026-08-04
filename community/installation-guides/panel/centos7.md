@@ -1,25 +1,25 @@
 # CentOS 7
 
-This guide provides comprehensive instructions for installing Pterodactyl v1.X on CentOS 7, including all dependencies and SSL configuration.
+本指南將詳細說明如何在 CentOS 7 上安裝 Pterodactyl v1.X，包括所有相依套件與 SSL 設定。
 
 [[toc]]
 
-## Install Dependencies
+## 安裝相依套件
 
-### SELinux Configuration
+### SELinux 設定
 
-If SELinux is enabled (check with `sestatus`), install the following packages:
+如果已啟用 SELinux（可使用 `sestatus` 檢查），請安裝以下套件：
 
 ```bash
 yum install -y policycoreutils policycoreutils-python selinux-policy selinux-policy-targeted libselinux-utils setroubleshoot-server setools setools-console mcstrans
 ```
 
-### Installing Dependencies
+### 安裝相依套件
 
-Run the following commands to install all necessary dependencies:
+執行以下指令以安裝所有必要的相依套件：
 
 ```bash
-# Add MariaDB repository
+# 新增 MariaDB 套件庫
 sudo tee /etc/yum.repos.d/mariadb.repo <<EOF
 [mariadb]
 name = MariaDB
@@ -28,40 +28,40 @@ gpgkey = https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck = 1
 EOF
 
-# Install EPEL and Remi repositories
+# 安裝 EPEL 與 Remi 套件庫
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
-# Enable PHP 8.3 from Remi
+# 啟用 Remi 提供的 PHP 8.3
 sudo yum install -y yum-utils
 sudo yum-config-manager --disable 'remi-php*'
 sudo yum-config-manager --enable remi-php83
 
 sudo yum update -y
 
-# Install dependencies
+# 安裝相依套件
 sudo yum install -y MariaDB-common MariaDB-server php php-{common,fpm,cli,json,mysqlnd,mcrypt,gd,mbstring,pdo,zip,bcmath,dom,opcache} nginx zip unzip
 
-# Install Redis
+# 安裝 Redis
 sudo yum install -y --enablerepo=remi redis
 
-# Start and enable services
+# 啟動並設定服務於開機時自動啟用
 sudo systemctl enable --now mariadb nginx redis
 
-# Configure firewall
+# 設定防火牆
 sudo firewall-cmd --add-service=http --permanent
 sudo firewall-cmd --add-service=https --permanent 
 sudo firewall-cmd --reload
 
-# Install Composer
+# 安裝 Composer
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 ```
 
-## Server Configuration
+## 伺服器設定
 
-### PHP Configuration
+### PHP 設定
 
-Create a new PHP-FPM configuration file in /etc/php-fpm.d/www-pterodactyl.conf:
+在 `/etc/php-fpm.d/www-pterodactyl.conf` 建立新的 PHP-FPM 設定檔：
 
 ```conf
 [pterodactyl]
@@ -80,15 +80,15 @@ pm.process_idle_timeout = 10s
 pm.max_requests = 200
 ```
 
-Start and enable PHP-FPM:
+啟動 PHP-FPM，並設定為開機時自動啟用：
 
 ```bash
 sudo systemctl enable --now php-fpm
 ```
 
-### SELinux configuration
+### SELinux 設定
 
-The following command will allow nginx to work with redis.
+以下指令會允許 Nginx 與 Redis 連線。
 
 ```bash
 setsebool -P httpd_can_network_connect 1
@@ -96,9 +96,10 @@ setsebool -P httpd_execmem 1
 setsebool -P httpd_unified 1
 ```
 
-## Installing the Panel
-Excellent, we now have all of the required dependencies installed and configured. From here, follow the [official Panel installation documentation](/panel/1.0/getting_started.md#download-files).
+## 安裝控制面板
+
+很好，現在所有必要的相依套件都已安裝並完成設定。接下來請依照[官方控制面板安裝文件](/panel/1.0/getting_started.md#download-files)繼續操作。
 
 ::: tip
-You will need to change the fastcgi_pass path in the Nginx configuration to `/var/run/php-fpm/pterodactyl.sock`
+您需要將 Nginx 設定中的 `fastcgi_pass` 路徑變更為 `/var/run/php-fpm/pterodactyl.sock`。
 :::
