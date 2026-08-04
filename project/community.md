@@ -1,77 +1,61 @@
-# Community Standards
+# 社群規範
 
 <!--
-    Sorry, but this file is off limits to additions or deletions that are not the result of fixing
-    grammar or spelling mistakes.
+    抱歉，除非是修正文法或拼字錯誤，否則不得新增或刪除本檔案內容。
 -->
 
-Pterodactyl has grown from a community of tens in 2015 to a community of thousands in 2020. During that time
-there have been countless growing pains and community has changed in an innumerable number of ways. At our heart
-however, Pterodactyl continues to exist for one purpose: to be _the_ platform for running your game servers.
+Pterodactyl 從 2015 年由數十人組成的社群，發展至 2020 年擁有數千名成員的社群。在這段期間，我們經歷了無數成長過程中的陣痛，社群也在各方面產生了許多變化。然而，Pterodactyl 的核心宗旨始終不變：成為執行遊戲伺服器的**首選平台**。
 
-In order to keep true to that goal, and continue to foster one of the largest open-source game panel communities
-out there, we've adopted a simple set of guidelines for participating in this community. The goal of these guidelines
-is to foster an inclusive, welcoming environment for new users, and provide a space for the thousands of existing
-users, administrators, network owners, and hosting companies to co-exist.
+為了堅守這個目標，並持續培養其中一個規模最大的開源遊戲控制面板社群，我們制定了一套簡單的社群參與規範。這些規範旨在建立一個包容且歡迎新使用者的環境，讓數千名現有使用者、管理員、網路擁有者與主機代管公司能夠共存。
 
-These rules and guidelines extend to all facets of the Pterodactyl Community, including but not limited to our
-Discord Server and all activities within the GitHub Organization.
+這些規則與規範適用於 Pterodactyl 社群的所有層面，包括但不限於 Discord 伺服器，以及 GitHub 組織中的所有活動。
 
-## Community Guidelines
-At the most basic level, these guidelines can be distilled down to:
+## 社群規範
 
-1. Be a decent human.
-2. Patience is a virtue.
+最基本而言，這些規範可以歸納為：
 
-### Be Mature
-You are expected to be mature and control your behavior in a manner that adheres to basic human decency. If you are
-unable to do this you will be removed from the community. Personal attacks, spam (in any form), "doxxing", or otherwise
-acting out is not allowed.
+1. 做一個正派的人。
+2. 耐心是一種美德。
 
-This community is fairly lax in regards to moderating language. However, the following are some examples of
-behavior that is absolutely _not_ tolerated and for which you will be removed from the community.
+### 保持成熟
 
-* Racist, sexist, homophobic, transphobic, or otherwise deregatory speech, images, insinuations, or any language whose
-  sole purpose is to denigrate any individual, organization, or class of individual.
-* Threats of violence against any person, group, or organization including "doxxing" of these entities.
-* Pornographic or excessively violent content.
+您應保持成熟，並以符合基本人道與禮儀的方式控制自己的行為。如果您無法做到，將會被移出社群。禁止人身攻擊、垃圾訊息（任何形式）、「人肉搜尋」或其他失控行為。
 
-### Limit the Drama
-Discussion, including linking to or discussing sites or software, that exists to cast a negative image of other
-companies or users is not allowed. This includes calling out hosts using nulled software, attempting to elicit negative
-reactions towards services or websites, or otherwise stirring up drama.
+本社群對語言內容的管理相對寬鬆。不過，以下是絕對**不會被容忍**的行為，違者將被移出社群：
+
+- 種族歧視、性別歧視、恐同、恐跨，或其他貶抑性言論、圖片、暗示，以及任何唯一目的在於侮辱個人、組織或特定群體的語言。
+- 對任何個人、群體或組織發出暴力威脅，包括對這些對象進行「人肉搜尋」。
+- 色情或過度暴力的內容。
+
+### 避免製造爭端
+
+禁止進行旨在損害其他公司或使用者形象的討論，包括連結至或討論相關網站或軟體。這包括公開指責使用破解軟體的主機商、試圖引發他人對服務或網站的負面反應，或以其他方式煽動爭端。
 
 ::: tip
-Assume someone is acting in good faith when responding to them. You don't have to agree with everyone, and you
-don't need to respond to everything.
+回應他人時，請假設對方是出於善意。您不必同意每個人的看法，也不需要對所有事情作出回應。
 :::
 
-### Be Patient
-This is an open-source project. No members of the development team are paid in an official capacity to write,
-maintain, nor support this software. The following actions are discouraged in this community.
+### 保持耐心
 
-* Repeatedly asking identical questions within the same channel (or across channels) within short periods of time.
-  * It is expected that some questions will be missed. If it has been a reasonable amount of time and your question
-    remains unanswered, you're welcome to re-post it.
-* Keep all support questions within the realm of the support channels.
-* Do not interrupt conversations in non-support channels solely to request that someone look in a support channel
-  and help you.
+這是一個開源專案。開發團隊中沒有任何成員以正式職務受薪來編寫、維護或支援本軟體。以下行為在本社群中不受鼓勵：
 
-### No Commercial Services
-Discussion of paid installation/upgrade services, modifications, or any other commercial offerings is strictly
-prohibited unless otherwise noted. This also includes reaching out to individuals via Direct Message and offering
-your services without provocation.
+- 在短時間內於同一頻道（或不同頻道）重複提出相同問題。
+  - 有些問題被忽略是可以理解的。如果經過合理時間後，您的問題仍未獲得回覆，歡迎重新發表。
+- 所有支援問題都應留在支援頻道的範圍內。
+- 不要僅為了要求他人前往支援頻道查看並協助您，而中斷非支援頻道中的討論。
 
-::: warning Check your Username
-Advertising commercial services within your username or display name on Discord is forbidden.
+### 禁止商業服務
+
+除非另有註明，嚴格禁止討論付費安裝／升級服務、修改服務或任何其他商業方案。這也包括在未獲對方要求的情況下，透過私人訊息聯絡個人並提供服務。
+
+::: warning 檢查您的使用者名稱
+禁止在 Discord 的使用者名稱或顯示名稱中宣傳商業服務。
 :::
 
-[Sponsors](/project/about.html#sponsors) at the silver tier and higher are exempt from this rule.
+銀級及以上的[贊助者](/project/about.html#sponsors)不受此規定限制。
 
-### No Mention or Ping Spam
-Please, do not direct message any administrative, development, or notable community members without first
-checking with them. Keep all support queries within the public support channels unless you have been directly
-asked to move it elsewhere.
+### 禁止提及或標記洗版
 
-_But what if I am trying to respond back to someone?_ That is fine! We only ask that you not mention people
-directly if they're not already involved in a discussion with you.
+請勿在未事先徵得同意的情況下，直接傳送私人訊息給管理員、開發人員或重要社群成員。除非對方明確要求，否則所有支援問題都應留在公開支援頻道中。
+
+_但是，如果我想回覆某個人呢？_ 這沒有問題！我們只是希望您不要直接提及尚未參與該討論的人。

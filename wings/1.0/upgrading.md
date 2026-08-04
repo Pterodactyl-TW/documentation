@@ -1,12 +1,11 @@
-# Upgrading Wings
+# 升級 Wings
 
-Upgrading Wings is a painless process and should take less than a minute to complete.
+升級 Wings 的流程很簡單，通常不到一分鐘即可完成。
 
-## Wings Version Requirements
+## Wings 版本需求
 
-Each version of Pterodactyl Panel also has a corresponding minimum version of Wings that
-is required for it to run. Please see the chart below for how these versions line up. In
-most cases your base Wings version should match that of your Panel.
+每個版本的 Pterodactyl Panel 都有相對應的 Wings 最低版本需求。請參考下表了解版本的對應關係。
+在大多數情況下，Wings 的主要版本應與 Panel 版本一致。
 
 | Panel Version | Wings Version | Supported |
 | ------------- | ------------- | --------- |
@@ -24,12 +23,11 @@ most cases your base Wings version should match that of your Panel.
 | **1.11.x**    | **1.11.x**    |           |
 | **1.12.x**    | **1.12.x**    | ✅         |
 
-*NOTE: There are no 1.8.x, 1.9.x, or 1.10.x releases of Wings.*
+*注意：Wings 沒有 1.8.x、1.9.x 或 1.10.x 發行版本。*
 
-## Download Updated Binary
+## 下載更新後的執行檔
 
-First, download the updated wings binary into `/usr/local/bin`. You will need to stop Wings briefly. _Your running
-servers **will not** be affected._
+首先，將更新後的 Wings 執行檔下載至 `/usr/local/bin`。你需要暫時停止 Wings，但_不會_影響正在執行的伺服器。
 
 ``` bash
 systemctl stop wings
@@ -37,10 +35,9 @@ curl -L -o /usr/local/bin/wings "https://github.com/pterodactyl/wings/releases/l
 chmod u+x /usr/local/bin/wings
 ```
 
-## Restart Process
+## 重新啟動程序
 
-Finally, restart the wings process. Your running servers will not be affected and any open
-connections to the instance will re-connect automatically.
+最後，重新啟動 Wings 程序。正在執行的伺服器不會受到影響，與該執行個體的現有連線也會自動重新連線。
 
 ``` bash
 systemctl restart wings

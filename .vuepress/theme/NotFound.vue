@@ -3,21 +3,21 @@
         <div class="content error-page">
             <h1>404</h1>
             <blockquote>{{ getMsg() }}</blockquote>
-            <router-link to="/">Take me home.</router-link>
+            <router-link to="/">帶我回首頁</router-link>
         </div>
     </div>
 </template>
 
 <script>
     const msgs = [
-        `There's nothing here.`,
-        `How did we get here?`,
-        `That's a Four-Oh-Four.`,
-        `Looks like we've got some broken links.`,
-        `Who let Dogmeat mess with the documentation again?`,
-        `Someone unplugged the ethernet cable... again.`,
-        `Couldn't locate that cap'n, should we start over?`,
-        `I don't like this game of hide'n'seek anymore.`
+        `這裡什麼都沒有。`,
+        `我們是怎麼到這裡的？`,
+        `這是 404 頁面。`,
+        `看來有些連結已經失效了。`,
+        `到底是誰又讓 Dogmeat 動了文件？`,
+        `有人又把網路線拔掉了……`,
+        `找不到那位船長，要不要重新開始？`,
+        `我已經不想再玩躲貓貓了。`
     ];
 
     export default {

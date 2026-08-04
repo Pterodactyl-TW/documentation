@@ -3,28 +3,23 @@ meta:
     - name: robots
       content: noindex
 ---
-# Additional Configuration
+# 額外設定
 
-::: danger This Software is Abandoned
-This documentation is for **abandoned software** which does not recieve any security updates or support
-from the community. This documentation has been left accessible for historial reasons.
+::: danger 此軟體已停止維護
+本文件適用於**已停止維護的軟體**，該軟體不再取得任何安全性更新，也不再獲得社群支援。本文件僅因歷史原因而繼續保留。
 
-You should be installing and using [Wings](/wings/1.0/installing.md) in production environments with
-[Pterodactyl Panel 1.0](/panel/1.0/getting_started.md).
+在正式環境中，您應安裝並使用 [Wings](/wings/1.0/installing.md) 以及 [Pterodactyl 控制面板 1.0](/panel/1.0/getting_started.md)。
 :::
 
 [[toc]]
 
 ::: warning
-These are advanced configurations for the daemon. You risk breaking your daemon and making containers un-usable if
-you modify something incorrectly. Proceed at your own risk, and only if you know what each configuration value does.
+以下是 Daemon 的進階設定。如果修改錯誤，可能會導致 Daemon 損壞，使容器無法使用。請自行承擔操作風險，並且只有在您了解每個設定值用途的情況下才進行修改。
 :::
 
-The documentation below uses dot-notated JSON to explain where each setting should live. You will need to manually
-expand this syntax when adding to the `core.json` file for the Daemon. For example, something like `internals.throttle.enabled`
-would be expanded to the JSON below.
+以下文件使用帶有點號的 JSON 表示法，說明每個設定應放置的位置。將設定加入 Daemon 的 `core.json` 檔案時，您需要手動將此表示法展開。例如，`internals.throttle.enabled` 應展開為以下 JSON：
 
-``` json
+```json
 {
   "internals": {
     "throttle": {
@@ -34,49 +29,42 @@ would be expanded to the JSON below.
 }
 ```
 
-## Output Throttles
-There are a few throttle limits built into the Daemon to keep people from causing issues with data volume and CPU usage.
-Under normal circumstances users should not encounter these limits. You might see the occasional data throttling
-warning while starting a server or when there is a sudden spike in data output.
+## 輸出節流
 
-If you're seeing more servers than you expected being killed as a result of the Daemon throttler, you can make
-adjustments to the settings below. Please note the configs below are in JSON dot-notation and should be expanded
-out into a normal JSON object.
+Daemon 內建數項節流限制，用於避免使用者造成資料量與 CPU 使用量方面的問題。在正常情況下，使用者不應該遇到這些限制。在啟動伺服器時，或輸出資料突然大量增加時，您可能偶爾會看到資料節流警告。
 
-| Setting Path        | Default Value | Notes                                                                                                                                                                                                                                                                                                                     |
-| ------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `enabled`           | true          | Determines if the throttle (and associated values below) should be used.                                                                                                                                                                                                                                                  |
-| `kill_at_count`     | 5             | The number of warnings that can accumulate for a particular instance before the server process is killed. The decay time below affects how quickly this value is decreased.                                                                                                                                               |
-| `decay`             | 10            | The number of seconds that a server process must go without triggering a data throttle warning before the throttle count begins decreasing. This loop is processed every 5 seconds and will decrement the throttle count by one when the process goes more than this number of seconds without a data throttle occurring. |
-| `bytes`             | 30720         | :warning: _(removed in v0.5.5)_ The maximum number of bytes of data that can be output in the defined interval before a warning occurs.                                                                                                                                                                                   |
-| `lines`             | 1000          | :warning: _(added in v0.5.6)_ The number of lines that can be output by the server process in the defined check interval time. By default, 5,000 lines in ~500ms results in a server process kill.                                                                                                                        |
-| `check_interval_ms` | 100           | The number of milliseconds between the throttle resetting the used bytes or line count.                                                                                                                                                                                                                                   |
+如果您發現有比預期更多的伺服器因 Daemon 節流機制而被終止，可以調整以下設定。請注意，以下設定使用 JSON 點號表示法，必須展開成一般的 JSON 物件。
 
-Please note that all of the settings above are in the `internals.throttle.X` path. So, `enabled` is actually `internals.throttle.enabled`.
+| 設定路徑            | 預設值 | 說明 |
+| ------------------- | ------ | ---- |
+| `enabled`           | `true` | 決定是否啟用節流機制，以及是否使用以下相關設定。 |
+| `kill_at_count`     | `5`    | 特定執行個體在伺服器程序被終止前，可以累積的警告次數。以下的衰減時間會影響此數值降低的速度。 |
+| `decay`             | `10`   | 伺服器程序在不觸發資料節流警告後，必須經過的秒數。超過此秒數仍未觸發資料節流時，節流計數便會開始降低。此迴圈每 5 秒處理一次，每當程序超過指定秒數未觸發資料節流時，節流計數會減少 1。 |
+| `bytes`             | `30720` | :warning: _（已於 v0.5.5 移除）_ 在指定時間間隔內可輸出的最大資料量（單位為位元組），超過後便會觸發警告。 |
+| `lines`             | `1000` | :warning: _（於 v0.5.6 新增）_ 伺服器程序在指定檢查間隔內可輸出的行數。預設情況下，約 500 毫秒內輸出 5,000 行會導致伺服器程序被終止。 |
+| `check_interval_ms` | `100`  | 節流機制重設已使用位元組數或行數的間隔時間，單位為毫秒。 |
 
-## Custom Network Interfaces
-If for whatever reason you need to modify the network interfaces used for Pterodactyl's local Docker network you
-can do so by modifying the `core.json` file for the daemon. In most cases you'll just be modifying the network
-name to allow your servers to use the host network stack. To do so, just change `docker.network.name` to be `host`
-rather than `pterodactyl_nw` as shown below.
+請注意，上述所有設定都位於 `internals.throttle.X` 路徑下。因此，`enabled` 的完整路徑實際上是 `internals.throttle.enabled`。
+
+## 自訂網路介面
+
+如果您因任何原因需要修改 Pterodactyl 本機 Docker 網路所使用的網路介面，可以修改 Daemon 的 `core.json` 檔案。在大多數情況下，您只需要修改網路名稱，讓伺服器使用主機的網路堆疊。請依照以下範例，將 `docker.network.name` 從 `pterodactyl_nw` 變更為 `host`。
 
 ::: warning
-While changing to the host network stack does allow servers running on Pterodactyl to have direct access to local
-interfaces and bind to specific IP addresses (required for some Steam games), it is not recommended on public
-installations of Pterodactyl (where you have other users running servers).
+變更為主機網路堆疊後，Pterodactyl 上執行的伺服器可以直接存取本機網路介面，並繫結至指定的 IP 位址（部分 Steam 遊戲需要此功能）。但不建議在公開的 Pterodactyl 安裝環境中使用此設定，尤其是該環境中有其他使用者執行伺服器時。
 
-Using the `host` stack removes many network specific protections afforded by Docker, and will allow server processes
-to access anything on the host, as well as bind to any IP or Port they wish.
+使用 `host` 網路堆疊會移除 Docker 提供的許多網路層級防護，並允許伺服器程序存取主機上的任何內容，以及繫結至其想要使用的任何 IP 位址或連接埠。
 :::
 
 ::: danger
-Any changes to the network after the daemon has been started will require you to remove the docker network and restart the daemon. Any servers on the host need to be stopped before and most likely rebuilt.
+Daemon 啟動後對網路進行任何變更，都需要移除 Docker 網路並重新啟動 Daemon。主機上的所有伺服器都必須先停止，而且很可能還需要重新建置。
 
-The following will stop the daemon, remove the network, and start the daemon again. Run at your own risk.  
+以下指令會停止 Daemon、移除網路，然後再次啟動 Daemon。請自行承擔執行風險。
+
 `systemctl stop wings && docker network rm pterodactyl_nw && systemctl start wings`
 :::
 
-``` json{5}
+```json{5}
 "docker": {
     "socket": "/var/run/docker.sock",
     "autoupdate_images": true,
@@ -93,61 +81,63 @@ The following will stop the daemon, remove the network, and start the daemon aga
 },
 ```
 
-## Private Registries
-| Setting Path    | Default Value | Notes                                                                                                     |
-| --------------- | ------------- | --------------------------------------------------------------------------------------------------------- |
-| `username`      | _none_        | The username to use when connecting to the registry.                                                      |
-| `password`      | _none_        | The password associated with the account.                                                                 |
-| `images`        | _none_        | An array of images that are associated with the private registry.                                         |
-| `auth`          | _none_        |                                                                                                           |
-| `email`         | _none_        |                                                                                                           |
-| `serveraddress` | _none_        | The address to the server the registry is located on.                                                     |
-| `key`           | _none_        | A pre-generated base64 encoded authentication string. If provided none of the above options are required. |
+## 私有套件庫
 
-Please note that all of the settings above are in the `docker.registry.X` path. So, `username` is actually `docker.registry.username`.
+| 設定路徑        | 預設值 | 說明 |
+| --------------- | ------ | ---- |
+| `username`      | _無_   | 連線至套件庫時使用的使用者名稱。 |
+| `password`      | _無_   | 與該帳戶相關聯的密碼。 |
+| `images`        | _無_   | 與私有套件庫相關聯的映像檔陣列。 |
+| `auth`          | _無_   |      |
+| `email`         | _無_   |      |
+| `serveraddress` | _無_   | 套件庫所在伺服器的位址。 |
+| `key`           | _無_   | 預先產生、經 Base64 編碼的驗證字串。如果提供此設定，則不需要設定上述其他選項。 |
 
-## Security Policies
-This daemon ships with a very strict security configuration designed to limit access to the host system, and mitigate
-a large range of potential attack vectors. However, some users might need to tweak these settings, or are running on
-a private instance and are willing to decrease some of the security measures.
+請注意，上述所有設定都位於 `docker.registry.X` 路徑下。因此，`username` 的完整路徑實際上是 `docker.registry.username`。
 
-| Setting Path           | Default Value | Notes                                                                                                                                                                                                                                                                             |
-| ---------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ipv6`                 | true          | Set this to false to disable IPv6 networking on the pterodactyl0 interface.                                                                                                                                                                                                       |
-| `internal`             | false         | Set this to true to prevent any external network access to all containers on the pterodactyl0 interface.                                                                                                                                                                          |
-| `enable_icc`           | true          | Set this to false to disallow containers to access services running on the host system's non-public IP addresses. Setting this to false does make it impossible to connect (from a container) to MySQL/Redis/etc. running on the host system without using the public IP address. |
-| `enable_ip_masquerade` | true          | Set this to false to disable IP Masquerading on the pterodactyl0 interface.                                                                                                                                                                                                       |
+## 安全性原則
 
-Please note that all of the settings above are in the `docker.policy.network.X` path. So, `ipv6` is actually `docker.policy.network.ipv6`.
+此 Daemon 預設使用非常嚴格的安全性設定，用於限制對主機系統的存取，並降低大量潛在攻擊向量的風險。不過，部分使用者可能需要調整這些設定，或是在私有環境中執行，因此願意降低部分安全性措施。
 
-## Container Policy
-| Setting Path         | Default Value             | Notes                                                                                                                                                                                                                             |
-| -------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `tmpfs`              | `rw,exec,nosuid,size=50M` | These are the arguments used for mounting a `tmpfs` directory into containers to allow certain programs to run.                                                                                                                   |
-| `log_driver`         | none                      | :warning: This option was **removed** in `v0.6` and is forcibly set to `json-file`. The log driver to use for containers. We default to `none` to mitigate a potential DoS attack vector if a server were to spam log output.     |
-| `log_opts`           | array                     |                                                                                                                                                                                                                                   |
-| `log_opts.max_size`  | `5m`                      | The maximum size of the server output log file created by Docker.                                                                                                                                                                 |
-| `log_opts.max_files` | `1`                       | The maximum number of files that Docker will create with output from the server.                                                                                                                                                  |
-| `readonly_root`      | true                      | Determines if the root filesystem of the container should be readonly.                                                                                                                                                            |
-| `securityopts`       | array                     | An array of security options to apply to a container. The default array is provided below.                                                                                                                                        |
-| `cap_drop`           | array                     | An array of linux capabilities to drop from the container (in addition to ones [dropped by docker already](https://docs.docker.com/engine/security/security/#linux-kernel-capabilities). A listing of the default array is below. |
+| 設定路徑              | 預設值 | 說明 |
+| --------------------- | ------ | ---- |
+| `ipv6`                | `true` | 設為 `false` 可停用 `pterodactyl0` 介面上的 IPv6 網路功能。 |
+| `internal`            | `false` | 設為 `true` 可防止 `pterodactyl0` 介面上的所有容器存取外部網路。 |
+| `enable_icc`          | `true` | 設為 `false` 可禁止容器存取主機系統上執行服務的非公開 IP 位址。設為 `false` 後，容器將無法透過主機的公開 IP 位址以外的方式連線至主機上的 MySQL、Redis 等服務。 |
+| `enable_ip_masquerade` | `true` | 設為 `false` 可停用 `pterodactyl0` 介面上的 IP 偽裝。 |
 
-Please note that all of the settings above are in the `docker.policy.container.X` path. So, `tmpfs` is actually `docker.policy.container.tmpfs`.
+請注意，上述所有設定都位於 `docker.policy.network.X` 路徑下。因此，`ipv6` 的完整路徑實際上是 `docker.policy.network.ipv6`。
 
-### Default Security Opts Array
-``` json
+## 容器原則
+
+| 設定路徑           | 預設值                    | 說明 |
+| ------------------ | ------------------------- | ---- |
+| `tmpfs`            | `rw,exec,nosuid,size=50M` | 用於將 `tmpfs` 目錄掛載至容器的參數，讓特定程式可以正常執行。 |
+| `log_driver`       | `none`                    | :warning: 此選項已於 `v0.6` **移除**，並強制設定為 `json-file`。容器使用的記錄驅動程式。預設為 `none`，以降低伺服器大量輸出記錄時可能造成的 DoS 攻擊風險。 |
+| `log_opts`         | 陣列                      |      |
+| `log_opts.max_size` | `5m`                     | Docker 建立的伺服器輸出記錄檔大小上限。 |
+| `log_opts.max_files` | `1`                     | Docker 為伺服器輸出建立的記錄檔數量上限。 |
+| `readonly_root`    | `true`                    | 決定容器的根檔案系統是否應設為唯讀。 |
+| `securityopts`     | 陣列                      | 套用至容器的安全性選項陣列。以下提供預設陣列。 |
+| `cap_drop`         | 陣列                      | 要從容器移除的 Linux 能力陣列（除此之外，Docker 也會[預先移除部分能力](https://docs.docker.com/engine/security/security/#linux-kernel-capabilities)）。以下提供預設陣列。 |
+
+請注意，上述所有設定都位於 `docker.policy.container.X` 路徑下。因此，`tmpfs` 的完整路徑實際上是 `docker.policy.container.tmpfs`。
+
+### 預設安全性選項陣列
+
+```json
 [
     'no-new-privileges',
 ]
 ```
 
-### Default Capabilities Drop Array
+### 預設移除能力陣列
 
 ::: warning
-Starting with `v0.6` of the Daemon, the following previously _dropped_ capabilities are available in containers: `chown`, `kill`, `setgid`, and `setuid`.
+從 Daemon `v0.6` 開始，以下先前會被移除的能力可在容器中使用：`chown`、`kill`、`setgid` 與 `setuid`。
 :::
 
-``` json
+```json
 [
     'setpcap',
     'mknod',
@@ -162,8 +152,8 @@ Starting with `v0.6` of the Daemon, the following previously _dropped_ capabilit
 ]
 ```
 
-## Enabling Cloudflare
+## 啟用 Cloudflare
 
-Enabling Cloudflare on the daemon isn't particularly useful since users do not connect directly to the daemon port, and users need an unproxied hostname to access any servers on the node.  As a result it's not possible to conceal the IP address of your node machine, but some people want to enable it regardless.
+在 Daemon 上啟用 Cloudflare 通常沒有太大用途，因為使用者不會直接連線至 Daemon 連接埠，而且使用者需要未經 Proxy 的主機名稱，才能存取節點上的任何伺服器。因此，您無法藉此隱藏節點主機的 IP 位址，但部分使用者仍可能希望啟用此功能。
 
-Cloudflare only proxies the default daemon port (8080) when using HTTP.  In order to get the daemon to work with Cloudflare when HTTPS is enabled you must change the daemon port to one that Cloudflare will proxy such as 8443.  Since Cloudflare only proxies HTTP/HTTPS traffic for non-enterprise plans you cannot proxy the SFTP port.
+使用 HTTP 時，Cloudflare 只會 Proxy 預設的 Daemon 連接埠（8080）。若要在啟用 HTTPS 的情況下讓 Daemon 與 Cloudflare 正常運作，您必須將 Daemon 連接埠變更為 Cloudflare 會 Proxy 的連接埠，例如 `8443`。由於 Cloudflare 只有在非企業方案中 Proxy HTTP／HTTPS 流量，因此無法 Proxy SFTP 連接埠。

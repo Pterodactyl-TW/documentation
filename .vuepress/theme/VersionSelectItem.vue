@@ -1,7 +1,7 @@
 <template>
   <div class="inline-block">
     {{ version.title || version.name }}
-    <span class="rounded-full ml-2" :class="classes">{{version.status}}</span>
+    <span class="rounded-full ml-2" :class="classes">{{ statusText }}</span>
   </div>
 </template>
 
@@ -17,6 +17,14 @@ export default {
     }
   },
   computed: {
+    statusText() {
+      return {
+        deprecated: "已棄用",
+        current: "目前版本",
+        stable: "穩定版",
+        beta: "測試版"
+      }[this.version.status] || this.version.status;
+    },
     classes() {
       return (
         {

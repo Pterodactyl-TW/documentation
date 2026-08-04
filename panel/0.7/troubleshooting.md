@@ -3,25 +3,23 @@ meta:
     - name: robots
       content: noindex
 ---
-# Troubleshooting
+# 疑難排解
 
 [[toc]]
 
-## Reading Error Logs
-If you ever encounter an unexpected error with the Panel the first thing you will likely be asked for is the logs.
-To retrieve these, simply execute the command below which will output the last 100 lines of the Panel's log file.
+## 查看錯誤記錄
 
-``` bash
+如果您在使用控制面板時遇到未預期的錯誤，通常首先會被要求提供記錄檔。執行以下指令，即可顯示控制面板記錄檔的最後 100 行：
+
+```bash
 tail -n 100 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log
 ```
 
-### Parsing the Error
-When you run the command above, you'll probably be hit with a huge wall of text that might scare you. Fear not,
-this is simply a stacktrace leading to the cause of the error, and you can actually ignore almost all of it when
-looking for the cause of the error. Lets take a look at some example output below, which has been truncated to
-make this easier to follow with.
+### 解析錯誤
 
-```
+執行上述指令後，您可能會看到一大段看似嚇人的文字。不用擔心，這只是指向錯誤原因的堆疊追蹤。尋找錯誤原因時，實際上可以忽略其中大部分內容。以下是一個經過截斷的範例輸出，方便說明：
+
+```text
 #70 /srv/www/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
 #71 /srv/www/public/index.php(53): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
 #72 {main}
@@ -35,136 +33,122 @@ Stack trace:
 #5 /srv/www/vendor/laravel/framework/src/Illuminate/View/View.php(125): Illuminate\View\View->getContents()
 ```
 
-The first thing you'll want to do is follow the chain of numbers _up_ until you find `#0`, this will be the function that
-triggered the exception. Right above line 0 you will see a line that has the date and time in brackets, `[2018-07-19 00:50:24]`
-above for example. This line will be the human readable exception that you can use to understand what went wrong.
+首先，請沿著編號**往上**查看，直到找到 `#0`。這就是觸發例外的函式。在 `#0` 上方，您會看到一行包含日期與時間的內容，例如上方的 `[2018-07-19 00:50:24]`。這一行會顯示可讀性較高的例外訊息，您可以藉此了解發生了什麼問題。
 
-### Understanding the Error
-In the example above we can see that the actual error was:
+### 理解錯誤
 
-```
+從上述範例可以看出，實際錯誤是：
+
+```text
 local.ERROR: ErrorException: file_put_contents(...): failed to open stream: Permission denied in /srv/www/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php:122
 ```
 
-From this error we can determine that there was an error performing a [file_put_contents()](http://php.net/manual/en/function.file-put-contents.php) call, and the error was
-that we couldn't open the file because permissions were denied. Its okay if you don't understand the error at all, but
-it does help you get faster support if you're able to provide these logs, and at least find the source of the error.
-Sometimes the errors are pretty straightforward and will tell you exactly what went wrong, such as a `ConnectionException`
-being thrown when the Panel can't connect to the Daemon.
+由此可知，程式在執行 [`file_put_contents()`](http://php.net/manual/en/function.file-put-contents.php) 時發生錯誤，原因是沒有足夠的權限開啟檔案。
 
-### Utilizing GREP
-If you're trying to go through a bunch of errors quickly, you can use the command below which will limit the results returned to only
-be the actual error lines, without all of the stack traces.
+即使您完全看不懂錯誤內容，也不用擔心。不過，如果您能提供這些記錄，並至少找出錯誤來源，通常能讓您更快取得支援。有些錯誤相當直接，會明確告訴您問題所在，例如控制面板無法連線至 Daemon 時，可能會出現 `ConnectionException`。
 
-``` bash
+### 使用 GREP
+
+如果您想快速查看大量錯誤，可以使用以下指令。此指令只會顯示實際的錯誤行，不會顯示完整的堆疊追蹤：
+
+```bash
 tail -n 1000 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log | grep "\[$(date +%Y)"
 ```
 
-## Transfer Exceptions / XHR Poll Error
-If you are seeing errors similar to the examples below, chances are there is some networking related issue, or you
-just don't have a required service running.
+## TransferException／XHR 輪詢錯誤
 
-### Example Errors
+如果您看到類似以下範例的錯誤，通常表示網路相關設定有問題，或某個必要的服務尚未執行。
 
-* "We were unable to connect to the main Socket.IO server, there may be network issues currently. The panel may not work as expected."
+### 錯誤範例
 
-* "A TransferException was encountered while trying to contact the daemon, please ensure it's online and accessible. This error has been logged."
+- 「我們無法連線至主要的 Socket.IO 伺服器，目前可能存在網路問題。控制面板可能無法正常運作。」
+- 「聯絡 Daemon 時發生 TransferException，請確認 Daemon 已啟動且可以連線。此錯誤已記錄。」
 
-### Basic Debugging Steps
+### 基本除錯步驟
 
-* Ensure you have AdBlock disabled or whitelisted for your Panel and Daemon domains.
+- 確認已停用 AdBlock，或將控制面板與 Daemon 的網域加入允許清單。
 
-* Check your browser's console by pressing `Ctrl + Shift + J` (in Chrome) or `Cmd + Alt + I` (in Safari). If there is
-a red error in it, chances are that it will narrow down the potential problem.
+- 在瀏覽器中按下 `Ctrl + Shift + J`（Chrome）或 `Cmd + Alt + I`（Safari）開啟主控台。如果其中出現紅色錯誤，通常可以協助縮小問題範圍。
 
-* Make sure if the daemon is properly installed and the active configuration matches the configuration shown under
-`Admin -> Node -> Configuration` in the Panel.
+- 確認 Daemon 已正確安裝，且目前使用的設定與控制面板中 `Admin -> Node -> Configuration` 顯示的設定一致。
 
-* Check that the Daemon is running, and not reporting errors. Use `service wings status` to check the current status of the process.
+- 確認 Daemon 正在執行，且沒有回報錯誤。使用 `service wings status` 檢查目前程序狀態。
 
-* Check that the Daemon ports are open on your firewall. The Daemon uses ports `8080` or `8443` for HTTP traffic,
-and `2022` for SFTP traffic.
+- 確認防火牆已開放 Daemon 使用的連接埠。Daemon 使用 `8080` 或 `8443` 傳輸 HTTP 流量，並使用 `2022` 傳輸 SFTP 流量。
 
-* Check that the Panel can reach the Daemon using the domain that is configured on the Panel. Run `curl
-https://domain.com:8080` on the Panel server and ensure that it can connect to the Daemon.
+- 確認控制面板可以透過面板中設定的網域連線至 Daemon。在控制面板伺服器上執行 `curl https://domain.com:8080`，確認是否能連線至 Daemon。
 
-* Ensure that you are using the correct HTTP scheme for your Panel and Daemon. If the Panel is running over HTTPS
-  the Daemon will also need to be running on HTTPS.
+- 確認控制面板與 Daemon 使用正確的 HTTP 通訊協定。如果控制面板使用 HTTPS，Daemon 也必須使用 HTTPS。
 
-### More Advanced Debugging Steps
+### 進階除錯步驟
 
-* Stop the Daemon and run `cd /srv/daemon; sudo npm start` to see if there are any errors being output by the Daemon.
-If so, try resolving them manually, or contact us on Discord for more assistance.
+- 停止 Daemon，然後執行 `cd /srv/daemon; sudo npm start`，查看 Daemon 是否輸出錯誤。如果有錯誤，請嘗試手動解決，或前往 Discord 尋求進一步協助。
 
-* Check your DNS and ensure that the response you receive is the one you expect using a tool such as `nslookup` or `dig`.
+- 檢查 DNS，並使用 `nslookup` 或 `dig` 等工具確認收到的回應是否符合預期。
 
-* If you use CloudFlare make sure that the yellow cloud is disabled for your Daemon or Panel `A` records.
+- 如果您使用 Cloudflare，請確認 Daemon 或控制面板的 `A` 記錄已停用黃色雲朵 Proxy。
 
-* Make sure when using the daemon behind a firewall — pfSense, OpenSwitch, etc — that the correct NAT settings to access
-the Daemon's ports from the outside network are setup.
+- 如果 Daemon 位於防火牆（例如 pfSense、OpenSwitch 等）後方，請確認已正確設定 NAT，讓外部網路可以存取 Daemon 的連接埠。
 
-* If nothing is working so far, check your own DNS settings and consider switching DNS servers.
+- 如果上述方法都無法解決問題，請檢查您自己的 DNS 設定，並考慮更換 DNS 伺服器。
 
-* When running the Panel and Daemon on one server it can sometimes help if to add an entry in `/etc/hosts` that directs
-the public IP back to the server. Sometimes the reverse path is also needed, so you may need to add an entry to your
-servers `/etc/hosts` file that points the Panel's domain to the correct IP.
+- 如果控制面板與 Daemon 位於同一台伺服器上，有時可以在 `/etc/hosts` 中加入一筆記錄，將公開 IP 位址指向該伺服器。有時也需要反向設定，因此您可能需要在伺服器的 `/etc/hosts` 檔案中，將控制面板網域指向正確的 IP 位址。
 
-* When running the Daemon and Panel on separate VM's using the same adapter make sure the VM's can connect to each
-other. Promiscuous mode might be needed.
+- 如果 Daemon 與控制面板分別執行於使用相同網路介面的不同虛擬機器上，請確認兩台虛擬機器可以互相連線。您可能需要啟用混雜模式。
 
-## Invalid MAC Exception
+## Invalid MAC 例外
+
 ::: warning
-This error should never happen if you correctly follow our installation and upgrade guides. The only time we have
-ever seen this error occur is when you blindly restore the Panel database from a backup and try to use a fresh
-installation of the Panel.
+如果您正確遵循我們的安裝與升級指南，理論上不應該發生此錯誤。此錯誤通常只會在使用備份還原控制面板資料庫，卻搭配全新安裝的控制面板時出現。
 
-When restoring backups you should _always_ restore the `.env` file!
+還原備份時，您應該**一併還原 `.env` 檔案**！
 :::
 
-Sometimes when using the Panel you'll unexpectedly encounter a broken page, and upon checking the logs you'll see
-an exception mentioning an invalid MAC when decrypting. This error is caused by mismatched `APP_KEY`s in your `.env` file
-when the data was encrypted versus decrypted.
+有時在使用控制面板時，您可能會突然遇到頁面損壞的情況。查看記錄後，可能會看到解密時發生 Invalid MAC 的例外。這是因為資料加密與解密時使用的 `.env` 檔案中的 `APP_KEY` 不一致所造成。
 
-If you are seeing this error the only solution is to restore the `APP_KEY` from your `.env` file. If you have lost that
-original key there is no way to recover the lost data.
+如果遇到此錯誤，唯一的解決方法是從原本的 `.env` 檔案還原 `APP_KEY`。如果您已遺失原始金鑰，便無法復原遺失的資料。
 
-## SELinux Issues
-On systems with SELinux installed you might encounter unexpected errors when running redis or attempting to connect
-to the daemon to perform actions. These issues can generally be resolved by executing the commands below to allow
-these programs to work with SELinux.
- 
-### Redis Permissions Errors
-``` bash
+## SELinux 問題
+
+在安裝 SELinux 的系統上，執行 Redis 或嘗試連線至 Daemon 以執行操作時，可能會遇到未預期的錯誤。通常可以執行以下指令，允許這些程式與 SELinux 正常運作。
+
+### Redis 權限錯誤
+
+```bash
 audit2allow -a -M redis_t
 semodule -i redis_t.pp
 ```
 
-### In case there is any weirdness with parts of the panel
-``` bash
+### 控制面板部分功能異常時
+
+```bash
 restorecon -R /var/www/pterodactyl/
 ```
 
-### Daemon Connection Errors
-``` bash
+### Daemon 連線錯誤
+
+```bash
 audit2allow -a -M http_port_t
 semodule -i http_port_t.pp
 ```
 
-## FirewallD issues
-If you are on a RHEL/CentOS server with firewalld installed you may have broken DNS.
+## FirewallD 問題
 
-```
+如果您使用的是安裝了 firewalld 的 RHEL／CentOS 伺服器，可能會遇到 DNS 異常。
+
+```bash
 firewall-cmd --permanent --zone=trusted --change-interface=pterodactyl0
 firewall-cmd --reload
 ```
 
-restart docker and wings after running these to be sure the rules are applied.
+執行上述指令後，請重新啟動 Docker 與 Wings，以確保規則已套用。
 
-
-## Database Errors
+## 資料庫錯誤
 
 ### DatabaseController.php:142
-```
+
+```text
 production.ERROR: ErrorException: Undefined variable: host in /var/www/pterodactyl/app/Http/Controllers/Admin/DatabaseController.php:142
 ```
-The database user you are trying to use doesn't have appropriate grants/has used incorrect password.
+
+您嘗試使用的資料庫使用者沒有適當的權限，或使用了錯誤的密碼。

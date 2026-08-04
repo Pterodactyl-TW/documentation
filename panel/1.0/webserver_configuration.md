@@ -1,85 +1,84 @@
-# Webserver Configuration
+# Web 伺服器設定
 
 ::: warning
-When using the SSL configuration you MUST create SSL certificates, otherwise your webserver will fail to start. See the [Creating SSL Certificates](/tutorials/creating_ssl_certificates.html) documentation page to learn how to create these certificates before continuing.
+使用 SSL 設定時，**必須先建立 SSL 憑證**，否則 Web 伺服器將無法啟動。請參閱[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)文件，先完成憑證建立，再繼續以下步驟。
 :::
 
 ::: tip
-If you are using [Caddy With Automatic SSL](#caddy-with-automatic-ssl), you do not have to create SSL certificates manually, Caddy will take care of it automatically.
+如果您使用的是[具備自動 SSL 功能的 Caddy](#caddy-with-automatic-ssl)，則不需要手動建立 SSL 憑證，Caddy 會自動處理。
 :::
 
 ::::: tabs
-:::: tab "Nginx With SSL"
-First, remove the default NGINX configuration.
+:::: tab "使用 SSL 的 Nginx"
 
-``` bash
+首先，移除 Nginx 的預設設定：
+
+```bash
 rm /etc/nginx/sites-enabled/default
 ```
 
-Now, you should paste the contents of the file below, replacing `<domain>` with your domain name being used in a file called
-`pterodactyl.conf` and place the file in `/etc/nginx/sites-available/`, or &mdash; if on RHEL, Rocky Linux, or AlmaLinux, `/etc/nginx/conf.d/`.
+接著，將以下檔案的內容貼上到名為 `pterodactyl.conf` 的設定檔中，並將 `<domain>` 替換成您使用的網域名稱。若使用一般 Linux 發行版，請將檔案放置於 `/etc/nginx/sites-available/`；若使用 RHEL、Rocky Linux 或 AlmaLinux，則放置於 `/etc/nginx/conf.d/`。
 
 <<< @/.snippets/webservers/nginx-php8.3.conf{4,11,26-27}
 
-### Enabling Configuration
+### 啟用設定
 
-The final step is to enable your NGINX configuration and restart it.
+最後，啟用 Nginx 設定並重新啟動服務：
 
 ```bash
-# You do not need to symlink this file if you are using RHEL, Rocky Linux, or AlmaLinux.
+# 如果使用 RHEL、Rocky Linux 或 AlmaLinux，則不需要建立此符號連結。
 sudo ln -s /etc/nginx/sites-available/pterodactyl.conf /etc/nginx/sites-enabled/pterodactyl.conf
 
-# You need to restart nginx regardless of OS.
+# 無論使用哪個作業系統，都必須重新啟動 Nginx。
 sudo systemctl restart nginx
 ```
 
 ::::
-:::: tab "Nginx Without SSL"
-First, remove the default NGINX configuration.
+:::: tab "不使用 SSL 的 Nginx"
 
-``` bash
+首先，移除 Nginx 的預設設定：
+
+```bash
 rm /etc/nginx/sites-enabled/default
 ```
 
-Now, you should paste the contents of the file below, replacing `<domain>` with your domain name being used in a file called
-`pterodactyl.conf` and place the file in `/etc/nginx/sites-available/`, or &mdash; if on RHEL, Rocky Linux, or AlmaLinux, `/etc/nginx/conf.d/`.
+接著，將以下檔案的內容貼上到名為 `pterodactyl.conf` 的設定檔中，並將 `<domain>` 替換成您使用的網域名稱。若使用一般 Linux 發行版，請將檔案放置於 `/etc/nginx/sites-available/`；若使用 RHEL、Rocky Linux 或 AlmaLinux，則放置於 `/etc/nginx/conf.d/`。
 
 <<< @/.snippets/webservers/nginx-php8.3-nossl.conf{4}
 
-### Enabling Configuration
+### 啟用設定
 
-The final step is to enable your NGINX configuration and restart it.
+最後，啟用 Nginx 設定並重新啟動服務：
 
 ```bash
-# You do not need to symlink this file if you are using RHEL, Rocky Linux, or AlmaLinux.
+# 如果使用 RHEL、Rocky Linux 或 AlmaLinux，則不需要建立此符號連結。
 sudo ln -s /etc/nginx/sites-available/pterodactyl.conf /etc/nginx/sites-enabled/pterodactyl.conf
 
-# You need to restart nginx regardless of OS.
+# 無論使用哪個作業系統，都必須重新啟動 Nginx。
 sudo systemctl restart nginx
 ```
 
 ::::
-:::: tab "Apache With SSL"
-First, remove the default Apache configuration.
+:::: tab "使用 SSL 的 Apache"
 
-``` bash
+首先，移除 Apache 的預設設定：
+
+```bash
 a2dissite 000-default.conf
 ```
 
-Now, you should paste the contents of the file below, replacing `<domain>` with your domain name being used in a file called
-`pterodactyl.conf` and place the file in `/etc/apache2/sites-available`, or &mdash; if on RHEL, Rocky Linux, or AlmaLinux, `/etc/httpd/conf.d/`.
+接著，將以下檔案的內容貼上到名為 `pterodactyl.conf` 的設定檔中，並將 `<domain>` 替換成您使用的網域名稱。若使用一般 Linux 發行版，請將檔案放置於 `/etc/apache2/sites-available`；若使用 RHEL、Rocky Linux 或 AlmaLinux，則放置於 `/etc/httpd/conf.d/`。
 
-Note: When using Apache, make sure you have the `libapache2-mod-php8.3` package installed or else PHP will not display on your webserver.
+注意：使用 Apache 時，請確認已安裝 `libapache2-mod-php8.3` 套件，否則 Web 伺服器將無法顯示 PHP 內容。
 
 <<< @/.snippets/webservers/apache.conf{3,12,26-27}
 
-### Enabling Configuration
+### 啟用設定
 
-Once you've created the file above, simply run the commands below. If you are on RHEL, Rocky Linux, or AlmaLinux _you do not need to run the commands
-below!_ You only need to run `systemctl restart httpd`.
+建立上述檔案後，執行以下指令。如果您使用的是 RHEL、Rocky Linux 或 AlmaLinux，_則不需要執行以下指令_，只需執行 `systemctl restart httpd` 即可。
 
 ```bash
-# You do not need to run any of these commands on RHEL, Rocky Linux, or AlmaLinux
+# RHEL、Rocky Linux 或 AlmaLinux 不需要執行以下指令
 sudo ln -s /etc/apache2/sites-available/pterodactyl.conf /etc/apache2/sites-enabled/pterodactyl.conf
 sudo a2enmod rewrite
 sudo a2enmod ssl
@@ -87,81 +86,82 @@ sudo systemctl restart apache2
 ```
 
 ::::
-:::: tab "Apache Without SSL"
-First, remove the default Apache configuration.
+:::: tab "不使用 SSL 的 Apache"
 
-``` bash
+首先，移除 Apache 的預設設定：
+
+```bash
 a2dissite 000-default.conf
 ```
 
-Now, you should paste the contents of the file below, replacing `<domain>` with your domain name being used in a file called
-`pterodactyl.conf` and place the file in `/etc/apache2/sites-available`, or &mdash; if on RHEL, Rocky Linux, or AlmaLinux, `/etc/httpd/conf.d/`.
+接著，將以下檔案的內容貼上到名為 `pterodactyl.conf` 的設定檔中，並將 `<domain>` 替換成您使用的網域名稱。若使用一般 Linux 發行版，請將檔案放置於 `/etc/apache2/sites-available`；若使用 RHEL、Rocky Linux 或 AlmaLinux，則放置於 `/etc/httpd/conf.d/`。
 
-Note: When using Apache, make sure you have the `libapache2-mod-php8.3` package installed or else PHP will not display on your webserver.
+注意：使用 Apache 時，請確認已安裝 `libapache2-mod-php8.3` 套件，否則 Web 伺服器將無法顯示 PHP 內容。
 
 <<< @/.snippets/webservers/apache-nossl.conf{3}
 
-### Enabling Configuration
+### 啟用設定
 
-Once you've created the file above, simply run the commands below. If you are on RHEL, Rocky Linux, or AlmaLinux _you do not need to run the commands
-below!_ You only need to run `systemctl restart httpd`.
+建立上述檔案後，執行以下指令。如果您使用的是 RHEL、Rocky Linux 或 AlmaLinux，_則不需要執行以下指令_，只需執行 `systemctl restart httpd` 即可。
 
 ```bash
-# You do not need to run any of these commands on RHEL, Rocky Linux, or AlmaLinux
+# RHEL、Rocky Linux 或 AlmaLinux 不需要執行以下指令
 sudo ln -s /etc/apache2/sites-available/pterodactyl.conf /etc/apache2/sites-enabled/pterodactyl.conf
 sudo a2enmod rewrite
 sudo systemctl restart apache2
 ```
 
 ::::
-:::: tab "Caddy With Automatic SSL"
-Before adding our custom configuration, let's remove the default one. You can do it either by deleting the contents of config file or by deleting the config file completely and than creating a new one from scratch. The config file path is `/etc/caddy/Caddyfile`.
+:::: tab "使用自動 SSL 的 Caddy"
 
-To delete the config file completely, run the following command:
+在加入自訂設定前，請先移除預設設定。您可以清空設定檔內容，或直接刪除設定檔，再重新建立。設定檔路徑為 `/etc/caddy/Caddyfile`。
 
-```shell
+若要完整刪除設定檔，請執行：
+
+```bash
 rm /etc/caddy/Caddyfile
 ```
 
-Then continue with an editor of your choice to write the config.
+接著使用您選擇的編輯器建立新的設定檔。
 
-You should paste the contents of the file below, replacing `<domain>` with your domain name.
+請將以下檔案的內容貼入設定檔，並將 `<domain>` 替換成您的網域名稱。
 
 <<< @/.snippets/webservers/Caddyfile{10}
 
 ::: tip
-If you are using Cloudflare DNS in proxy mode, refer to [this tutorial](/tutorials/creating_ssl_certificates.html#method-3:-caddy-(using-cloudflare-api)), to see how to configure Caddy to use DNS challenge for obtaining SSL certificates.
+如果您使用 Cloudflare DNS Proxy 模式，請參閱[此教學](/tutorials/creating_ssl_certificates.html#method-3:-caddy-(using-cloudflare-api))，了解如何設定 Caddy，使用 DNS 挑戰取得 SSL 憑證。
 :::
 
-### Enabling Configuration
+### 啟用設定
 
-The final step is to restart Caddy.
+最後，重新啟動 Caddy：
 
 ```bash
 systemctl restart caddy
 ```
 
 ::::
-:::: tab "Caddy Without SSL"
-Before adding our custom configuration, let's remove the default one. You can do it either by deleting the contents of config file or by deleting the config file completely and than creating a new one from scratch. The config file path is `/etc/caddy/Caddyfile`.
+:::: tab "不使用 SSL 的 Caddy"
 
-To delete the config file completely, run the following command:
+在加入自訂設定前，請先移除預設設定。您可以清空設定檔內容，或直接刪除設定檔，再重新建立。設定檔路徑為 `/etc/caddy/Caddyfile`。
 
-```shell
+若要完整刪除設定檔，請執行：
+
+```bash
 rm /etc/caddy/Caddyfile
 ```
 
-Then continue with an editor of your choice to write the config.
+接著使用您選擇的編輯器建立新的設定檔。
 
-You should paste the contents of the file below, replacing `<domain>` with your domain name.
+請將以下檔案的內容貼入設定檔，並將 `<domain>` 替換成您的網域名稱。
 
-The only two differences are that we have suffixed the `<domain>` with `:80` and in the global config at `servers` directive, we have changed the port from `:443` to `:80`.
+此設定有兩項差異：我們在 `<domain>` 後方加上 `:80`，並且在全域設定的 `servers` 指令中，將連接埠從 `:443` 改為 `:80`。
 
 <<< @/.snippets/webservers/Caddyfile-nossl{10}
 
-### Enabling Configuration
+### 啟用設定
 
-The final step is to restart Caddy.
+最後，重新啟動 Caddy：
 
 ```bash
 systemctl restart caddy
@@ -170,4 +170,4 @@ systemctl restart caddy
 ::::
 :::::
 
-#### Next Step: [Wings Installation](../../wings/installing.md)
+#### 下一步：[安裝 Wings](../../wings/installing.md)

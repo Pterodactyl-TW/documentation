@@ -3,29 +3,26 @@ meta:
     - name: robots
       content: noindex
 ---
-# Standalone SFTP Server
+# 獨立 SFTP 伺服器
 
-::: danger This Software is Abandoned
-This documentation is for **abandoned software** which does not recieve any security updates or support
-from the community. This documentation has been left accessible for historial reasons.
+::: danger 此軟體已遭棄用
+本文件適用於**已遭棄用的軟體**，不再提供任何安全性更新或社群支援。
+基於歷史原因，本文件仍保留供查閱。
 
-You should be installing and using [Wings](/wings/1.0/installing.md) in production environments with
-[Pterodactyl Panel 1.0](/panel/1.0/getting_started.md).
+在正式環境中，你應搭配 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md) 安裝並使用 [Wings](/wings/1.0/installing.md)。
 :::
 
 ::: warning
-Standalone SFTP support was introduced in `Panel@v0.7.11` and `Daemon@v0.6.8` and will not work with prior versions.
+獨立 SFTP 支援在 `Panel@v0.7.11` 與 `Daemon@v0.6.8` 中引入，舊版無法使用。
 :::
 
-Pterodactyl now ships with the option to use a [standalone SFTP server](https://github.com/pterodactyl/sftp-server)
-rather than using the one that was built into the Daemon. This provides better compatibility with SFTP clients, improved
-transfer speeds, and a more native approach to file handling and server operation.
+Pterodactyl 現在提供使用[獨立 SFTP 伺服器](https://github.com/pterodactyl/sftp-server)的選項，不必使用 Daemon 內建的 SFTP。
+這能提供更好的 SFTP 用戶端相容性、更快的傳輸速度，以及更原生的檔案處理與伺服器運作方式。
 
-Because this functionality is new, we've decided to make it an opt-in process, rather than an opt-out process. This page
-will cover how to setup your standalone SFTP server.
+由於此功能相對新，我們決定採用選擇加入，而不是選擇退出。本頁將說明如何設定獨立 SFTP 伺服器。
 
-## Disable Daemon's Server
-To disable the Daemon SFTP server, you only need to add `sftp.enabled=false` to your Daemon's `core.json` file.
+## 停用 Daemon 的 SFTP 伺服器
+若要停用 Daemon SFTP 伺服器，只需在 Daemon 的 `core.json` 檔案加入 `sftp.enabled=false`。
 
 ```json
 {
@@ -41,33 +38,31 @@ To disable the Daemon SFTP server, you only need to add `sftp.enabled=false` to 
 }
 ```
 
-Once you've done that, restarting the Daemon will apply the change and not boot the built-in server.
+完成後重新啟動 Daemon 即可套用變更，且不會啟動內建伺服器。
 
-## Run the Standalone Server
-To download the standalone server, execute the command below in your Daemon's base directory (generally `/srv/daemon`).
+## 執行獨立伺服器
+若要下載獨立伺服器，請在 Daemon 的基礎目錄（通常是 `/srv/daemon`）中執行下方命令。
 
 ``` sh
 curl -Lo sftp-server https://github.com/pterodactyl/sftp-server/releases/download/v1.0.5/sftp-server
 chmod +x sftp-server
 ```
 
-Excellent, now you've got the server binary. Because we've written this server using [`go`](https://golang.org) there
-are no additional dependencies you need to install.
+現在你已取得伺服器執行檔。由於此伺服器使用 [`go`](https://golang.org) 撰寫，不需要安裝其他相依套件。
 
-### Start the Server
-Finally, start the SFTP server so that you can then use it to access your files.
+### 啟動伺服器
+最後啟動 SFTP 伺服器，之後即可使用它存取檔案。
 
 ``` sh
 ./sftp-server
 ```
 
-By default, this will start the SFTP server on the old port of `2022`. If you want to use a different port it can be
-specified by passing the `--port` flag. For more advanced usage, please refer to the [GitHub README](https://github.com/pterodactyl/sftp-server/tree/release/v1.0.4#running)
-which includes all of the flags and their default values.
+預設會在舊的 `2022` 連接埠啟動 SFTP 伺服器。如果要使用其他連接埠，可以透過 `--port` 旗標指定。
+如需進階用法，請參閱 [GitHub README](https://github.com/pterodactyl/sftp-server/tree/release/v1.0.4#running)，其中包含所有旗標與預設值。
 
-## Daemonize Server
-Chances are you'll want to daemonize the SFTP server using something like `systemd` so that it will run in the
-background. Place the contents below in a file called `pterosftp.service` in the `/etc/systemd/system` directory.
+## 將伺服器以 Daemon 執行
+你很可能會想使用 `systemd` 將 SFTP 伺服器作為 Daemon 執行，讓它在背景運作。將下方內容放入 `/etc/systemd/system` 目錄中
+名為 `pterosftp.service` 的檔案。
 
 ``` text
 [Unit]
@@ -87,12 +82,11 @@ StartLimitInterval=600
 WantedBy=multi-user.target
 ```
 
-Then, run the command below to enable it in systemd and start the SFTP server.
+接著執行下方命令，在 systemd 中啟用並啟動 SFTP 伺服器。
 
 ``` bash
 systemctl enable --now pterosftp
 ```
 
-### Customizing Startup
-If you're trying to pass additional arguments to the server when starting it using SystemD you'll want to modify
-the `ExecStart` line. Something like `ExecStart=/srv/daemon/sftp-server --port 2022` for example.
+### 自訂啟動方式
+如果使用 systemd 啟動時要傳入額外引數，請修改 `ExecStart` 行。例如：`ExecStart=/srv/daemon/sftp-server --port 2022`。

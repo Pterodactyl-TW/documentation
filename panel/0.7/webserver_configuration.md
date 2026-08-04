@@ -3,45 +3,44 @@ meta:
     - name: robots
       content: noindex
 ---
-# Webserver Configuration
+# 網頁伺服器設定
 
-::: danger This Version is End-of-Life
-This documentation is for **end-of-life software** which does not recieve any security updates or support
-from the community. This documentation has been left accessible for historial reasons.
+::: danger 此版本已終止支援
+本文件適用於**已終止生命週期的軟體**，不再提供任何安全性更新或社群支援。
+基於歷史原因，本文件仍保留供查閱。
 
-You should be installing and using [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md) in production environments.
+在正式環境中，你應安裝並使用 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md)。
 :::
 
 [[toc]]
 
 ::: danger
-You should remove the default Apache or NGINX configuration as it will expose application secrets to malicious
-users by default.
+你應移除預設的 Apache 或 NGINX 設定，因為預設設定可能會將應用程式機密暴露給惡意使用者。
 :::
 
 ## NGINX
-You should paste the contents of the file below, replacing `<domain>` with your domain name being used in a file called
-`pterodactyl.conf` and place it in `/etc/nginx/sites-available/`, or &mdash; if on CentOS, `/etc/nginx/conf.d/`.
+請將下方檔案內容貼上，將 `<domain>` 替換為使用的網域名稱，存入名為 `pterodactyl.conf` 的檔案，
+並放在 `/etc/nginx/sites-available/`；如果使用 CentOS，則放在 `/etc/nginx/conf.d/`。
 
-### NGINX With SSL
-This configuration assumes that you will be using SSL on both the Panel and Daemons for significantly improved communication
-security between users and the Panel. You will need to get a valid SSL certificate which can be done for free by using
-Let's Encrypt. 
+### 使用 SSL 的 NGINX
+此設定假設 Panel 與 Daemon 都使用 SSL，以大幅提升使用者與 Panel 之間的通訊安全性。你需要取得有效的 SSL 憑證，
+可以免費使用 Let's Encrypt 取得。
 
-::: warning 
-When using the SSL configuration you MUST create SSL certificates, otherwise your NGINX will fail to start.  See [Creating SSL Certificates](/tutorials/creating_ssl_certificates.html) documentation page for how to create these certificates before continuing.
+::: warning
+使用 SSL 設定時，**必須**建立 SSL 憑證，否則 NGINX 將無法啟動。繼續之前，請參閱[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)文件，
+了解如何建立這些憑證。
 :::
 
 <<< @/.snippets/webservers/nginx.conf{5,11,26-27}
 
-Continue reading to the bottom of this section for the final steps with NGINX!
+請繼續閱讀本節底部，完成 NGINX 的最後步驟！
 
-### NGINX Without SSL
+### 不使用 SSL 的 NGINX
 
 <<< @/.snippets/webservers/nginx-nossl.conf{3}
 
-### Enabling Configuration
-The final step is to enable your NGINX configuration and restart it.
+### 啟用設定
+最後一步是啟用 NGINX 設定並重新啟動 NGINX。
 ``` bash
 # You do not need to symlink this file if you are using CentOS.
 sudo ln -s /etc/nginx/sites-available/pterodactyl.conf /etc/nginx/sites-enabled/pterodactyl.conf
@@ -51,27 +50,27 @@ systemctl restart nginx
 ```
 
 ## Apache
-You should paste the contents of the file below, replacing `<domain>` with your domain name being used in a file called
-`pterodactyl.conf` and place it in `/etc/apache2/sites-available`, or &mdash; if on CentOS, `/etc/httpd/conf.d/`.
+請將下方檔案內容貼上，將 `<domain>` 替換為使用的網域名稱，存入名為 `pterodactyl.conf` 的檔案，
+並放在 `/etc/apache2/sites-available`；如果使用 CentOS，則放在 `/etc/httpd/conf.d/`。
 
-Note: When using Apache, make sure you have the `libapache2-mod-php` package installed or else PHP will not display on your webserver.
+注意：使用 Apache 時，請確認已安裝 `libapache2-mod-php` 套件，否則 PHP 不會在網頁伺服器上顯示。
 
-### Apache With SSL
-Like the nginx configuration, this assumes you will be using SSL on both the Panel and Daemons for improved security.
+### 使用 SSL 的 Apache
+與 NGINX 設定一樣，此設定假設 Panel 與 Daemon 都使用 SSL，以提升安全性。
 
 ::: warning
-When using the SSL configuration you MUST create SSL certificates, otherwise your Apache will fail to start.  See [Creating SSL Certificates](/tutorials/creating_ssl_certificates.html) documentation page for how to create these certificates before continuing.
+使用 SSL 設定時，**必須**建立 SSL 憑證，否則 Apache 將無法啟動。繼續之前，請參閱[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)文件，
+了解如何建立這些憑證。
 :::
 
 <<< @/.snippets/webservers/apache.conf{2,8,17-18}
 
-### Apache Without SSL
+### 不使用 SSL 的 Apache
 
 <<< @/.snippets/webservers/apache-nossl.conf{2}
 
-### Enabling Configuration
-Once you've created the file above, simply run the commands below. If you are on CentOS _you do not need to run the commands
-below!_ You only need to run `systemctl restart httpd`.
+### 啟用設定
+建立上方檔案後，執行下方命令即可。如果使用 CentOS，_不需要執行下方命令！_ 只需執行 `systemctl restart httpd`。
 
 ``` bash
 # You do not need to run any of these commands on CentOS

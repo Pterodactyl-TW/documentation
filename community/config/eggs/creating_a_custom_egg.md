@@ -1,59 +1,52 @@
-# Creating a Custom Egg
+# 建立自訂 Egg
+
 ::: warning
-You should not edit existing services or options that ship with the Panel. Each upgrade we push can make minor
-changes to these, and you'll lose any changes you've made.
+請勿編輯控制面板內建的服務或選項。每次更新時，我們可能會對這些內容進行細微變更，而您所做的修改也會因此遺失。
 :::
 
 [[toc]]
 
-The first thing you'll need to do is create a new service. In this case, the name and description speak for themselves.
-The `Folder Name` _must be a unique name_ not being used by any other service, and should only
-contain letters, numbers, underscores, and dashes. This is the name of the folder where the daemon will be storing
-the service options on the daemon.
+首先，您需要建立新的服務。在此情況下，名稱與描述的用途相當直觀。`Folder Name` **必須是未被其他服務使用的唯一名稱**，且只能包含字母、數字、底線與連字號。這個名稱會作為 Daemon 儲存該服務選項的資料夾名稱。
 
-The default start command is also required, however it can be changed per-option.
+預設啟動指令也是必填項目，但您可以針對個別選項進行變更。
 
-## Create New Option
-After creating the service, in the bottom right of the page you should see a button titled `New Egg`, press it.
+## 建立新的選項
+
+建立服務後，您應該會在頁面右下角看到一個名為 `New Egg` 的按鈕，請按下該按鈕。
 
 ![](../../../.vuepress/public/community/config/eggs/Pterodactyl_Create_New_Egg_Select.png)
 
-You will be taken to a new service option page which is where most of the configuration happens. The first thing
-you need to do is select your service that you created previously from the `Associated Nest` dropdown.
+接著您會進入新的服務選項頁面，大部分的設定都會在此完成。首先，請從 `Associated Nest` 下拉式選單中選取先前建立的服務。
 
 ![](../../../.vuepress/public/community/config/eggs/Pterodactyl_Create_New_Egg_Process_Management.png)
 
-After that, enter an Option Name to describe it, in this case I am using `Widget`. You will also need to provide a
-_valid_ docker image, as well as a start command to be assigned to servers under this service option (remember, this
-can be tweaked per-server if needed).
+接著輸入用於描述此選項的名稱，本例使用 `Widget`。您也需要提供一個**有效的** Docker 映像檔，以及要套用到使用此服務選項之伺服器的啟動指令（如有需要，也可以針對個別伺服器進行調整）。
 
-_Docker images must be specifically designed to work with Pterodactyl Panel._ You should read more about that in
-our [Creating a Docker Image](/community/config/eggs/creating_a_custom_image.md) guide.
+_Docker 映像檔必須經過專門設計，才能與 Pterodactyl 控制面板搭配使用。_ 詳細資訊請參閱[建立 Docker 映像檔](/community/config/eggs/creating_a_custom_image.md)指南。
 
-## Configure Process Management
-This is perhaps the most important step in this service option configuration, as this tells the Daemon how to run everything.
+## 設定程序管理
+
+這可能是服務選項設定中最重要的步驟，因為此處會告訴 Daemon 如何執行所有操作。
 
 ![](../../../.vuepress/public/community/config/eggs/Pterodactyl_Create_New_Egg_Process_Management.png)
 
-The first field you'll encounter is `Copy Settings From`. The default selection is `None`. That is expected, and okay.
-This dropdown is discussed at the end of this article.
+您首先會看到的欄位是 `Copy Settings From`。預設選項為 `None`，這是正常且可接受的設定。此下拉式選單會在本文最後說明。
 
-### Stop Command
-Next, you'll encounter `Stop Command` and, as the name implies, this should be the command used to safely stop the
-option. For some games, this is `stop` or `end`. Certain programs and games don't have a specified stop command, so
-you can enter `^C` to have the daemon execute a `SIGINT` to end the process.
+### 停止指令
 
-### Log Storage
-Logs are competely handeled by the daemon now and use the docker logs to output the complete output from the server.
-This can be set like below.
+接著是 `Stop Command`。顧名思義，此欄位應填入用於安全停止該選項的指令。某些遊戲使用 `stop` 或 `end`。部分程式與遊戲沒有指定的停止指令，此時您可以輸入 `^C`，讓 Daemon 傳送 `SIGINT` 以結束程序。
+
+### 記錄儲存
+
+記錄現在完全由 Daemon 處理，並使用 Docker 記錄輸出伺服器的完整輸出內容。設定方式如下：
 
 ```json
 {}
-``` 
+```
 
-### Configuration Files
-The next block is one of the most complex blocks, the `Configuration Files` descriptor. The Daemon will process this
-block prior to booting the server to ensure all of the required settings are defined and set correctly.
+### 設定檔
+
+下一個區塊是較複雜的 `Configuration Files` 設定。Daemon 會在啟動伺服器前處理此區塊，以確保所有必要的設定都已定義並正確設定。
 
 ```json
 {
@@ -69,25 +62,18 @@ block prior to booting the server to ensure all of the required settings are def
 }
 ```
 
-In this example, we are telling the Daemon to read `server.properties` in `/home/container`. Within this block, we
-define a `parser`, in this case `properties` but the following are [valid parsers](https://github.com/pterodactyl/wings/blob/develop/parser/parser.go#L25-L30):
+在此範例中，我們告訴 Daemon 讀取 `/home/container` 中的 `server.properties`。在這個區塊內，我們定義了 `parser`，本例使用 `properties`。以下是[有效的解析器](https://github.com/pterodactyl/wings/blob/develop/parser/parser.go#L25-L30)：
 
-* `file` — This parser goes based on matching the beginning of lines, and not a specific property like the other five.
-Avoid using this parser if possible.
-* `yaml` (supports `*` notation)
-* `properties`
-* `ini`
-* `json` (supports `*` notation)
-* `xml`
+- `file`：此解析器會根據行首進行比對，而不是像其他五種解析器一樣比對特定屬性。請盡可能避免使用此解析器。
+- `yaml`（支援 `*` 萬用字元）
+- `properties`
+- `ini`
+- `json`（支援 `*` 萬用字元）
+- `xml`
 
-Once you have defined a parser, we then define a `find` block which tells the Daemon what specific elements to find
-and replace. In this example, we have provided four separate items within the `server.properties` file that we want to
-find and replace to the assigned values. You can use either an exact value, or define a specific server setting from
-the `server.json` file. In this case, we're assigning the default server port to be used as the `server-port` and
-`query.port`. **These placeholders are case sensitive, and should have no spaces in them.**
+定義解析器後，接著定義 `find` 區塊，用來告訴 Daemon 要尋找並替換哪些特定元素。在此範例中，我們提供了 `server.properties` 檔案中的四個項目，並將其替換為指定的值。您可以使用精確值，也可以指定 `server.json` 檔案中的特定伺服器設定。在本例中，我們將預設伺服器連接埠指定給 `server-port` 與 `query.port`。**這些替換字串區分大小寫，且不應包含空格。**
 
-You can have multiple files listed here, the Daemon will process them in parallel before starting the server. When
-using `yaml` or `json` you can use more advanced searching for elements.
+您可以在此列出多個檔案，Daemon 會在啟動伺服器前平行處理這些檔案。使用 `yaml` 或 `json` 時，您可以對元素進行更進階的搜尋。
 
 ```json
 {
@@ -106,18 +92,15 @@ using `yaml` or `json` you can use more advanced searching for elements.
 }
 ```
 
-In this example, we are parsing `config.yml` using the `yaml` parser. The first three find items are simply assigning
-ports and IPs for the first listener block. The last one, `servers.*.address` uses wildcard matching to match any items
-within the `servers` block, and then finding each `address` block for those items.
+在此範例中，我們使用 `yaml` 解析器解析 `config.yml`。前面三個 `find` 項目只是為第一個監聽器區塊指定連接埠與 IP 位址。最後一個項目 `servers.*.address` 使用萬用字元比對，會比對 `servers` 區塊中的所有項目，然後尋找這些項目中的每個 `address` 區塊。
 
 ::: v-pre
-An advanced feature of this file configuration is the ability to define multiple find and replace statements for a
-single matching line. In this case, we are looking for either `127.0.0.1` or `localhost` and replacing them with the
-docker interface defined in the configuration file using `{{config.docker.interface}}`. 
+此檔案設定的進階功能之一，是可以針對單一比對行定義多個尋找與替換陳述式。在本例中，我們會尋找 `127.0.0.1` 或 `localhost`，並將其替換為設定檔中定義的 Docker 介面 `{{config.docker.interface}}`。
 :::
 
-### Start Configuration
-The last block to configure is the `Start Configuration` for servers running using this service option.
+### 啟動設定
+
+最後要設定的區塊，是使用此服務選項執行之伺服器的 `Start Configuration`。
 
 ```json
 {
@@ -125,79 +108,58 @@ The last block to configure is the `Start Configuration` for servers running usi
 }
 ```
 
-In the example block above, we define `done` as the entire line, or part of a line that indicates a server is done
-starting, and is ready for players to join. When the Daemon sees this output, it will mark the server as `ON` rather
-than `STARTING`.
+在上述範例中，我們將 `done` 定義為完整的一行，或表示伺服器已完成啟動並準備好讓玩家加入的部分行內容。當 Daemon 偵測到此輸出時，就會將伺服器狀態從 `STARTING` 標記為 `ON`。
 
-That concludes basic service option configuration.
+基本的服務選項設定到此完成。
 
-## Copy Settings From
-As mentioned above, there is a unique `Copy Settings From` dropdown when adding a new option. This gives you the
-ability to, as the name suggests, copy settings defined above from a different option.
+## 複製設定來源
+
+如上所述，新增選項時會看到獨特的 `Copy Settings From` 下拉式選單。顧名思義，此功能可以讓您從其他選項複製已定義的設定。
 
 ![](../../../.vuepress/public/community/config/eggs/Pterodactyl_Create_New_Egg_Copy_Settings_From.png)
 
-In the panel, we use this to copy settings that remain the same between similar service options, such as many of the
-Minecraft options.
+在控制面板中，我們會利用此功能複製相似服務選項之間相同的設定，例如許多 Minecraft 選項。
 
-For example, lets look at the `Sponge (SpongeVanilla)` service option.
+以 `Sponge (SpongeVanilla)` 服務選項為例。
 
-As you can see, it as been told to copy settings from `Vanilla Minecraft`. This means that any of the fields that are
-left blank will inherit from the assigned parent. We then define a specific `userInteraction` line that is different in
-Sponge compared to Vanilla, but tell it that everything else should remain the same.
+如您所見，它被設定為從 `Vanilla Minecraft` 複製設定。這表示所有留白的欄位都會繼承指定父選項的設定。接著，我們可以定義 Sponge 與 Vanilla 不同的特定 `userInteraction` 行，同時讓其他設定維持不變。
 
-*Please note that `Copy Settings From` does not support nested copies, you can only copy from a single parent,
-and that parent **must not be copying from another option.***
+*請注意，`Copy Settings From` 不支援巢狀複製。您只能從單一父選項複製設定，而且該父選項**不得再從其他選項複製設定**。*
 
-## Egg Variables
-One of the great parts of the Egg Variables is the ability to define specific variables that users and/or admins can
-control to tweak different settings without letting users modify the startup command. To create new variables, or edit
-existing ones, visit the new service option you created, and click the `Variables` tab at the top of the page. Lets take
-a look at an example variable that we can create.
+## Egg 變數
+
+Egg 變數的一項重要功能，是可以定義特定變數，讓使用者及／或管理員調整不同設定，而無需讓使用者修改啟動指令。若要建立新的變數或編輯現有變數，請前往剛建立的服務選項，然後按下頁面頂端的 `Variables` 分頁。以下將以一個可建立的變數作為範例。
 
 ![](../../../.vuepress/public/community/config/eggs/Pterodactyl_Create_New_Egg_Variables.png)
 
 ::: v-pre
-The name and description are rather self-explanitory, so I'll skip down to the `Environment Variable` box. This should
-be an Alpha-Numeric name with underscores, and should be uppercase. This will be the name of the environment variable
-which can be accessed in the startup command as `{{WOOZLE_WOO}}`, within file modifications as `{{env.WOOZLE_WOO}}`, or
-just `${WOOZLE_WOO}` in any shell scripts (it is passed through in the environment). We also define a default value for
-this environment variable in this example, but it is not required to do so.
+名稱與描述相當直觀，因此我們直接說明 `Environment Variable` 欄位。此欄位應使用由字母、數字與底線組成的名稱，並且應使用大寫字母。這會成為環境變數的名稱，可在啟動指令中以 `{{WOOZLE_WOO}}` 存取，在檔案修改設定中以 `{{env.WOOZLE_WOO}}` 存取，或在任何 Shell 指令碼中直接使用 `${WOOZLE_WOO}`（此變數會透過環境傳入）。本範例也為此環境變數定義了預設值，但並非必要。
 :::
 
-The next section is `Permissions`, which is a dropdown with two options: `Users Can View` and `Users Can Edit`.
+下一個區段是 `Permissions`，這是一個包含兩個選項的下拉式選單：`Users Can View` 與 `Users Can Edit`。
 
-* `Users Can View` — allows a user to view the field on the front-end, as well as the assigned value of that variable.
-They will be able to see it replaced in their startup command.
-* `Users Can Edit` — allows a user to edit the value of the variable, for example the name of their `server.jar` file
-if running Minecraft.
+- `Users Can View`：允許使用者在前端查看此欄位，以及該變數目前指定的值。他們也能在啟動指令中看到替換後的值。
+- `Users Can Edit`：允許使用者編輯變數值，例如執行 Minecraft 時，用於指定 `server.jar` 檔案名稱的變數。
 
-You should use caution here, even if you assign neither of the permissions it does not mean that the value will be
-hidden. Crafty users will still be able to get the environment on their server. In most cases this is simply hiding
-it from the user, and then used within the Dockerfile to perform actions, thus it is not important for the user to see.
+請謹慎設定這些權限。即使您不指定任何權限，也不代表該值會真正隱藏。熟悉系統的使用者仍然可以取得其伺服器的環境變數。在大多數情況下，這項設定只是將變數從使用者介面中隱藏，然後在 Dockerfile 中使用該變數執行操作，因此使用者是否能看見該值通常並不重要。
 
-Finally, you will need to define some input rules to validate the value against. In this example, we use
-`required|string|between:1,10`, which means the field is `required`, must be a `string`, and must be between `1` and
-`10` characters in length. You can find [all of the available validation rules](https://laravel.com/docs/5.6/validation#available-validation-rules)
-on the Laravel website. You can also use ReGEX based validation by using the `regex:` rule flag. For example,
-[`required|regex:/^([\w\d._-]+)(\.jar)$/`](https://regex101.com/r/k4oEOn/1) will require the field, and will match the
-regex as any letters or numbers (`\w\d`) including underscore (`_`), periods (`.`), and dashes (`-`) ending in `.jar`.
+最後，您需要定義一些輸入規則，以驗證變數值。在此範例中，我們使用 `required|string|between:1,10`，這表示欄位為 `required`（必填）、必須是 `string`（字串），且長度必須介於 `1` 到 `10` 個字元之間。您可以在 Laravel 網站上查看[所有可用的驗證規則](https://laravel.com/docs/5.6/validation#available-validation-rules)。您也可以使用 `regex:` 規則標記進行以正規表示式為基礎的驗證。例如，[`required|regex:/^([\w\d._-]+)(\.jar)$/`](https://regex101.com/r/k4oEOn/1) 會要求此欄位必填，並比對由字母或數字（`\w\d`）、底線（`_`）、句點（`.`）與連字號（`-`）組成，且以 `.jar` 結尾的內容。
 
-They will then be visible when managing the startup for a server in both the Admin CP and on the Front-End.
+之後，這些變數會在管理伺服器啟動設定時，同時顯示於管理控制面板與前端介面。
 
 ![](../../../.vuepress/public/community/config/eggs/Pterodactyl_Create_New_Egg_Startup.png)
 
-## List of default variables
+## 預設變數清單
 
-The default variables are always accessible to all eggs and don't have to be created separately. They can be used in the egg startup, install script, or the configuration file parser.
+預設變數一律可供所有 Egg 使用，無需另外建立。它們可以用於 Egg 啟動指令、安裝指令碼或設定檔解析器。
 
-| Variable                  | Description                                 | Example                                                        |
-| ------------------------- | ------------------------------------------- | -------------------------------------------------------------- |
-| TZ                        | Time Zone                                   | `Etc/UTC`                                                      |
-| STARTUP                   | Startup command of the egg                  | `java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}` |
-| SERVER_MEMORY             | Memory available for the server in MB       | `512`                                                          |
-| SERVER_IP                 | Default ip of the server                    | `127.0.0.1`                                                    |
-| SERVER_PORT               | Primary Server Port                         | `27015`                                                        |
-| P_SERVER_LOCATION         | Location of the server                      | `Example City`                                                 |
-| P_SERVER_UUID             | UUID of the server                          | `539fdca8-4a08-4551-a8d2-8ee5475b50d9`                         |
-| P_SERVER_ALLOCATION_LIMIT | Limit of allocations allowed for the server | `0`                                                            |
+| 變數                      | 描述                         | 範例                                                        |
+| ------------------------- | ---------------------------- | ----------------------------------------------------------- |
+| TZ                        | 時區                         | `Etc/UTC`                                                   |
+| STARTUP                   | Egg 的啟動指令                | `java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}` |
+| SERVER_MEMORY             | 伺服器可用的記憶體，單位為 MB | `512`                                                       |
+| SERVER_IP                 | 伺服器的預設 IP 位址          | `127.0.0.1`                                                 |
+| SERVER_PORT               | 主要伺服器連接埠              | `27015`                                                     |
+| P_SERVER_LOCATION         | 伺服器的位置                  | `Example City`                                              |
+| P_SERVER_UUID             | 伺服器的 UUID                 | `539fdca8-4a08-4551-a8d2-8ee5475b50d9`                      |
+| P_SERVER_ALLOCATION_LIMIT | 伺服器允許使用的配置數量上限   | `0`                                                         |

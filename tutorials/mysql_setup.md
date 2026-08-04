@@ -1,16 +1,14 @@
-# Setting up MySQL
+# 設定 MySQL
 [[toc]]
 
 
-## Creating a database for Pterodactyl
-MySQL is a core component of Pterodactyl Panel but it can be confusing to setup and use if you've never done so before.
-This is a very basic tutorial that skims just enough of the surface to set MySQL up and running with the panel.
-If you're interested in learning more, there are some great tutorials available on the Internet.
+## 為 Pterodactyl 建立資料庫
+MySQL 是 Pterodactyl Panel 的核心元件，但如果你從未使用過 MySQL，設定與使用方式可能會令人困惑。
+本教學只涵蓋讓 MySQL 與 Panel 運作所需的基本內容。如果你想深入了解，網路上有許多優質教學可供參考。
 
-### Logging In
-The first step in this process is to login to the MySQL command line where we will be executing some statements to get
-things setup. To do so, simply run the command below and provide the Root MySQL account's password that you setup when
-installing MySQL. If you do not remember doing this, chances are you can just hit enter as no password is set.
+### 登入
+第一步是登入 MySQL 命令列，接著我們會在其中執行一些語句完成設定。請執行下方命令，並輸入你安裝 MySQL 時
+設定的 Root MySQL 帳戶密碼。如果你不記得曾設定過密碼，很可能只要直接按 Enter，因為系統尚未設定密碼。
 
 ```sql
 # If using MariaDB (v11.0.0+)
@@ -20,65 +18,67 @@ mariadb -u root -p
 mysql -u root -p
 ```
 
-### Creating a user
-For security sake, and due to changes in MySQL 5.7, you'll need to create a new user for the panel. To do so, we want
-to first tell MySQL to use the mysql database, which stores such information.
+### 建立使用者
+基於安全考量，以及 MySQL 5.7 的變更，你需要為 Panel 建立新的使用者。首先，我們要讓 MySQL 使用儲存這類資訊的
+mysql 資料庫。
 
-Next, we will create a user called `pterodactyl` and allow logins from localhost which prevents any external connections
-to our database. You can also use `%` as a wildcard or enter a numeric IP. We will also set the account password
-to `somePassword`.
+接著建立名為 `pterodactyl` 的使用者，並只允許從 localhost 登入，以防止外部連線到資料庫。你也可以使用 `%` 作為
+萬用字元，或輸入數值 IP。我們也會將帳戶密碼設定為 `somePassword`。
 
 ``` sql
 # Remember to change 'somePassword' below to be a unique password specific to this account.
 CREATE USER 'pterodactyl'@'127.0.0.1' IDENTIFIED BY 'somePassword';
 ```
 
-### Create a database
-Next, we need to create a database for the panel. In this tutorial we will be naming the database `panel`, but you can
-substitute that for whatever name you wish.
+### 建立資料庫
+接著需要為 Panel 建立資料庫。本教學會將資料庫命名為 `panel`，但你可以替換成任何想使用的名稱。
 
 ``` sql
 CREATE DATABASE panel;
 ```
 
-### Assigning permissions
-Finally, we need to tell MySQL that our pterodactyl user should have access to the panel database. To do this, simply
-run the command below.
+### 指派權限
+最後，我們要告訴 MySQL `pterodactyl` 使用者可以存取 Panel 資料庫。請執行下方命令即可。
 
 ``` sql
 GRANT ALL PRIVILEGES ON panel.* TO 'pterodactyl'@'127.0.0.1';
 ```
 
-## Creating a Database Host for Nodes
+## 為節點建立資料庫主機
 :::tip
-This section covers creating a MySQL user that has permission to create and modify users. This allows the Panel to create per-server databases on the given host.
+本節說明如何建立具有建立與修改使用者權限的 MySQL 使用者。這能讓 Panel 在指定主機上為每台伺服器建立資料庫。
 :::
 
-### Creating a user
-If your database is on a different host than the one where your Panel or Daemon is installed make sure to use the IP address of the machine the Panel is running on. If you use `127.0.0.1` and try to connect externally, you will receive a connection refused error.
+### 建立使用者
+如果資料庫所在主機與 Panel 或 Daemon 安裝所在主機不同，請務必使用執行 Panel 的機器 IP 位址。如果使用 `127.0.0.1`
+並嘗試從外部連線，將會收到連線被拒絕的錯誤。
 
 ```sql
 # You should change the username and password below to something unique.
 CREATE USER 'pterodactyluser'@'127.0.0.1' IDENTIFIED BY 'somepassword';
 ```
 
-### Assigning permissions
-The command below will give your newly created user the ability to create additional users, as well as create and destroy databases. As above, ensure `127.0.0.1` matches the IP address you used in the previous command.
+### 指派權限
+下方命令會讓新建立的使用者能夠建立其他使用者，以及建立和刪除資料庫。同樣地，請確認 `127.0.0.1` 與上一個命令
+使用的 IP 位址一致。
 
 ```sql
 GRANT ALL PRIVILEGES ON *.* TO 'pterodactyluser'@'127.0.0.1' WITH GRANT OPTION;
 ```
 
-### Allowing external database access
-Chances are you'll need to allow external access to this MySQL instance in order to allow servers to connect to it. To do this, open `my.cnf`, which varies in location depending on your OS and how MySQL was installed. You can type `find /etc -iname my.cnf` to locate it.
+### 允許外部存取資料庫
+你很可能需要允許外部存取此 MySQL 執行個體，讓伺服器可以連線。請開啟 `my.cnf`；它的位置會依作業系統與 MySQL
+的安裝方式而異。你可以輸入 `find /etc -iname my.cnf` 找出檔案位置。
 
-Open `my.cnf`, add text below to the bottom of the file and save it:
+開啟 `my.cnf`，將下方內容加入檔案底部並儲存：
 ```
 [mysqld]
 bind-address=0.0.0.0
 ```
-Restart MySQL/MariaDB to apply these changes. This will override the default MySQL configuration, which by default will only accept requests from localhost. Updating this will allow connections on all interfaces, and thus, external connections. Make sure to allow the MySQL port (default 3306) in your firewall.
+重新啟動 MySQL/MariaDB 以套用變更。這會覆寫預設的 MySQL 設定；預設設定只接受來自 localhost 的要求。更新後將允許
+所有介面連線，也就能接受外部連線。請確認防火牆已允許 MySQL 連接埠（預設為 3306）。
 
-If your Database and Wings are on the same machine and won't need external access, you can also use the `docker0` interface IP address rather than `127.0.0.1`. This IP address can be found by running `ip addr | grep docker0`, and it likely looks like `172.x.x.x`.
+如果資料庫與 Wings 位於同一台機器，且不需要外部存取，你也可以使用 `docker0` 介面的 IP 位址取代 `127.0.0.1`。
+執行 `ip addr | grep docker0` 即可找出此 IP 位址，其格式通常類似 `172.x.x.x`。
 
-Starting with MySQL 8.0.13 / MariaDB 10.11 or above, `bind_address` now also accepts a comma-separated list of interfaces to give more control over what interfaces it will listen on and which not.
+從 MySQL 8.0.13／MariaDB 10.11 起，`bind_address` 也接受以逗號分隔的介面清單，讓你更精確地控制要監聽與不監聽哪些介面。

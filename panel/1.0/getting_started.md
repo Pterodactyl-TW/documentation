@@ -1,39 +1,36 @@
-# Getting Started
+# 開始使用
 
 [[toc]]
 
-Pterodactyl Panel is designed to run on your own web server. You will need to have root access to your server in order to run and use this panel.
+Pterodactyl Panel 設計為在你自己的網頁伺服器上執行。你需要具備伺服器的 root 存取權，才能執行和使用此控制面板。
 
-You are expected to understand how to read documentation to use this Panel. We have spent many hours detailing how to install or upgrade our
-software; take some time and read rather than copy and pasting and then complaining when things do not work. This panel does
-not exist as a drag-and-drop service to run your servers. It is a highly complex system requiring multiple dependencies and
-administrators willing to spend some time learning how to use it. **If you expect to be able to install this with no understanding
-of basic linux system administration you should stop and turn around now.**
+你需要具備閱讀文件的能力，才能使用此控制面板。我們花費許多時間詳細說明安裝與升級流程，請先花時間閱讀，
+不要只複製貼上，遇到問題後才抱怨。此控制面板不是可以用拖放方式執行伺服器的服務，而是一個需要多個相依套件的複雜系統，
+並要求管理員投入時間學習如何使用。**如果你不具備基本 Linux 系統管理知識，卻期望能直接完成安裝，請現在停止操作。**
 
-::: tip Looking for something simple to setup?
+::: tip 想找簡單的設定方式嗎？
 [WISP](https://wisp.gg) is a Pterodactyl powered SaaS suitable for enterprise and personal use. Offering all the features without the setup hassle, and fully compatible with Pterodactyl eggs. Comparable to MultiCraft or TCAdmin while offering new and unique features. Click here to [learn more](https://wisp.gg/features).
 :::
 
-## Picking a Server OS
+## 選擇伺服器作業系統
 
-Pterodactyl runs on a wide range of operating systems, so pick whichever you are most comfortable using.
+Pterodactyl 支援多種作業系統，請選擇你最熟悉的系統。
 
 ::: warning
-Pterodactyl does not support most OpenVZ systems due to incompatibilities with Docker. If you are planning on running
-this software on an OpenVZ based system you will &mdash; most likely &mdash; not be successful.
+由於 Docker 相容性問題，Pterodactyl 不支援大多數 OpenVZ 系統。如果打算在 OpenVZ 系統上執行此軟體，成功的可能性很低。
 :::
 
-| Operating System                   | Version |     Supported      | Notes                                                       |
+| 作業系統 | 版本 | 支援狀態 | 備註 |
 | ---------------------------------- | ------- | :----------------: | ----------------------------------------------------------- |
-| **Ubuntu**                         | 22.04   | :white_check_mark: | Requires additional repositories for PHP                    |
-|                                    | 24.04   | :white_check_mark: | MariaDB can be installed without the repo setup script.     |
-| **RHEL / Rocky Linux / AlmaLinux** | 8       | :white_check_mark: | Extra repos are required.                                   |
+| **Ubuntu** | 22.04 | :white_check_mark: | PHP 需要額外的套件庫。 |
+| | 24.04 | :white_check_mark: | 不使用套件庫設定指令碼也能安裝 MariaDB。 |
+| **RHEL / Rocky Linux / AlmaLinux** | 8 | :white_check_mark: | 需要額外的套件庫。 |
 |                                    | 9       | :white_check_mark: |                                                             |
-| **Debian**                         | 11      | :white_check_mark: | [Debian Dependencies](/community/installation-guides/panel/debian.md)                                                            |
+| **Debian** | 11 | :white_check_mark: | [Debian 相依套件](/community/installation-guides/panel/debian.md) |
 |                                    | 12      | :white_check_mark: | [Debian Dependencies](/community/installation-guides/panel/debian.md)
 |                                    | 13      | :white_check_mark: | [Debian Dependencies](/community/installation-guides/panel/debian.md)
 
-## Dependencies
+## 相依套件
 
 * PHP `8.2` or `8.3` (recommended) with the following extensions: `cli`, `openssl`, `gd`, `mysql`, `PDO`, `mbstring`, `tokenizer`, `bcmath`, `xml` or `dom`, `curl`, `zip`, and `fpm` if you are planning to use NGINX.
 * MySQL `5.7.22` and higher (MySQL `8` recommended) **or** MariaDB `10.2` and higher.
@@ -45,10 +42,9 @@ this software on an OpenVZ based system you will &mdash; most likely &mdash; not
 * `git`
 * `composer` v2
 
-### Example Dependency Installation
+### 相依套件安裝範例
 
-The commands below are simply an example of how you might install these dependencies. Please consult with your
-operating system's package manager to determine the correct packages to install.
+下方命令只是安裝這些相依套件的範例。請參閱作業系統的套件管理器，以確認應安裝的正確套件。
 
 ``` bash
 # Add "add-apt-repository" command
@@ -68,29 +64,27 @@ apt update
 apt -y install php8.3 php8.3-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx tar unzip git redis-server
 ```
 
-### Installing Composer
+### 安裝 Composer
 
-Composer is a dependency manager for PHP that allows us to ship everything you'll need code wise to operate the Panel. You'll
-need composer installed before continuing in this process.
+Composer 是 PHP 的相依套件管理器，能提供執行控制面板所需的所有程式碼相依套件。
+繼續進行前，必須先安裝 Composer。
 
 ``` bash
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 ```
 
-## Download Files
+## 下載檔案
 
-The first step in this process is to create the folder where the panel will live and then move ourselves into that
-newly created folder. Below is an example of how to perform this operation.
+第一步是建立放置控制面板的資料夾，然後進入新建立的資料夾。以下是操作範例。
 
 ``` bash
 mkdir -p /var/www/pterodactyl
 cd /var/www/pterodactyl
 ```
 
-Once you have created a new directory for the Panel and moved into it you'll need to download the Panel files. This
-is as simple as using `curl` to download our pre-packaged content. Once it is downloaded you'll need to unpack the archive
-and then set the correct permissions on the `storage/` and `bootstrap/cache/` directories. These directories
-allow us to store files as well as keep a speedy cache available to reduce load times.
+建立控制面板資料夾並進入其中後，需要下載控制面板檔案。只要使用 `curl` 下載我們預先打包的內容即可。
+下載完成後解壓縮封存檔，並設定 `storage/` 與 `bootstrap/cache/` 目錄的正確權限。
+這些目錄用於儲存檔案，以及提供快速快取以縮短載入時間。
 
 ``` bash
 curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz

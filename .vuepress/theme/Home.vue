@@ -8,65 +8,65 @@
                     </div>
                     <div class="mt-4">
                         <!-- <a class="btn hidden md:inline-block" href="https://demo.pterodactyl.io" target="_blank" rel="nofollow noopener">Demo</a> -->
-                        <router-link class="btn inline-block" to="/panel/getting_started.html">Let's Get Started!</router-link>
+                        <router-link class="btn inline-block" to="/panel/getting_started.html">開始使用！</router-link>
                     </div>
                 </div>
             </div>
         </div>
         <div class="section bg-white">
             <div class="container text-center">
-                <h1 class="text-blue mb-4">Pterodactyl Panel</h1>
+                <h1 class="text-blue mb-4">Pterodactyl 面板</h1>
                 <h3 class="border-0 font-normal leading-normal mx-auto" style="max-width: 50rem">
-                    Pterodactyl&reg; is a free, open-source game server management panel built with PHP, React, and Go.
-                    Designed with security in mind, Pterodactyl runs all game servers in isolated Docker containers
-                    while exposing a beautiful and intuitive UI to end users.
+                    Pterodactyl&reg; 是一款免費、開放原始碼的遊戲伺服器管理面板，採用 PHP、React 與 Go 建置。
+                    Pterodactyl 以安全性為設計核心，將所有遊戲伺服器執行於隔離的 Docker 容器中，
+                    同時為終端使用者提供美觀且直覺的使用介面。
                 </h3>
                 <h3 class="border-0 leading-normal mx-auto mt-4" style="max-width: 50rem">
-                    Stop settling for less. Make game servers a first class citizen on your platform.
+                    別再接受次等方案，讓遊戲伺服器成為你平台上的核心服務。
                 </h3>
                 <img class="max-w-lg w-full m-4 inline-block" src="https://cdn.pterodactyl.io/site-assets/mockup-macbook-grey-1.0.png">
             </div>
         </div>
         <div class="section bg-blue text-grey-lightest">
             <div class="container text-center">
-                <h1 class="mb-4">Why Pterodactyl&reg;</h1>
+                <h1 class="mb-4">為什麼選擇 Pterodactyl&reg;？</h1>
                 <div class="flex flex-wrap">
                     <div class="feature">
                         <span><i class="icon icon-lock"></i></span>
-                        <h3>Security First</h3>
-                        <p>Security is a first-class citizen on this platform with bcrypt hashing, AES-256-CBC encryption, and HTTPS support out of the box.</p>
+                        <h3>安全至上</h3>
+                        <p>平台將安全性視為核心要務，內建 bcrypt 雜湊、AES-256-CBC 加密與 HTTPS 支援。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-beaker"></i></span>
-                        <h3>Modern Tooling</h3>
-                        <p>Built on a modern stack utilizing the best design practices that make it easy to jump in and make modifications.</p>
+                        <h3>現代化工具</h3>
+                        <p>採用現代技術堆疊與最佳設計實務，讓你能輕鬆開始使用並進行修改。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-anchor"></i></span>
-                        <h3>Docker to the Core</h3>
-                        <p>All servers run in isolated Docker containers that limit attack vectors, provide strict resource limits, and provide environments tailored to each specific game.</p>
+                        <h3>以 Docker 為核心</h3>
+                        <p>所有伺服器都執行於隔離的 Docker 容器中，以降低攻擊面、提供嚴格的資源限制，並為各款遊戲提供量身打造的環境。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-wallet"></i></span>
-                        <h3>Free & Open Source</h3>
-                        <p>Pterodactyl is 100% free and licensed under a MIT license. All of our code is completely open source as well.</p>
+                        <h3>免費且開放原始碼</h3>
+                        <p>Pterodactyl 完全免費，採用 MIT 授權條款，所有程式碼也都完全開放原始碼。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-browser"></i></span>
-                        <h3>User Friendly</h3>
-                        <p>Save the furious clicking and screaming for Overwatch. Pterodactyl's interface is designed so well even Hanzo can use it.</p>
+                        <h3>易於使用</h3>
+                        <p>把瘋狂點擊與吶喊留給 Overwatch 吧。Pterodactyl 的介面設計得如此完善，就連新手也能輕鬆使用。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-expand"></i></span>
-                        <h3>Scalable</h3>
-                        <p>Whether you're a hosting company, the next Hyplex, or just some dudes playing video games, we've got you covered.</p>
+                        <h3>可擴充</h3>
+                        <p>無論你是託管商、下一個 Hyplex，還是只想和朋友玩遊戲，我們都能滿足你的需求。</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="section bg-white">
             <div class="text-center">
-                <h1>Screenshots</h1>
+                <h1>螢幕截圖</h1>
                 <div class="screenshots">
                     <slick ref="slick" :options="slickOptions">
                         <a href="https://cdn.pterodactyl.io/site-assets/carousel/screenshot-1.png">
@@ -108,10 +108,10 @@
         </div>
         <div class="section bg-blue text-grey-lightest">
             <div class="container text-center">
-                <h1>Get Started</h1>
-                <p class="m-4">Ready to fly on the Pterodactyl?</p>
+                <h1>開始使用</h1>
+                <p class="m-4">準備好搭乘 Pterodactyl 起飛了嗎？</p>
                 <div class="mt-4">
-                    <router-link class="btn inline-block" to="/project/introduction.html">About the project</router-link>
+                    <router-link class="btn inline-block" to="/project/introduction.html">關於本專案</router-link>
                     <a class="btn inline-block" href="https://discord.gg/pterodactyl">Discord</a>
                 </div>
             </div>
@@ -135,10 +135,10 @@
                     </div>
                     <div class="hidden md:block md:flex-1 md:pr-12">
                         <p><a class="text-grey-lightest" href="https://github.com/pterodactyl">GitHub</a></p>
-                        <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">Sponsor</a></p>
-                        <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">Donate</a></p>
-                        <p><a class="text-grey-lightest" href="/panel/troubleshooting.html">Troubleshooting</a></p>
-                        <p><a class="text-grey-lightest" href="https://pterodactyleggs.com">Additional Game Configurations</a></p>
+                        <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">贊助</a></p>
+                        <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">捐款</a></p>
+                        <p><a class="text-grey-lightest" href="/panel/troubleshooting.html">疑難排解</a></p>
+                        <p><a class="text-grey-lightest" href="https://pterodactyleggs.com">其他遊戲設定</a></p>
                     </div>
                     <div class="text-center mt-8 md:flex-1 md:mt-0">
                         <a href="https://discord.gg/pterodactyl" target="_blank" rel="nofollow noopener">
@@ -146,18 +146,35 @@
                         </a>
                     </div>
                 </div>
-                <div class="footer">MIT Licensed | Pterodactyl&reg; Copyright &copy; Dane Everitt and contributors</div>
+                <div class="footer">採用 MIT 授權條款 | Pterodactyl&reg; 版權所有 &copy; Dane Everitt 與貢獻者</div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import Swal from 'sweetalert2';
+    import 'sweetalert2/dist/sweetalert2.min.css';
     import NavLink from './NavLink.vue';
     import Slick from './SlickCarousel.vue';
 
     export default {
         components: { NavLink, Slick },
+        mounted() {
+            Swal.fire({
+                title: 'Pterodactyl TW',
+                text: '你現在看到的是 Pterodactyl TW，這是一個非官方的繁體化專案，裡面的內容可能會與官方的最新版有衝突，請以官方所描述的為主。',
+                icon: 'info',
+                allowOutsideClick: false,
+                showDenyButton: true,
+                confirmButtonText: '我知道了',
+                denyButtonText: '我要看官方的'
+            }).then(result => {
+                if (result.isDenied) {
+                    window.location.href = 'https://pterodactyl.io';
+                }
+            });
+        },
         data() {
             return {
                 slickOptions: {
@@ -187,3 +204,9 @@
         },
     };
 </script>
+
+<style>
+    .swal2-title {
+        border-bottom: 0 !important;
+    }
+</style>

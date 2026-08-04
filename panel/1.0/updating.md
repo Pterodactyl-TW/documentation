@@ -1,13 +1,11 @@
-# Updating the Panel
+# 更新 Panel
 
-This documentation covers the process for updating within the `1.x` series of releases. This means updating from
-&mdash; for example &mdash; `1.5.0` to `1.6.0`. **Do not use this guide for upgrading from `0.7`.**
+本文件說明 `1.x` 系列版本內的更新流程，例如從 `1.5.0` 更新至 `1.6.0`。**請勿使用本指南從 `0.7` 升級。**
 
-## Panel Version Requirements
+## Panel 版本需求
 
-Each version of Pterodactyl Panel also has a corresponding minimum version of Wings that
-is required for it to run. Please see the chart below for how these versions line up. In
-most cases your base Wings version should match that of your Panel.
+每個版本的 Pterodactyl Panel 都有相對應的 Wings 最低版本需求。請參考下表了解版本的對應關係。
+在大多數情況下，Wings 的主要版本應與 Panel 版本一致。
 
 | Panel Version | Wings Version | Supported | PHP Versions          |
 | ------------- | ------------- | --------- | --------------------- |
@@ -26,18 +24,18 @@ most cases your base Wings version should match that of your Panel.
 | **1.12.x**    | **1.12.x**    | ✅        | 8.2, **8.3** |
 
 
-::: tip Wings releases
-There are no 1.8.x, 1.9.x, or 1.10.x releases of Wings.
+::: tip Wings 發行版本
+Wings 沒有 1.8.x、1.9.x 或 1.10.x 發行版本。
 :::
 
-## Update Dependencies
+## 更新相依套件
 
 - PHP `8.2`, or `8.3` (recommended)
 - Composer `2.X`
 
-**Before continuing**, please ensure that your system and web server configuration has been upgraded to at least PHP 8.2 by running `php -v` and Composer 2 by running `composer --version`. You
-should see an output similar to the result below. If you do not see at least PHP 8.2 and Composer 2, you will need to upgrade by following
-our [PHP Upgrade Guide](/guides/php_upgrade.md) and return to this documentation afterward.
+**繼續之前**，請執行 `php -v` 確認系統與網頁伺服器設定至少已升級至 PHP 8.2，並執行 `composer --version` 確認 Composer 2。
+你應會看到類似下方的輸出。如果版本低於 PHP 8.2 或 Composer 2，請依照[PHP 升級指南](/guides/php_upgrade.md)升級，
+再返回本文件繼續操作。
 
 ```shell
 vagrant@pterodactyl:~/app$ php -v
@@ -50,27 +48,24 @@ vagrant@pterodactyl:~/app$ composer --version
 Composer version 2.3.5 2022-04-13 16:43:00
 ```
 
-## Self Upgrade
+## 自動升級
 
 ::: warning
-The self-upgrade is currently in-operable due to issues with some dependencies we make use of.
-For the time being please perform a manual upgrade until this issue can be resolved.
+由於部分相依套件存在問題，目前無法使用自動升級。
+在問題解決前，請先執行手動升級。
 :::
 
-## Manual Upgrade
+## 手動升級
 
-If you prefer not to perform the automatic self-upgrade, or need to reference any upgrade steps you can follow
-the documentation below.
+如果你不想執行自動升級，或需要查閱升級步驟，可以依照下方文件操作。
 
 ::: warning
-If you've already performed the self-upgrade successfully you do not need to do anything else on this page.
+如果你已成功執行自動升級，就不需要再進行本頁的其他操作。
 :::
 
-### Enter Maintenance Mode
+### 進入維護模式
 
-Whenever you are performing an update you should be sure to place your Panel into maintenance mode. This will prevent
-users from encountering unexpected errors and ensure everything can be updated before users encounter
-potentially new features.
+執行更新時，務必讓 Panel 進入維護模式。這能避免使用者遇到意外錯誤，並確保所有內容在使用者看到新功能前完成更新。
 
 ```bash
 cd /var/www/pterodactyl
@@ -78,56 +73,51 @@ cd /var/www/pterodactyl
 php artisan down
 ```
 
-### Download the Update
+### 下載更新
 
-The first step in the update process is to download the new panel files from GitHub. The command below will download
-the release archive for the most recent version of Pterodactyl, save it in the current directory and will automatically
-unpack the archive into your current folder.
+更新流程的第一步是從 GitHub 下載新的 Panel 檔案。下方命令會下載最新 Pterodactyl 版本的發行壓縮檔，
+將其儲存到目前目錄，並自動解壓縮到目前資料夾。
 
 ```bash
 curl -L https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz | tar -xzv
 ```
 
-Once all of the files are downloaded we need to set the correct permissions on the cache and storage directories to avoid
-any webserver related errors.
+下載所有檔案後，需要為快取與儲存目錄設定正確權限，以避免網頁伺服器相關錯誤。
 
 ```bash
 chmod -R 755 storage/* bootstrap/cache
 ```
 
-### Update Dependencies
+### 更新相依套件
 
-After you've downloaded all of the new files you will need to upgrade the core components of the panel. To do this,
-simply run the commands below and follow any prompts.
+下載所有新檔案後，需要更新 Panel 的核心元件。請執行下方命令並依照提示操作。
 
 ```bash
 composer install --no-dev --optimize-autoloader
 ```
 
-### Clear Compiled Template Cache
+### 清除已編譯的範本快取
 
-You'll also want to clear the compiled template cache to ensure that new and modified templates show up correctly for
-users.
+你也應清除已編譯的範本快取，以確保使用者能正確看到新的與已修改的範本。
 
 ```bash
 php artisan view:clear
 php artisan config:clear
 ```
 
-### Database Updates
+### 更新資料庫
 
-You'll also need to update your database schema for the newest version of Pterodactyl. Running the command below
-will update the schema and ensure the default eggs we ship are up to date (and add any new ones we might have). Just
-remember, _never edit core eggs we ship_! They will be overwritten by this update process.
+你也需要更新資料庫結構，以配合最新版本的 Pterodactyl。執行下方命令會更新結構，確保隨附的預設 Egg 保持最新，
+並加入可能新增的 Egg。請記住，_絕對不要編輯我們隨附的核心 Egg_！它們會在更新過程中被覆寫。
 
 ```bash
 php artisan migrate --seed --force
 ```
 
-### Set Permissions
+### 設定權限
 
-The last step is to set the proper owner of the files to be the user that runs your webserver. In most cases this
-is `www-data` but can vary from system to system &mdash; sometimes being `nginx`, `caddy`, `apache`, or even `nobody`.
+最後一步是將檔案擁有者設定為執行網頁伺服器的使用者。大多數情況下是 `www-data`，但可能依系統而異，
+有時會是 `nginx`、`caddy`、`apache`，甚至是 `nobody`。
 
 ```bash
 # If using NGINX or Apache (not on CentOS)
@@ -140,27 +130,25 @@ chown -R nginx:nginx /var/www/pterodactyl/*
 chown -R apache:apache /var/www/pterodactyl/*
 ```
 
-### Restarting Queue Workers
+### 重新啟動佇列工作程序
 
-After _every_ update you should restart the queue worker to ensure that the new code is loaded in and used.
+每次更新後都應重新啟動佇列工作程序，確保載入並使用新程式碼。
 
 ```bash
 php artisan queue:restart
 ```
 
-### Exit Maintenance Mode
+### 離開維護模式
 
-Now that everything has been updated you need to exit maintenance mode so that the Panel can resume accepting
-connections.
+現在所有內容都已更新，你需要離開維護模式，讓 Panel 恢復接受連線。
 
 ```bash
 php artisan up
 ```
 
-### Telemetry
+### 遙測
 
-Since 1.11, Pterodactyl will collect anonymous telemetry to help us better understand how the
-software is being used. To learn more about this feature and to opt-out, please see our [Telemetry](./additional_configuration.md#telemetry)
-documentation. Remember to continue with the rest of the upgrade.
+自 1.11 起，Pterodactyl 會收集匿名遙測資料，協助我們更了解軟體的使用方式。若要深入了解此功能或選擇退出，
+請參閱[遙測](./additional_configuration.md#telemetry)文件。請記得繼續完成其餘升級步驟。
 
-[Final Step: Upgrade Wings](/wings/1.0/upgrading.md)
+[最後一步：升級 Wings](/wings/1.0/upgrading.md)

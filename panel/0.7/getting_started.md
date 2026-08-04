@@ -3,56 +3,51 @@ meta:
     - name: robots
       content: noindex
 ---
-# Getting Started
+# 開始使用
 
-::: danger This Version is End-of-Life
-This documentation is for **end-of-life software** which does not recieve any security updates or support
-from the community. This documentation has been left accessible for historial reasons.
+::: danger 此版本已終止支援
+本文件適用於**已終止支援的軟體**，不再提供任何安全性更新或社群支援。
+基於歷史原因，本文件仍保留供查閱。
 
-You should be installing and using [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md) in production environments.
+在正式環境中，你應搭配 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md) 使用 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md)。
 :::
 
-Pterodactyl Panel is designed to run on your own web server. You will need to have root access to your server in order
-to run and use this panel.
+Pterodactyl Panel 設計為在你自己的網頁伺服器上執行。你需要具備伺服器的 root 存取權，才能執行和使用此控制面板。
 
-This panel does not exist as a drag-and-drop service to run your servers. It is a highly complex system
-requiring multiple dependencies and administrators willing to spend some time learning how to use it. If you expect
-to be able to install this with no understanding of basic Linux system administration you should stop and turn
-around now.
+此控制面板不是可以用拖放方式執行伺服器的服務，而是一個需要多個相依套件的複雜系統，並要求管理員投入時間學習如何使用。
+**如果你不具備基本 Linux 系統管理知識，卻期望能直接完成安裝，請現在停止操作。**
 
 [[toc]]
 
-## Picking a Server OS
-Pterodactyl runs on a wide range of operating systems, so pick whichever you are most comfortable using.
+## 選擇伺服器作業系統
+Pterodactyl 支援多種作業系統，請選擇你最熟悉的系統。
 
 ::: warning
-Pterodactyl does not support most OpenVZ systems due to incompatabilities with Docker. If you are planning on running
-this software on an OpenVZ based system you will &mdash; most likely &mdash; not be successful.
+由於 Docker 相容性問題，Pterodactyl 不支援大多數 OpenVZ 系統。如果打算在 OpenVZ 系統上執行此軟體，成功的可能性很低。
 :::
 
-| Operating System | Version                                                       |     Supported      | Notes                                                       |
-| ---------------- | ------------------------------------------------------------- | :----------------: | ----------------------------------------------------------- |
-| **Ubuntu**       | 18.04                                                         | :white_check_mark: | Documentation written assuming Ubuntu 18.04 as the base OS. |
-|                  | [20.04](/community/installation-guides/panel/ubuntu2004.html) | :white_check_mark: |                                                             |
-| **CentOS**       | [7](/community/installation-guides/panel/centos7.html)        | :white_check_mark: | Extra repos are required.                                   |
-|                  | [8](/community/installation-guides/panel/centos8.html)        | :white_check_mark: | All required packages are part of the base repos.           |
-| **Debian**       | [9](/community/installation-guides/panel/debian9.html)        | :white_check_mark: | Extra repos are required.                                   |
-|                  | [10](/community/installation-guides/panel/debian10.html)      | :white_check_mark: | All required packages are part of the base repos.           |
+| 作業系統 | 版本 | 支援狀態 | 備註 |
+| --- | --- | :---: | --- |
+| **Ubuntu** | 18.04 | :white_check_mark: | 文件以 Ubuntu 18.04 為基礎作業系統撰寫。 |
+| | [20.04](/community/installation-guides/panel/ubuntu2004.html) | :white_check_mark: | |
+| **CentOS** | [7](/community/installation-guides/panel/centos7.html) | :white_check_mark: | 需要額外的套件庫。 |
+| | [8](/community/installation-guides/panel/centos8.html) | :white_check_mark: | 所有必要套件都包含在基礎套件庫中。 |
+| **Debian** | [9](/community/installation-guides/panel/debian9.html) | :white_check_mark: | 需要額外的套件庫。 |
+| | [10](/community/installation-guides/panel/debian10.html) | :white_check_mark: | 所有必要套件都包含在基礎套件庫中。 |
 
-## Dependencies
-* PHP `7.2` with the following extensions: `cli`, `openssl`, `gd`, `mysql`, `PDO`, `mbstring`, `tokenizer`, `bcmath`, `xml` or `dom`, `curl`, `zip`, and `fpm` if you are planning to use nginx
-* MySQL `5.7` **or** MariaDB `10.1.3` or higher
-* Redis (`redis-server`)
-* A webserver (Apache, NGINX, Caddy, etc.)
+## 相依套件
+* PHP `7.2` 及以下擴充功能：`cli`、`openssl`、`gd`、`mysql`、`PDO`、`mbstring`、`tokenizer`、`bcmath`、`xml` 或 `dom`、`curl`、`zip`；若使用 nginx，還需要 `fpm`
+* MySQL `5.7` **或** MariaDB `10.1.3` 以上
+    最後啟用服務，並設定為機器啟動時自動執行。
+* 網頁伺服器（Apache、NGINX、Caddy 等）
 * `curl`
 * `tar`
 * `unzip`
 * `git`
 * `composer`
 
-### Example Dependency Installation
-The commands below are simply an example of how you might install these dependencies. Please consult with your
-operating system's package manager to determine the correct packages to install.
+### 相依套件安裝範例
+下方命令只是安裝這些相依套件的範例。請參閱作業系統的套件管理器，以確認應安裝的正確套件。
 
 ``` bash
 # Add "add-apt-repository" command

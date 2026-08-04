@@ -1,20 +1,17 @@
-# Troubleshooting
+# 疑難排解
 
 [[toc]]
 
-## Reading Error Logs
-If you ever encounter an unexpected error with the Panel the first thing you will likely be asked for is the logs.
-To retrieve these, simply execute the command below which will output the last 100 lines of the Panel's log file.
+## 讀取錯誤記錄
+如果 Panel 遇到意外錯誤，通常首先會請你提供記錄。請執行下方命令，輸出 Panel 記錄檔的最後 100 行。
 
 ``` bash
 tail -n 100 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log
 ```
 
-### Parsing the Error
-When you run the command above, you'll probably be hit with a huge wall of text that might scare you. Fear not,
-this is simply a stacktrace leading to the cause of the error, and you can actually ignore almost all of it when
-looking for the cause of the error. Lets take a look at some example output below, which has been truncated to
-make this easier to follow with.
+### 解析錯誤
+執行上方命令後，你可能會看到大量令人不知所措的文字。別擔心，這只是指向錯誤原因的堆疊追蹤；尋找錯誤原因時，
+其實幾乎可以忽略其中大部分內容。以下是經過截短的範例輸出，方便閱讀。
 
 ```
 #70 /srv/www/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
@@ -30,49 +27,39 @@ Stack trace:
 #5 /srv/www/vendor/laravel/framework/src/Illuminate/View/View.php(125): Illuminate\View\View->getContents()
 ```
 
-The first thing you'll want to do is follow the chain of numbers _up_ until you find `#0`, this will be the function that
-triggered the exception. Right above line 0 you will see a line that has the date and time in brackets, `[2018-07-19 00:50:24]`
-above for example. This line will be the human readable exception that you can use to understand what went wrong.
+首先，沿著數字鏈結向上尋找，直到找到 `#0`；這就是觸發例外的函式。在第 0 行上方，你會看到一行包含方括號日期與時間的內容，
+例如上方的 `[2018-07-19 00:50:24]`。這一行是人類可讀的例外訊息，可用來了解發生了什麼問題。
 
-### Understanding the Error
-In the example above we can see that the actual error was:
+### 了解錯誤
+從上方範例可以看出，實際錯誤是：
 
 ```
 local.ERROR: ErrorException: file_put_contents(...): failed to open stream: Permission denied in /srv/www/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php:122
 ```
 
-From this error we can determine that there was an error performing a [file_put_contents()](http://php.net/manual/en/function.file-put-contents.php) call, and the error was
-that we couldn't open the file because permissions were denied. Its okay if you don't understand the error at all, but
-it does help you get faster support if you're able to provide these logs, and at least find the source of the error.
-Sometimes the errors are pretty straightforward and will tell you exactly what went wrong, such as a `ConnectionException`
-being thrown when the Panel can't connect to the Daemon.
+從這個錯誤可以判斷，[file_put_contents()](http://php.net/manual/en/function.file-put-contents.php) 呼叫執行失敗，原因是權限不足，無法開啟檔案。
+即使完全看不懂錯誤也沒關係，但如果你能提供這些記錄，並至少找出錯誤來源，就能更快獲得支援。有些錯誤相當直接，
+會明確告訴你發生了什麼，例如 Panel 無法連線到 Daemon 時拋出的 `ConnectionException`。
 
-### Utilizing GREP
-If you're trying to go through a bunch of errors quickly, you can use the command below which will limit the results returned to only
-be the actual error lines, without all of the stack traces.
+### 使用 GREP
+如果想快速瀏覽大量錯誤，可以使用下方命令，將結果限制為實際的錯誤行，不顯示完整堆疊追蹤。
 
 ``` bash
 tail -n 1000 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log | grep "\[$(date +%Y)"
 ```
 
-## Cannot Connect to Server Errors
-### Basic Debugging Steps
-* Check that Wings is running, and not reporting errors. Use `systemctl status wings` to check the current status of
-  the process.
-* Check your browser's console by pressing `Ctrl + Shift + J` (in Chrome) or `Cmd + Alt + I` (in Safari). If there is
-a red error in it, chances are that it will narrow down the potential problem.
-* Make sure Wings is properly installed and the active configuration matches the configuration shown under
-`Admin -> Node -> Configuration` in the Panel.
-* Check that the Wings ports are open on your firewall. Wings uses ports `8080` or `8443` for HTTP(s) traffic,
-and `2022` for SFTP traffic.
-* Ensure you have AdBlock disabled or whitelisted for your Panel and Wings domains.
-* Check that the Panel can reach Wings using the domain that is configured on the Panel. Run `curl
-https://domain.com:8080` on the Panel server and ensure that it can successfully connect to Wings.
-* Ensure that you are using the correct HTTP scheme for your Panel and Wings. If the Panel is running over HTTPS
-  Wings will also need to be running on HTTPS.
-* If using HTTPS for Wings, make sure that the certificates have not expired.
+## 無法連線至伺服器
+### 基本除錯步驟
+* 確認 Wings 正在執行且沒有回報錯誤。使用 `systemctl status wings` 檢查程序目前狀態。
+* 按下 `Ctrl + Shift + J`（Chrome）或 `Cmd + Alt + I`（Safari）查看瀏覽器主控台。如果看到紅色錯誤，通常能縮小問題範圍。
+* 確認 Wings 已正確安裝，且目前設定符合 Panel 中 `Admin -> Node -> Configuration` 顯示的設定。
+* 確認防火牆已開放 Wings 連接埠。Wings 使用 `8080` 或 `8443` 傳輸 HTTP(S)，並使用 `2022` 傳輸 SFTP。
+* 確認已對 Panel 與 Wings 網域停用 AdBlock，或將這些網域加入允許清單。
+* 確認 Panel 能透過 Panel 設定的網域連線到 Wings。在 Panel 伺服器上執行 `curl https://domain.com:8080`，確認能成功連線。
+* 確認 Panel 與 Wings 使用正確的 HTTP 通訊協定。如果 Panel 使用 HTTPS，Wings 也必須使用 HTTPS。
+* 如果 Wings 使用 HTTPS，請確認憑證尚未過期。
 
-### More Advanced Debugging Steps
+### 進階除錯步驟
 * Stop Wings and run `wings --debug` to see if there are any errors being output. If so, try resolving them manually,
   or reach out on [Discord](https://discord.gg/pterodactyl) for more assistance.
 * Check your DNS and ensure that the response you receive is the one you expect using a tool such as `nslookup` or `dig`.

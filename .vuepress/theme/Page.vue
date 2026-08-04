@@ -48,7 +48,7 @@ export default {
       if (typeof this.$site.themeConfig.lastUpdated === "string") {
         return this.$site.themeConfig.lastUpdated;
       }
-      return "Last Updated";
+      return "最後更新";
     },
     prev() {
       const prev = this.$page.frontmatter.prev;
@@ -96,7 +96,7 @@ export default {
       return (
         this.$themeLocaleConfig.editLinkText ||
         this.$site.themeConfig.editLinkText ||
-        `Edit this page`
+        `編輯此頁面`
       );
     }
   },
