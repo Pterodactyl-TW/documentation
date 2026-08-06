@@ -7,7 +7,7 @@
 每個版本的 Pterodactyl Panel 都有相對應的 Wings 最低版本需求。請參考下表了解版本的對應關係。
 在大多數情況下，Wings 的主要版本應與 Panel 版本一致。
 
-| Panel Version | Wings Version | Supported | PHP Versions          |
+| Panel 版本     | Wings 版本     | 支援狀態  | PHP 版本               |
 | ------------- | ------------- | --------- | --------------------- |
 | 1.0.x         | 1.0.x         |           | 7.3, 7.4              |
 | 1.1.x         | 1.1.x         |           | 7.3, 7.4              |
@@ -30,7 +30,7 @@ Wings 沒有 1.8.x、1.9.x 或 1.10.x 發行版本。
 
 ## 更新相依套件
 
-- PHP `8.2`, or `8.3` (recommended)
+- PHP `8.2` 或 `8.3`（建議使用）
 - Composer `2.X`
 
 **繼續之前**，請執行 `php -v` 確認系統與網頁伺服器設定至少已升級至 PHP 8.2，並執行 `composer --version` 確認 Composer 2。
@@ -77,6 +77,9 @@ php artisan down
 
 更新流程的第一步是從 GitHub 下載新的 Panel 檔案。下方命令會下載最新 Pterodactyl 版本的發行壓縮檔，
 將其儲存到目前目錄，並自動解壓縮到目前資料夾。
+
+> [!NOTE]
+> 由於我們僅提供最新版本文件的翻譯，通常只有依照我們的文件說明操作、或使用我們的一鍵安裝程式，才會套用我們的繁體中文化版本。若你選擇安裝舊版本，即代表你將安裝官方的英文版本，我們將不提供翻譯內容上的支援；但技術問題仍可透過 [Discord](https://pterodactyl.tw/discord) 與我們聯絡，或與其他使用者討論翻譯相關問題。
 
 ```bash
 curl -L https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz | tar -xzv
@@ -149,6 +152,6 @@ php artisan up
 ### 遙測
 
 自 1.11 起，Pterodactyl 會收集匿名遙測資料，協助我們更了解軟體的使用方式。若要深入了解此功能或選擇退出，
-請參閱[遙測](./additional_configuration.md#telemetry)文件。請記得繼續完成其餘升級步驟。
+請參閱[遙測](./additional_configuration.md#遙測)文件。請記得繼續完成其餘升級步驟。
 
 [最後一步：升級 Wings](/wings/1.0/upgrading.md)

@@ -9,7 +9,8 @@ meta:
 
 ## 查看錯誤記錄
 
-如果您在使用控制面板時遇到未預期的錯誤，通常首先會被要求提供記錄檔。執行以下指令，即可顯示控制面板記錄檔的最後 100 行：
+如果你在使用控制面板時遇到未預期的錯誤，通常第一步就是被要求提供記錄檔內容。執行以下指令，就能顯示控制面板記錄檔
+最後 100 行的內容：
 
 ```bash
 tail -n 100 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log
@@ -17,7 +18,8 @@ tail -n 100 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log
 
 ### 解析錯誤
 
-執行上述指令後，您可能會看到一大段看似嚇人的文字。不用擔心，這只是指向錯誤原因的堆疊追蹤。尋找錯誤原因時，實際上可以忽略其中大部分內容。以下是一個經過截斷的範例輸出，方便說明：
+跑完上面的指令後，你可能會看到一大串看起來很嚇人的文字，不過不用緊張，這其實只是指向錯誤原因的堆疊追蹤，真正要找
+錯誤原因時，大部分內容都可以直接略過。以下是一段經過刪減的範例輸出，方便說明怎麼看：
 
 ```text
 #70 /srv/www/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
@@ -33,23 +35,28 @@ Stack trace:
 #5 /srv/www/vendor/laravel/framework/src/Illuminate/View/View.php(125): Illuminate\View\View->getContents()
 ```
 
-首先，請沿著編號**往上**查看，直到找到 `#0`。這就是觸發例外的函式。在 `#0` 上方，您會看到一行包含日期與時間的內容，例如上方的 `[2018-07-19 00:50:24]`。這一行會顯示可讀性較高的例外訊息，您可以藉此了解發生了什麼問題。
+看這種堆疊追蹤有個訣竅：從編號**由下往上**看，一路找到 `#0`，這就是真正觸發例外的那個函式。在 `#0` 上方，你會看到
+一行帶有日期與時間的內容，例如上面的 `[2018-07-19 00:50:24]`。這一行通常會用比較口語的方式描述發生了什麼問題，
+所以是最值得先看的部分。
 
 ### 理解錯誤
 
-從上述範例可以看出，實際錯誤是：
+以上面這個範例來說，真正的錯誤內容其實就是：
 
 ```text
 local.ERROR: ErrorException: file_put_contents(...): failed to open stream: Permission denied in /srv/www/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php:122
 ```
 
-由此可知，程式在執行 [`file_put_contents()`](http://php.net/manual/en/function.file-put-contents.php) 時發生錯誤，原因是沒有足夠的權限開啟檔案。
+由此可以看出，程式在呼叫 [`file_put_contents()`](http://php.net/manual/en/function.file-put-contents.php) 時出了問題，
+原因是權限不足，無法開啟檔案。
 
-即使您完全看不懂錯誤內容，也不用擔心。不過，如果您能提供這些記錄，並至少找出錯誤來源，通常能讓您更快取得支援。有些錯誤相當直接，會明確告訴您問題所在，例如控制面板無法連線至 Daemon 時，可能會出現 `ConnectionException`。
+就算完全看不懂錯誤內容也沒關係，不用太擔心。不過如果你能附上這些記錄，並且至少大概指出錯誤發生在哪裡，通常可以
+更快得到協助。有些錯誤其實蠻直接的，訊息會明確告訴你問題出在哪，例如控制面板連不上 Wings 時，常常會看到
+`ConnectionException` 這類錯誤。
 
 ### 使用 GREP
 
-如果您想快速查看大量錯誤，可以使用以下指令。此指令只會顯示實際的錯誤行，不會顯示完整的堆疊追蹤：
+如果只是想快速掃過大量錯誤，不想看完整的堆疊追蹤，可以用下面這道指令，它只會列出實際的錯誤行：
 
 ```bash
 tail -n 1000 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log | grep "\[$(date +%Y)"
@@ -57,60 +64,74 @@ tail -n 1000 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log | grep "\
 
 ## TransferException／XHR 輪詢錯誤
 
-如果您看到類似以下範例的錯誤，通常表示網路相關設定有問題，或某個必要的服務尚未執行。
+如果你看到類似下面這些錯誤訊息，通常代表網路相關設定出了狀況，或者有某個必要的服務目前沒有在執行。
 
 ### 錯誤範例
 
 - 「我們無法連線至主要的 Socket.IO 伺服器，目前可能存在網路問題。控制面板可能無法正常運作。」
-- 「聯絡 Daemon 時發生 TransferException，請確認 Daemon 已啟動且可以連線。此錯誤已記錄。」
+- 「聯絡 Wings 時發生 TransferException，請確認 Wings 已啟動且可以連線。此錯誤已記錄。」
 
 ### 基本除錯步驟
 
-- 確認已停用 AdBlock，或將控制面板與 Daemon 的網域加入允許清單。
+遇到這類問題時，可以先照下面的順序一項一項檢查：
 
-- 在瀏覽器中按下 `Ctrl + Shift + J`（Chrome）或 `Cmd + Alt + I`（Safari）開啟主控台。如果其中出現紅色錯誤，通常可以協助縮小問題範圍。
+- 確認已停用 AdBlock，或是把控制面板與 Wings 的網域加進允許清單。
 
-- 確認 Daemon 已正確安裝，且目前使用的設定與控制面板中 `Admin -> Node -> Configuration` 顯示的設定一致。
+- 在瀏覽器中按下 `Ctrl + Shift + J`（Chrome）或 `Cmd + Alt + I`（Safari）打開開發者主控台。如果裡面出現紅色的錯誤訊息，
+  通常能幫你快速縮小問題範圍。
 
-- 確認 Daemon 正在執行，且沒有回報錯誤。使用 `service wings status` 檢查目前程序狀態。
+- 確認 Wings 已經正確安裝，而且目前使用的設定，跟控制面板 `Admin -> Node -> Configuration` 頁面顯示的設定一致。
 
-- 確認防火牆已開放 Daemon 使用的連接埠。Daemon 使用 `8080` 或 `8443` 傳輸 HTTP 流量，並使用 `2022` 傳輸 SFTP 流量。
+- 確認 Wings 正在執行，而且沒有回報任何錯誤，可以用 `service wings status` 檢查目前的程序狀態。
 
-- 確認控制面板可以透過面板中設定的網域連線至 Daemon。在控制面板伺服器上執行 `curl https://domain.com:8080`，確認是否能連線至 Daemon。
+- 確認防火牆已經開放 Wings 需要用到的連接埠。Wings 會用 `8080` 或 `8443` 傳輸 HTTP 流量，並用 `2022` 傳輸 SFTP 流量。
 
-- 確認控制面板與 Daemon 使用正確的 HTTP 通訊協定。如果控制面板使用 HTTPS，Daemon 也必須使用 HTTPS。
+- 確認控制面板能透過面板中設定的網域連線到 Wings。可以在控制面板伺服器上執行 `curl https://domain.com:8080`，
+  看看能不能順利連上 Wings。
+
+- 確認控制面板與 Wings 使用的是同一種 HTTP 通訊協定。如果控制面板走 HTTPS，Wings 也一定要跟著走 HTTPS。
 
 ### 進階除錯步驟
 
-- 停止 Daemon，然後執行 `cd /srv/daemon; sudo npm start`，查看 Daemon 是否輸出錯誤。如果有錯誤，請嘗試手動解決，或前往 Discord 尋求進一步協助。
+如果基本步驟都排查過還是沒頭緒，可以再往下試試這些進階做法：
 
-- 檢查 DNS，並使用 `nslookup` 或 `dig` 等工具確認收到的回應是否符合預期。
+- 先停止 Wings，然後執行 `cd /srv/daemon; sudo npm start`，看看 Wings 有沒有直接跳出錯誤訊息。如果有，可以先嘗試
+  自行排查，或是到 Discord 尋求進一步協助。
 
-- 如果您使用 Cloudflare，請確認 Daemon 或控制面板的 `A` 記錄已停用黃色雲朵 Proxy。
+- 檢查 DNS 設定，用 `nslookup` 或 `dig` 這類工具，確認收到的回應是否符合預期。
 
-- 如果 Daemon 位於防火牆（例如 pfSense、OpenSwitch 等）後方，請確認已正確設定 NAT，讓外部網路可以存取 Daemon 的連接埠。
+- 如果你有使用 Cloudflare，記得確認 Wings 或控制面板的 `A` 記錄已經關閉黃色雲朵（也就是停用 Cloudflare 的 Proxy）。
 
-- 如果上述方法都無法解決問題，請檢查您自己的 DNS 設定，並考慮更換 DNS 伺服器。
+- 如果 Wings 是架在防火牆（例如 pfSense、OpenSwitch 等）後方，記得確認 NAT 設定正確，這樣外部網路才能連到 Wings
+  的連接埠。
 
-- 如果控制面板與 Daemon 位於同一台伺服器上，有時可以在 `/etc/hosts` 中加入一筆記錄，將公開 IP 位址指向該伺服器。有時也需要反向設定，因此您可能需要在伺服器的 `/etc/hosts` 檔案中，將控制面板網域指向正確的 IP 位址。
+- 如果以上方法都試過還是沒解決，可以檢查一下自己的 DNS 設定，甚至考慮換一個 DNS 伺服器試試看。
 
-- 如果 Daemon 與控制面板分別執行於使用相同網路介面的不同虛擬機器上，請確認兩台虛擬機器可以互相連線。您可能需要啟用混雜模式。
+- 如果控制面板與 Wings 是架在同一台伺服器上，有時候可以在 `/etc/hosts` 中加一筆記錄，把公開 IP 位址指向這台伺服器。
+  有時候也需要反過來設定，所以你可能還要在伺服器的 `/etc/hosts` 檔案中，把控制面板的網域指向正確的 IP 位址。
+
+- 如果 Wings 與控制面板是分別跑在使用相同網路介面的不同虛擬機器上，記得確認這兩台虛擬機器彼此連得到，
+  有時候可能還需要開啟混雜模式才行。
 
 ## Invalid MAC 例外
 
 ::: warning
-如果您正確遵循我們的安裝與升級指南，理論上不應該發生此錯誤。此錯誤通常只會在使用備份還原控制面板資料庫，卻搭配全新安裝的控制面板時出現。
+如果你有確實照著我們的安裝與升級指南操作，理論上不應該遇到這個錯誤。這個錯誤通常只會在用備份還原控制面板資料庫，
+卻搭配一套全新安裝的控制面板時才會出現。
 
-還原備份時，您應該**一併還原 `.env` 檔案**！
+也就是說，還原備份時，你應該**連 `.env` 檔案也一併還原**！
 :::
 
-有時在使用控制面板時，您可能會突然遇到頁面損壞的情況。查看記錄後，可能會看到解密時發生 Invalid MAC 的例外。這是因為資料加密與解密時使用的 `.env` 檔案中的 `APP_KEY` 不一致所造成。
+有時候使用控制面板時，可能會突然發現頁面壞掉了。查看記錄檔後，你可能會看到解密時發生 Invalid MAC 的例外，
+這其實是因為加密與解密資料時，使用的 `.env` 檔案中的 `APP_KEY` 前後不一致所造成的。
 
-如果遇到此錯誤，唯一的解決方法是從原本的 `.env` 檔案還原 `APP_KEY`。如果您已遺失原始金鑰，便無法復原遺失的資料。
+如果遇到這個錯誤，唯一的解法就是把原本的 `.env` 檔案中的 `APP_KEY` 還原回去。如果原始金鑰已經遺失，很遺憾，
+遺失的資料就沒辦法救回來了。
 
 ## SELinux 問題
 
-在安裝 SELinux 的系統上，執行 Redis 或嘗試連線至 Daemon 以執行操作時，可能會遇到未預期的錯誤。通常可以執行以下指令，允許這些程式與 SELinux 正常運作。
+在有安裝 SELinux 的系統上，執行 Redis 或嘗試連線到 Wings 時，可能會遇到一些未預期的錯誤。這時通常可以執行以下指令，
+讓這些程式能正常跟 SELinux 相處。
 
 ### Redis 權限錯誤
 
@@ -125,7 +146,7 @@ semodule -i redis_t.pp
 restorecon -R /var/www/pterodactyl/
 ```
 
-### Daemon 連線錯誤
+### Wings 連線錯誤
 
 ```bash
 audit2allow -a -M http_port_t
@@ -134,14 +155,14 @@ semodule -i http_port_t.pp
 
 ## FirewallD 問題
 
-如果您使用的是安裝了 firewalld 的 RHEL／CentOS 伺服器，可能會遇到 DNS 異常。
+如果你用的是裝了 firewalld 的 RHEL／CentOS 伺服器，可能會遇到 DNS 異常的狀況。
 
 ```bash
 firewall-cmd --permanent --zone=trusted --change-interface=pterodactyl0
 firewall-cmd --reload
 ```
 
-執行上述指令後，請重新啟動 Docker 與 Wings，以確保規則已套用。
+執行完上面的指令後，記得重新啟動 Docker 與 Wings，確保規則真的有套用上去。
 
 ## 資料庫錯誤
 
@@ -151,4 +172,4 @@ firewall-cmd --reload
 production.ERROR: ErrorException: Undefined variable: host in /var/www/pterodactyl/app/Http/Controllers/Admin/DatabaseController.php:142
 ```
 
-您嘗試使用的資料庫使用者沒有適當的權限，或使用了錯誤的密碼。
+看到這個錯誤，代表你用來連線的資料庫使用者權限不夠，或者密碼打錯了。

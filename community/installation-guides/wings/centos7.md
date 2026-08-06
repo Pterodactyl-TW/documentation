@@ -1,6 +1,6 @@
 # CentOS 7
 
-本指南將詳細說明如何在 CentOS 7 上安裝 Pterodactyl Wings v1.X。
+這篇指南會詳細帶你在 CentOS 7 上安裝 Pterodactyl Wings v1.X。
 
 [[toc]]
 
@@ -29,4 +29,4 @@ firewall-cmd --reload
 
 ## 安裝 Wings
 
-很好，現在所有相依套件與防火牆規則都已處理完畢。接下來請依照[官方 Wings 安裝文件](/wings/1.0/installing.html#enabling-swap)繼續操作。
+到這裡，相依套件跟防火牆規則都已經處理好了。接下來只要接著照[官方 Wings 安裝文件](/wings/1.0/installing.html#enabling-swap)繼續操作即可。

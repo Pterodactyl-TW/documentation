@@ -3,14 +3,14 @@
 [[toc]]
 
 ::: warning
-本教學使用我們的 [`core:java`](https://github.com/pterodactyl/images/tree/java) Docker 映像檔作為範例，您可以在 GitHub 上找到該映像檔。本教學也預設您具備一些 [Docker](https://docker.io/) 相關知識。如果您對這些內容感到陌生，建議先閱讀相關文件。
+本教學使用我們的 [`core:java`](https://github.com/pterodactyl/images/tree/java) Docker 映像檔作為範例，你可以在 GitHub 上找到它。另外也提醒一下，本教學預設你已經具備一些 [Docker](https://docker.io/) 的基本知識，如果你對 Docker 還不熟悉，建議先花點時間讀一下官方文件，之後再回來看會比較好懂。
 :::
 
 ## 建立 Dockerfile
 
-此流程中最重要的部分，是建立 Daemon 將使用的 [`Dockerfile`](https://docs.docker.com/engine/reference/builder/)。由於伺服器容器受到嚴格限制，因此必須以特定方式設定此檔案。
+整個流程中最關鍵的一步，就是建立 Daemon 會用到的 [`Dockerfile`](https://docs.docker.com/engine/reference/builder/)。這裡要特別注意的是，伺服器容器本身受到相當嚴格的限制，所以這個檔案不能隨便寫，必須照特定方式設定才行。
 
-為了縮減映像檔大小，我們會盡可能使用 [Alpine Linux](https://alpinelinux.org) 建立映像檔。
+另外，為了讓映像檔體積盡量小一點，我們會盡可能選用 [Alpine Linux](https://alpinelinux.org) 來建立映像檔。
 
 ```bash
 # ----------------------------------
@@ -35,39 +35,39 @@ COPY ./entrypoint.sh /entrypoint.sh
 CMD ["/bin/bash", "/entrypoint.sh"]
 ```
 
-接下來逐步說明上述 `Dockerfile`。首先會注意到的是 [`FROM`](https://docs.docker.com/engine/reference/builder/#from) 宣告：
+接下來我們逐段拆解這個 `Dockerfile`，看看每一部分實際在做什麼。第一眼會注意到的，是最上面的 [`FROM`](https://docs.docker.com/engine/reference/builder/#from) 宣告：
 
 ```bash
 FROM openjdk:8-jdk-alpine
 ```
 
-在此範例中，我們使用 [`openjdk:8-jdk-alpine`](https://github.com/docker-library/openjdk)，它提供 Java 8 執行環境。
+這裡選用的是 [`openjdk:8-jdk-alpine`](https://github.com/docker-library/openjdk)，簡單來說，它提供了一個現成的 Java 8 執行環境，不用自己再從頭裝一遍。
 
 ## 安裝相依套件
 
-接著，我們使用 Alpine 的套件管理工具 `apk` 安裝所需的相依套件。您會注意到其中包含一些可縮減容器大小的特定參數，例如 `--no-cache`，而且所有操作都放在單一個 [`RUN`](https://docs.docker.com/engine/reference/builder/#run) 區塊中。
+接著，我們用 Alpine 內建的套件管理工具 `apk` 來安裝需要的相依套件。你會發現這裡有幾個用來縮小容器體積的小技巧，例如加上 `--no-cache` 參數，而且所有安裝動作都塞在同一個 [`RUN`](https://docs.docker.com/engine/reference/builder/#run) 區塊裡完成，這樣可以減少 Docker 產生的中間層數量。
 
 ## 建立容器使用者
 
-在這個 `RUN` 區塊中，您會看到 `useradd` 指令：
+在同一個 `RUN` 區塊中，你會看到這一行 `useradd` 指令：
 
 ```bash
 adduser -D -h /home/container container
 ```
 
 ::: warning
-所有 Pterodactyl 容器都必須擁有名為 `container` 的使用者，而且該使用者的家目錄**必須**是 `/home/container`。
+這裡要特別提醒，所有 Pterodactyl 容器都必須有一個名為 `container` 的使用者，而且這個使用者的家目錄**必須**是 `/home/container`，這是硬性規定，不能省略或改名。
 :::
 
-建立使用者後，我們會定義容器預設使用的 [`USER`](https://docs.docker.com/engine/reference/builder/#user)，以及幾個套用到容器內程式的 [`ENV`](https://docs.docker.com/engine/reference/builder/#env) 設定。
+建立好使用者之後，接下來要做兩件事：定義容器預設要用哪個使用者身分執行，也就是 [`USER`](https://docs.docker.com/engine/reference/builder/#user)；再加上幾個要套用到容器內程式的 [`ENV`](https://docs.docker.com/engine/reference/builder/#env) 環境變數設定。
 
 ## 工作目錄與 Entrypoint
 
-接下來其中一個步驟，是定義 [`WORKDIR`](https://docs.docker.com/engine/reference/builder/#workdir)。其他所有操作都會在這個目錄中執行。`WORKDIR` 必須設定為 `/home/container`。
+再來要定義的是 [`WORKDIR`](https://docs.docker.com/engine/reference/builder/#workdir)，之後所有操作都會在這個目錄底下執行，所以 `WORKDIR` 這裡固定要設成 `/home/container`。
 
-最後，我們需要將 [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entrypoint) 指令碼複製到 Docker 映像檔的根目錄。這是透過 [`COPY`](https://docs.docker.com/engine/reference/builder/#copy) 完成的，接著再使用 [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd) 定義容器啟動時要執行的指令。
+最後一步，是把 [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entrypoint) 指令碼複製到 Docker 映像檔的根目錄，這是靠 [`COPY`](https://docs.docker.com/engine/reference/builder/#copy) 完成的；接著再用 [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd) 定義容器啟動時要跑的指令。
 
-`CMD` 行一律應指向 `entrypoint.sh` 檔案：
+這裡有個規則要記住，`CMD` 這一行一律要指向 `entrypoint.sh` 檔案：
 
 ```bash
 COPY ./entrypoint.sh /entrypoint.sh
@@ -76,9 +76,9 @@ CMD ["/bin/bash", "/entrypoint.sh"]
 
 ## Entrypoint 指令碼
 
-若要完成這個 `Dockerfile`，我們需要建立 `entrypoint.sh` 檔案，用來告訴 Docker 如何執行這種特定類型的伺服器。
+要完成這個 `Dockerfile`，最後還缺一個 `entrypoint.sh` 檔案，它的作用是告訴 Docker 該怎麼執行這種特定類型的伺服器。
 
-這些 Entrypoint 檔案其實已經具備相當程度的抽象化。Daemon 會在處理並執行啟動指令前，將該指令以環境變數的形式傳入。
+這些 Entrypoint 檔案其實已經幫你做了不少抽象化的處理。簡單來說，Daemon 會先把啟動指令包裝成環境變數傳進容器，再由這個指令碼負責解析並執行它。
 
 ```bash
 #!/bin/bash
@@ -95,18 +95,18 @@ echo ":/home/container$ ${MODIFIED_STARTUP}"
 ${MODIFIED_STARTUP}
 ```
 
-第二個指令 `cd /home/container` 只是在執行其餘指令時，確保目前位於正確的目錄。接著使用 `java -version` 顯示 Java 版本給終端使用者查看，但這並非必要步驟。
+其中 `cd /home/container` 這一行，只是確保接下來執行其他指令時，目前所在的目錄是對的。接下來的 `java -version` 是拿來顯示 Java 版本給終端使用者看，方便除錯用，但這步驟並非必要，可以省略。
 
 ## 修改啟動指令
 
-此檔案中最重要的部分，是 `MODIFIED_STARTUP` 環境變數。在這個範例中，我們會解析 Daemon 傳入容器的 `STARTUP` 環境變數。通常，此變數看起來如下：
+這個檔案裡最核心的部分，其實是 `MODIFIED_STARTUP` 這個環境變數。這裡要做的事情，是把 Daemon 傳進容器的 `STARTUP` 環境變數解析出來。一般來說，這個變數看起來會像這樣：
 
 ```bash
 STARTUP="java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}"
 ```
 
 ::: v-pre
-您會注意到其中有幾個替換字串，特別是 `{{SERVER_MEMORY}}` 與 `{{SERVER_JARFILE}}`。這兩者分別指向其他傳入的環境變數，其形式如下：
+仔細看你會發現裡面有幾個用雙大括號包住的替換字串，特別是 `{{SERVER_MEMORY}}` 與 `{{SERVER_JARFILE}}`。這兩個其實各自對應到另外兩個獨立傳入的環境變數，格式大概是這樣：
 :::
 
 ```bash
@@ -114,21 +114,21 @@ SERVER_MEMORY=1024
 SERVER_JARFILE=server.jar
 ```
 
-環境變數有許多種，並且會依據特定服務選項的設定而有所不同。不過，這通常不需要特別處理。
+環境變數的種類其實蠻多的，會依照不同服務選項的設定而有所差異，不過這部分通常不需要你特別去處理。
 
 ```bash
 MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
 ```
 
 ::: v-pre
-上述指令會先解析 `STARTUP` 環境變數，接著將大括號 `{{EXAMPLE}}` 包住的內容替換成相符的環境變數，例如 `EXAMPLE`。因此，我們的 `STARTUP` 指令：
+這一行指令做的事情，就是先解析 `STARTUP` 環境變數，接著把裡面用雙大括號 `{{EXAMPLE}}` 包住的部分，替換成對應的環境變數 `EXAMPLE`。也就是說，我們原本的 `STARTUP` 指令：
 :::
 
 ```bash
 java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}
 ```
 
-會變成：
+經過這一步處理後，就會變成：
 
 ```bash
 java -Xms128M -Xmx1024M -jar server.jar
@@ -136,11 +136,11 @@ java -Xms128M -Xmx1024M -jar server.jar
 
 ## 執行指令
 
-最後一步是執行修改後的啟動指令，這是透過 `${MODIFIED_STARTUP}` 這一行完成的。
+最後一步很簡單，就是把處理好的啟動指令真正執行起來，靠的就是 `${MODIFIED_STARTUP}` 這一行。
 
 ### 注意事項
 
-有時候可能需要變更 `entrypoint.sh` 檔案的權限。在 Linux 上，您可以先切換到該檔案所在的目錄，然後執行以下指令：
+有時候你可能會發現 `entrypoint.sh` 檔案的執行權限不對，需要手動調整。在 Linux 上，先切換到該檔案所在的目錄，然後執行：
 
 ```bash
 chmod +x entrypoint.sh

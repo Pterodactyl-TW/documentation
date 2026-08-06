@@ -1,8 +1,8 @@
 # 升級 PHP
 
-本文件說明如何將系統升級至最新版本的 PHP。請參考下表，確認你的 Pterodactyl 版本需要哪個 PHP 版本。
+這篇文件會說明如何把系統的 PHP 升級到最新版本。開始之前，先參考下表確認你目前的 Pterodactyl 版本實際上需要哪個 PHP 版本。
 
-| Panel Version   | PHP Version   |
+| Panel 版本      | PHP 版本      |
 | --------------- | ------------- |
 | 1.0.0 - 1.2.0   | 7.3, 7.4      |
 | 1.3.0+          | 7.4, 8.0      |
@@ -14,10 +14,10 @@
 
 ## 安裝 PHP
 
-若要安裝 PHP 8.3，請執行下方命令。請注意，不同作業系統對命令格式的要求可能略有不同。
+要安裝 PHP 8.3，執行下面的指令即可，不過這裡要提醒一下，不同作業系統的指令寫法可能會有些微差異，遇到問題可以對照自己系統的套件管理工具調整。
 
 ```bash
-# Add additional repository for PHP
+# 加入 PHP 的額外套件庫
 add-apt-repository -y ppa:ondrej/php
 apt -y update
 apt -y install php8.3 php8.3-{cli,gd,mysql,common,mbstring,tokenizer,bcmath,xml,fpm,curl,zip}
@@ -25,8 +25,7 @@ apt -y install php8.3 php8.3-{cli,gd,mysql,common,mbstring,tokenizer,bcmath,xml,
 
 ## 更新 Composer
 
-從 `Panel@1.3.0` 起，系統要求使用 `composer` v2。若要更新 Composer，請執行下方命令；它會執行 Composer 自我更新，
-並將你切換至第 2 版。
+從 `Panel@1.3.0` 開始，系統就要求要用 `composer` 第 2 版了。執行下面的指令可以更新 Composer,它會先跑一次自我更新，再把你切換到第 2 版。
 
 ```bash
 composer self-update --2
@@ -34,18 +33,19 @@ composer self-update --2
 
 ## 網頁伺服器設定
 
+升級完 PHP 之後，別忘了網頁伺服器這邊的設定也要對應調整，不然服務可能起不來。以下依你使用的網頁伺服器分別說明。
+
 :::: tabs
 ::: tab "NGINX"
-升級至 PHP 8.3 後，你很可能需要更新 NGINX 設定。設定檔通常名為 `pterodactyl.conf`，位於 `/etc/nginx/sites-available/`；
-如果使用 CentOS，則位於 `/etc/nginx/conf.d/`。
+升級到 PHP 8.3 之後，通常也需要一併更新 NGINX 的設定。設定檔一般叫做 `pterodactyl.conf`，放在 `/etc/nginx/sites-available/` 底下；如果你用的是 CentOS，則會放在 `/etc/nginx/conf.d/`。
 
-請確認下方命令中的路徑符合設定檔的實際位置。
+執行下面的指令之前，記得先確認一下路徑跟你實際的設定檔位置是否相符。
 
 ``` bash
 sed -i -e 's/php[7|8].[0-9]-fpm.sock/php8.3-fpm.sock/' /etc/nginx/sites-available/pterodactyl.conf
 ```
 
-編輯檔案後，執行下方命令重新載入 NGINX 並套用變更。
+改完設定檔之後，執行下面的指令重新載入 NGINX，變更就會生效。
 
 ```bash
 systemctl reload nginx
@@ -53,13 +53,13 @@ systemctl reload nginx
 
 :::
 ::: tab "Apache"
-執行下方命令停用所有先前的 PHP 版本，並啟用 PHP 8.3 來處理要求。
+執行下面的指令，把之前舊版本的 PHP 模組都停用，改成用 PHP 8.3 來處理請求。
 
 ``` bash
-# Hint: a2dismod = a2_disable_module 🤯
+# 小提示：a2dismod 就是 a2_disable_module 的意思 🤯
 a2dismod php*
 
-# Hint: a2enmod = a2_enable_module 🤯
+# 小提示：a2enmod 就是 a2_enable_module 的意思 🤯
 a2enmod php8.3
 
 ```

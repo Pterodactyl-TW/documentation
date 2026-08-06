@@ -9,7 +9,7 @@ Pterodactyl 是一套採用 PHP、React 與 Go 建置的開源遊戲伺服器管
 
 我們核心支援的遊戲包括：
 
-* Minecraft — including Spigot, Sponge, Bungeecord, Waterfall, and more
+* Minecraft — 包含 Spigot、Sponge、Bungeecord、Waterfall 等多種核心
 * Rust
 * Terraria
 * Teamspeak
@@ -28,7 +28,7 @@ Pterodactyl 是一套採用 PHP、React 與 Go 建置的開源遊戲伺服器管
 * FiveM
 * Xonotic
 * Discord ATLBot
-* [and many more...](https://pterodactyleggs.com)
+* [還有更多...](https://eggs.pterodactyl.tw)
 
 ## 負責任的漏洞揭露
 Pterodactyl 完全開源，因此歡迎獨立使用者與稽核人員檢視我們的程式碼並尋找安全性問題。如果你發現任何可疑之處，

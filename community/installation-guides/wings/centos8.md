@@ -1,6 +1,6 @@
 # Enterprise Linux 8 與 Fedora Server 40
 
-本指南將詳細說明如何在 CentOS 8、Rocky Linux 8、AlmaLinux 8 以及 Fedora Server 40 上安裝 Pterodactyl Wings v1.X。
+這篇指南會詳細帶你在 CentOS 8、Rocky Linux 8、AlmaLinux 8，以及 Fedora Server 40 上安裝 Pterodactyl Wings v1.X。
 
 [[toc]]
 
@@ -31,8 +31,8 @@ firewall-cmd --reload
 
 ## 安裝 Wings
 
-很好，現在所有相依套件與防火牆規則都已處理完畢。接下來請依照[官方 Wings 安裝文件](/wings/1.0/installing.html#enabling-swap)繼續操作。
+到這裡，相依套件跟防火牆規則都已經處理好了。接下來只要接著照[官方 Wings 安裝文件](/wings/1.0/installing.html#enabling-swap)繼續操作即可。
 
 ::: tip
-如果您已啟用 SELinux 強制執行模式，且容器出現 AVC 拒絕訊息，請嘗試將 Wings 資料目錄從 `/var/lib/pterodactyl` 移至 `/var/srv/containers/pterodactyl`。這是目標原則預期 Docker 讀取與寫入資料的位置。
+這裡有個小提醒：如果你的系統已經啟用 SELinux 強制執行模式，而且容器出現了 AVC 拒絕訊息，可以試著把 Wings 的資料目錄從 `/var/lib/pterodactyl` 搬到 `/var/srv/containers/pterodactyl`。之所以這樣做，是因為目標原則（targeted policy）預期 Docker 是從這個位置讀寫資料的，換個路徑通常就能解決這類權限問題。
 :::

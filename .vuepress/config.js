@@ -1,10 +1,18 @@
 module.exports = {
     base: '/',
     title: 'Pterodactyl',
-    description: 'Pterodactyl 是一款開源的遊戲伺服器管理面板，採用 PHP、React 和 Go 技術構建。Pterodactyl 以安全性為設計核心，將所有遊戲伺服器隔離在 Docker 容器中運行，同時為終端用戶提供美觀且直觀的使用介面。',
+    description: 'Pterodactyl 是一款採用 PHP、React 與 Go 建置的開源遊戲伺服器管理面板。Pterodactyl 以安全性為設計核心，將所有遊戲伺服器執行於隔離的 Docker 容器中，同時為使用者提供美觀且直覺的使用者介面。',
     plugins: [
         ['@vuepress/search', {
             searchMaxSuggestions: 10
+        }],
+        ['zooming', {
+            selector: '.content img',
+            delay: 300,
+            options: {
+                bgColor: 'black',
+                zIndex: 100,
+            },
         }],
         ['vuepress-plugin-container', {
             type: 'warning',
@@ -35,8 +43,8 @@ module.exports = {
         ['meta', { name: 'theme-color', content: '#0e4688' }],
     ],
     themeConfig: {
-        repo: 'pterodactyl/panel',
-        docsRepo: 'pterodactyl/documentation',
+        repo: 'Pterodactyl-TW/panel',
+        docsRepo: 'Pterodactyl-TW/documentation',
         repoLabel: 'GitHub',
         editLinkText: '幫助我們改善此頁面',
         editLinks: true,
@@ -44,7 +52,7 @@ module.exports = {
         nav: [
             {
                 text: 'Eggs',
-                link: 'https://eggs.pterodactyl.io/',
+                link: 'https://eggs.pterodactyl.tw/',
             },
             {
                 text: '文件',
@@ -56,7 +64,7 @@ module.exports = {
             },
             {
                 text: '取得幫助',
-                link: 'https://discord.gg/pterodactyl'
+                link: 'https://pterodactyl.tw/discord'
             },
             {
                 text: 'API',

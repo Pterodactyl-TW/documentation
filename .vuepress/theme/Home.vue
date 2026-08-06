@@ -16,6 +16,9 @@
         <div class="section bg-white">
             <div class="container text-center">
                 <h1 class="text-blue mb-4">Pterodactyl 面板</h1>
+                <p class="text-sm text-grey mb-2">
+                    本站由 <strong>Pterodactyl 台灣翻譯團隊</strong> 維護，提供 Pterodactyl 官方文件的繁體中文化版本。
+                </p>
                 <h3 class="border-0 font-normal leading-normal mx-auto" style="max-width: 50rem">
                     Pterodactyl&reg; 是一款免費、開放原始碼的遊戲伺服器管理面板，採用 PHP、React 與 Go 建置。
                     Pterodactyl 以安全性為設計核心，將所有遊戲伺服器執行於隔離的 Docker 容器中，
@@ -112,7 +115,7 @@
                 <p class="m-4">準備好搭乘 Pterodactyl 起飛了嗎？</p>
                 <div class="mt-4">
                     <router-link class="btn inline-block" to="/project/introduction.html">關於本專案</router-link>
-                    <a class="btn inline-block" href="https://discord.gg/pterodactyl">Discord</a>
+                    <a class="btn inline-block" href="https://pterodactyl.tw/discord">Discord</a>
                 </div>
             </div>
         </div>
@@ -124,24 +127,24 @@
                 <div class="text-left md:flex">
                     <div class="flex-none w-full md:w-1/2 md:pr-12">
                         <p class="my-4">
-                            Since 2015 Pterodactyl&reg; has been delivering robust, performant, and secure software that allows
-                            individuals, networks, and hosting companies to run game servers at scale; easily. Best of all?
-                            No exorbitant monthly costs.
+                            自 2015 年起，Pterodactyl&reg; 便持續提供強大、高效能且安全的軟體，
+                            讓個人、網路社群與代管公司都能輕鬆大規模執行遊戲伺服器。
+                            最棒的是？完全沒有高昂的月費負擔。
                         </p>
                         <p class="my-4">
-                            Take the plunge today and discover why thousands of users trust Pterodactyl&reg; to manage their
-                            game servers.
+                            現在就踏出這一步，了解為什麼有數千名使用者信賴 Pterodactyl&reg;
+                            來管理他們的遊戲伺服器。
                         </p>
                     </div>
                     <div class="hidden md:block md:flex-1 md:pr-12">
-                        <p><a class="text-grey-lightest" href="https://github.com/pterodactyl">GitHub</a></p>
+                        <p><a class="text-grey-lightest" href="https://github.com/Pterodactyl-TW">GitHub</a></p>
                         <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">贊助</a></p>
                         <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">捐款</a></p>
                         <p><a class="text-grey-lightest" href="/panel/troubleshooting.html">疑難排解</a></p>
-                        <p><a class="text-grey-lightest" href="https://pterodactyleggs.com">其他遊戲設定</a></p>
+                        <p><a class="text-grey-lightest" href="https://eggs.pterodactyl.tw">其他遊戲設定</a></p>
                     </div>
                     <div class="text-center mt-8 md:flex-1 md:mt-0">
-                        <a href="https://discord.gg/pterodactyl" target="_blank" rel="nofollow noopener">
+                        <a href="https://pterodactyl.tw/discord" target="_blank" rel="nofollow noopener">
                             <img src="https://cdn.pterodactyl.io/site-assets/discord.png" class="w-3/4">
                         </a>
                     </div>
@@ -163,7 +166,7 @@
         mounted() {
             Swal.fire({
                 title: 'Pterodactyl TW',
-                text: '你現在看到的是 Pterodactyl TW，這是一個非官方的繁體化專案，裡面的內容可能會與官方的最新版有衝突，請以官方所描述的為主。',
+                text: '你現在看到的是 Pterodactyl TW，由 Pterodactyl 台灣翻譯團隊維護的非官方繁體中文化專案，裡面的內容可能會與官方的最新版有衝突，請以官方所描述的為主。',
                 icon: 'info',
                 allowOutsideClick: false,
                 showDenyButton: true,

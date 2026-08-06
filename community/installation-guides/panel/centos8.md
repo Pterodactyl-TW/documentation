@@ -1,6 +1,6 @@
 # Enterprise Linux 8 與 Fedora Server 40
 
-本指南將詳細說明如何在 CentOS 8、Rocky Linux 8、AlmaLinux 8 以及 Fedora Server 40 上安裝 Pterodactyl v1.X，包括所有必要的相依套件。
+這篇指南會詳細帶你在 CentOS 8、Rocky Linux 8、AlmaLinux 8，以及 Fedora Server 40 上安裝 Pterodactyl v1.X，所有必要的相依套件都會一併說明。
 
 [[toc]]
 
@@ -8,7 +8,7 @@
 
 ### SELinux 設定
 
-如果已啟用 SELinux（可使用 `sestatus` 檢查），請安裝以下套件：
+先檢查一下系統有沒有啟用 SELinux（用 `sestatus` 就能看到），如果有的話，先把以下套件裝起來：
 
 ```bash
 sudo dnf install -y policycoreutils selinux-policy selinux-policy-targeted setroubleshoot-server setools setools-console mcstrans
@@ -16,7 +16,7 @@ sudo dnf install -y policycoreutils selinux-policy selinux-policy-targeted setro
 
 ### 安裝相依套件
 
-執行以下指令以安裝所有必要的相依套件：
+接下來執行以下指令，一次裝齊所有必要的相依套件：
 
 ```bash
 # 更新系統
@@ -50,7 +50,7 @@ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/loca
 
 ## PHP 設定
 
-在 `/etc/php-fpm.d/www-pterodactyl.conf` 建立新的 PHP-FPM 設定檔：
+接著要建立一個新的 PHP-FPM 設定檔，位置在 `/etc/php-fpm.d/www-pterodactyl.conf`，內容如下：
 
 ```conf
 [pterodactyl]
@@ -69,7 +69,7 @@ pm.process_idle_timeout = 10s
 pm.max_requests = 200
 ```
 
-啟動 PHP-FPM，並設定為開機時自動啟用：
+設定完成後，啟動 PHP-FPM，並讓它開機時自動啟用：
 
 ```bash
 sudo systemctl enable --now php-fpm
@@ -77,8 +77,8 @@ sudo systemctl enable --now php-fpm
 
 ## 安裝控制面板
 
-很好，現在所有必要的相依套件都已安裝並完成設定。接下來請依照[官方控制面板安裝文件](/panel/1.0/getting_started.md#download-files)繼續操作。
+到這裡，所有必要的相依套件都已經安裝並設定完成了。接下來只要接著照[官方控制面板安裝文件](/panel/1.0/getting_started.md#download-files)繼續操作就可以了。
 
 ::: tip
-您需要將 Nginx 設定中的 `fastcgi_pass` 路徑變更為 `/var/run/php-fpm/pterodactyl.sock`。
+小提醒，設定 Nginx 時記得把 `fastcgi_pass` 的路徑改成 `/var/run/php-fpm/pterodactyl.sock`，這樣才會對應到前面設定好的 PHP-FPM socket。
 :::

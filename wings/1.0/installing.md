@@ -1,70 +1,64 @@
 # 安裝 Wings
 
-Wings 是 Pterodactyl 的新一代伺服器控制平面。它以 Go 和第一代 Node.js Daemon 的經驗為基礎，從頭重新打造。
+Wings 是 Pterodactyl 全新一代的伺服器控制平面，用 Go 語言從頭打造，並吸收了初代 Node.js Daemon 累積下來的經驗。
 
 ::: warning
-只有在執行 **Pterodactyl 1.x** 時才應安裝 Wings。請勿在舊版 Pterodactyl 上安裝此軟體。
+Wings 只能安裝在 **Pterodactyl 1.x** 上，千萬不要拿去裝在舊版的 Pterodactyl。
 :::
 
 ## 支援的系統
 
-以下是支援的作業系統清單。請注意，這並非完整清單；你很可能也能在其他 Linux 發行版上輕鬆執行此軟體。
-你需要自行判斷那些系統可能需要哪些套件。下列支援作業系統的新版本也很可能能正常運作，不受限於下表列出的版本。
+下表列出目前支援的作業系統，但這並不是一份完整清單；實際上你很可能在其他 Linux 發行版上也能順利跑起來,只是需要自己判斷該裝哪些對應套件。另外，表中列出版本的更新版通常也能正常運作，不必被表格本身限制住。
 
-| Operating System                   | Version |     Supported      | Notes                                                       |
-| ---------------------------------- | ------- | :----------------: | ----------------------------------------------------------- |
-| **Ubuntu**                         | 20.04   | :white_check_mark: | Documentation written assuming Ubuntu 20.04 as the base OS. |
-|                                    | 22.04   | :white_check_mark: |                                                             |
-|                                    | 24.04   | :white_check_mark: |                                                             |
-| **RHEL / Rocky Linux / AlmaLinux** | 8       | :white_check_mark: |                                                             |
-|                                    | 9       | :white_check_mark: |                                                             |
-| **Debian**                         | 11      | :white_check_mark: |                                                             |
-|                                    | 12      | :white_check_mark: |                                                             |
-|                                    | 13      | :white_check_mark: |                                                             |
-| **Windows**                        | All     |        :x:         | This software will not run in Windows environments.         |
+| 作業系統                            | 版本    |      是否支援       | 說明                                     |
+| ---------------------------------- | ------- | :----------------: | ---------------------------------------- |
+| **Ubuntu**                         | 20.04   | :white_check_mark: | 本文件以 Ubuntu 20.04 作為基礎作業系統撰寫。 |
+|                                    | 22.04   | :white_check_mark: |                                           |
+|                                    | 24.04   | :white_check_mark: |                                           |
+| **RHEL / Rocky Linux / AlmaLinux** | 8       | :white_check_mark: |                                           |
+|                                    | 9       | :white_check_mark: |                                           |
+| **Debian**                         | 11      | :white_check_mark: |                                           |
+|                                    | 12      | :white_check_mark: |                                           |
+|                                    | 13      | :white_check_mark: |                                           |
+| **Windows**                        | 全部    |        :x:         | 此軟體無法在 Windows 環境中執行。          |
 
 ## 系統需求
 
-若要執行 Wings，需要具備執行 Docker 容器能力的 Linux 系統。大多數 VPS 與幾乎所有專用伺服器都能執行 Docker，
-但仍有少數例外情況。
+要跑 Wings，前提是這台 Linux 系統要能執行 Docker 容器。大多數 VPS，以及幾乎所有的專用伺服器都符合這個條件，不過仍然有少數例外要注意。
 
-如果供應商使用 `Virtuozzo`、`OpenVZ`（或 `OVZ`）或 `LXC` 虛擬化，你很可能無法執行 Wings。部分供應商已進行必要變更，
-透過巢狀虛擬化支援 Docker；請向供應商支援團隊確認。KVM 確定可以正常運作。
+如果你的供應商用的是 `Virtuozzo`、`OpenVZ`（或稱 `OVZ`）或 `LXC` 這類虛擬化技術，那 Wings 很可能沒辦法在上面執行。雖然有些供應商已經透過巢狀虛擬化的方式讓 Docker 能跑起來，但保險起見還是建議先跟供應商的支援團隊確認清楚。相對地，KVM 虛擬化是確定沒問題的。
 
-最簡單的檢查方式是輸入 `systemd-detect-virt`。如果結果不包含 `OpenVZ` 或 `LXC`，通常就沒問題。
-在沒有任何虛擬化的專用硬體上執行時，結果會顯示 `none`。
+最簡單的確認方式，就是執行 `systemd-detect-virt` 這個指令。只要結果不是 `OpenVZ` 或 `LXC`，基本上就沒問題；如果你的機器是完全沒有虛擬化的專用硬體，這裡通常會顯示 `none`。
 
-如果因故無法使用上述方法，或你仍不確定，也可以執行下方命令。
+萬一上面這個方法在你的環境行不通，或是你還是不放心，也可以改用下面這個指令再確認一次。
 
 ```bash
 dane@pterodactyl:~$ sudo dmidecode -s system-manufacturer
 VMware, Inc.
 ```
 
-## Dependencies
+## 相依套件
 
 - curl
 - Docker
 
 ### 安裝 Docker
 
-若要快速安裝 Docker CE，可以執行下方命令：
+想快速裝好 Docker CE，直接執行下面這行指令就好。
 
 ```bash
 curl -sSL https://get.docker.com/ | CHANNEL=stable bash
 ```
 
-如果想手動安裝，請參閱 [Docker 官方文件](https://docs.docker.com/engine/install/)，了解如何在伺服器上安裝 Docker CE。
+如果你比較想自己手動安裝，可以參考 [Docker 官方文件](https://docs.docker.com/engine/install/)，裡面有詳細的 Docker CE 安裝步驟。
 
 ::: warning 檢查核心
-請注意，部分主機安裝了修改過的核心，可能不支援重要的 Docker 功能。請執行 `uname -r` 檢查核心。
-如果核心版本以 `-xxxx-grs-ipv6-64` 或 `-xxxx-mod-std-ipv6-64` 結尾，可能使用了不受支援的核心。
-詳細資訊請參閱[核心修改](../../../daemon/0.6/kernel_modifications.md)指南。
+這裡要提醒一下：有些主機商會提供經過修改的核心，這種核心可能不支援 Docker 的一些關鍵功能。建議先執行 `uname -r` 檢查一下核心版本，如果版本結尾是 `-xxxx-grs-ipv6-64` 或 `-xxxx-mod-std-ipv6-64`，就代表你用的很可能是不受支援的核心版本，詳細說明可以參考[核心修改](../../../daemon/0.6/kernel_modifications.md)這篇指南。
 :::
 
 #### 開機時啟動 Docker
 
-如果使用具備 systemd 的作業系統（Ubuntu 16+、Debian 8+、CentOS 7+），請執行下方命令，讓 Docker 在機器開機時啟動。
+如果你的作業系統有 systemd（例如 Ubuntu 16 以上、Debian 8 以上、CentOS 7 以上），執行下面這行指令，就能讓 Docker 在每次開機時自動啟動。
 
 ```bash
 sudo systemctl enable --now docker
@@ -72,31 +66,31 @@ sudo systemctl enable --now docker
 
 #### 啟用 Swap
 ::: tip 新版 Linux 核心
-自 Linux 核心 6.1 起，Swap 預設已啟用。如果執行核心版本 6.1 或更新版本，可以跳過此步驟。
-請執行 `uname -r` 檢查核心版本。
+簡單來說，從 Linux 核心 6.1 開始，Swap 預設就已經啟用了，如果你的核心版本是 6.1 以上，這一步可以直接跳過。想確認核心版本，執行 `uname -r` 就能看到。
 :::
 
-在大多數系統上，Docker 預設無法設定 Swap 空間。你可以執行 `docker info`，查看輸出底部附近是否有 `WARNING: No swap limit support`。
+在大多數系統上，Docker 預設其實是無法設定 Swap 空間的。你可以執行 `docker info`，看輸出結果的最後幾行有沒有出現 `WARNING: No swap limit support` 這樣的警告。
 
-啟用 Swap 完全是選擇性的，但如果要為他人提供託管服務，建議啟用以防止 OOM 錯誤。
+啟用 Swap 完全是可選的步驟，但如果你打算對外提供代管服務，還是建議啟用一下，可以避免發生 OOM（記憶體不足）錯誤。
 
-若要啟用 Swap，請以 root 使用者開啟 `/etc/default/grub`，找到以 `GRUB_CMDLINE_LINUX_DEFAULT` 開頭的行，
-並確認雙引號內包含 `swapaccount=1`。
+如果要啟用 Swap，先以 root 身分開啟 `/etc/default/grub` 這個檔案，找到以 `GRUB_CMDLINE_LINUX_DEFAULT` 開頭的那一行，確認雙引號裡面有包含 `swapaccount=1`。
 
-接著執行 `sudo update-grub`，再執行 `sudo reboot` 重新啟動伺服器並啟用 Swap。
-以下是該行的範例，_請勿原樣複製，因為其中通常還有作業系統專用參數_。
+接著執行 `sudo update-grub`，再執行 `sudo reboot` 重新啟動伺服器，Swap 就會生效。下面是這一行設定的範例，_請不要直接整行複製貼上，因為裡面通常還會有你這台機器作業系統專屬的其他參數_。
 
 ```text
 GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1"
 ```
 
 ::: tip GRUB 設定
-部分 Linux 發行版可能會忽略 `GRUB_CMDLINE_LINUX_DEFAULT`。如果預設設定無法運作，可能需要改用 `GRUB_CMDLINE_LINUX`。
+小提醒：部分 Linux 發行版可能不會讀取 `GRUB_CMDLINE_LINUX_DEFAULT` 這個變數。如果照著上面設定卻沒有效果，可以試著改用 `GRUB_CMDLINE_LINUX` 看看。
 :::
 
 ## 安裝 Wings
 
-安裝 Wings 的第一步，是確認已建立必要的目錄結構。請執行下方命令建立基礎目錄並下載 Wings 執行檔。
+安裝 Wings 的第一步，是先把需要的目錄結構建起來。執行下面的指令，建立基礎目錄並下載 Wings 的執行檔。
+
+> [!NOTE]
+> 我們目前只翻譯最新版本的文件，所以一般來說，只有照著這份文件操作，或是使用我們的一鍵安裝程式，才會裝到繁體中文化版本。如果你選擇安裝的是舊版本，那就代表你裝的是官方英文版，我們沒辦法在翻譯內容上提供支援；不過技術層面的問題，還是歡迎到 [Discord](https://pterodactyl.tw/discord) 找我們，或跟其他使用者一起討論。
 
 ```bash
 sudo mkdir -p /etc/pterodactyl
@@ -105,41 +99,34 @@ sudo chmod u+x /usr/local/bin/wings
 ```
 
 ::: warning OVH/SYS Servers
-如果使用 OVH 或 SoYouStart 提供的伺服器，請注意主要磁碟空間很可能預設配置給 `/home`，而不是 `/`。
-請考慮使用 `/home/daemon-data` 儲存伺服器資料。建立節點時即可輕鬆設定。
+如果你用的是 OVH 或 SoYouStart 提供的伺服器，要注意一下：主要磁碟空間預設很可能是配置給 `/home`，而不是 `/`。這種情況下，建議把伺服器資料改存在 `/home/daemon-data`，建立節點的時候就能順手設定好。
 :::
 
 ## 設定
 
-安裝 Wings 與必要元件後，下一步是在已安裝的 Panel 上建立節點。前往 Panel 管理介面，從側邊欄選取 Nodes，
-再點選右側的 Create New 按鈕。
+裝好 Wings 跟相關元件之後，接下來要做的是回到已經安裝好的 Panel，在裡面建立一個節點。進入 Panel 管理介面，從側邊欄點選 Nodes，再按右邊的 Create New 按鈕即可。
 
-建立節點後，點選該節點，你會看到名為 Configuration 的分頁。複製程式碼區塊內容，貼到 `/etc/pterodactyl` 中名為 `config.yml` 的新檔案，
-然後儲存。
+節點建立完成後，點進去會看到一個叫 Configuration 的分頁。把裡面的程式碼區塊內容複製起來，貼到 `/etc/pterodactyl` 目錄下新建的 `config.yml` 檔案中,存檔即可。
 
-或者可以點選 Generate Token 按鈕，複製 Bash 命令並貼到終端機中。
+或者更省事的做法是，直接點 Generate Token 按鈕，把它給你的 Bash 指令複製貼到終端機執行。
 
 ![example image of wings configuration](./../../.vuepress/public/wings_configuration_example.png)
 
 ::: warning
-如果 Panel 使用 SSL，Wings 的 FQDN 也必須建立 SSL 憑證。繼續之前，請參閱[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)文件頁面，
-了解如何建立這些憑證。
+如果你的 Panel 有啟用 SSL，那 Wings 的 FQDN 也需要一份對應的 SSL 憑證才行。繼續下一步之前，建議先看一下[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)這篇文件，了解怎麼把憑證準備好。
 :::
 
 ### 啟動 Wings
 
-若要啟動 Wings，請執行下方命令，以除錯模式啟動。確認沒有錯誤後，使用 `CTRL+C` 終止程序，並依照下方說明將其作為 Daemon 執行。
-依伺服器網際網路連線速度而定，Wings 首次拉取並啟動可能需要幾分鐘。
+先用下面的指令，加上 `--debug` 旗標以除錯模式啟動 Wings，確認過程中沒有任何錯誤之後，按 `CTRL+C` 把它終止，再依照下一節的說明改成以 Daemon 方式常駐執行。這裡提醒一下，依你伺服器的網路速度而定，Wings 第一次拉取映像檔並啟動可能會需要幾分鐘,耐心等一下就好。
 
 ```bash
 sudo wings --debug
 ```
 
-你也可以選擇加入 `--debug` 旗標，以除錯模式執行 Wings。
-
 ### 以 Daemon 執行（使用 systemd）
 
-讓 Wings 在背景執行很簡單，但請先確認它能無錯誤執行。將下方內容放入 `/etc/systemd/system` 目錄中名為 `wings.service` 的檔案。
+讓 Wings 在背景常駐執行其實不難，但前提是要先確認它能正常無錯誤地跑起來。準備好之後，在 `/etc/systemd/system` 目錄下新增一個叫 `wings.service` 的檔案，內容如下。
 
 ```text
 [Unit]
@@ -163,7 +150,7 @@ RestartSec=5s
 WantedBy=multi-user.target
 ```
 
-接著執行下方命令重新載入 systemd 並啟動 Wings。
+接著執行下面的指令，重新載入 systemd 設定並啟動 Wings。
 
 ```bash
 sudo systemctl enable --now wings
@@ -171,10 +158,8 @@ sudo systemctl enable --now wings
 
 ### 節點配置
 
-配置是可以指派給伺服器的 IP 與連接埠組合。每台建立的伺服器至少必須有一個配置。配置通常是網路介面的 IP 位址；
-在 NAT 後方等情況下，則會是內部 IP。若要建立新配置，請前往 Nodes > 你的節點 > Allocation。
+配置（Allocation）指的是可以指派給伺服器使用的 IP 與連接埠組合，每一台建立出來的伺服器至少都需要一組配置才能運作。一般情況下，配置用的會是網路介面本身的 IP 位址；但如果你的機器是在 NAT 後方，那就會改用內部 IP。想建立新的配置，前往 Nodes > 你的節點 > Allocation 頁面即可。
 
 ![example image of node allocations](../../.vuepress/public/node_allocations.png)
 
-輸入 `hostname -I | awk '{print $1}'` 找出配置要使用的 IP。或者輸入 `ip addr | grep "inet "` 查看所有可用介面與 IP 位址。
-請勿將 127.0.0.1 用於配置。
+不確定該用哪個 IP 的話，可以執行 `hostname -I | awk '{print $1}'` 快速找出配置要用的 IP；如果想看所有可用的介面與位址，用 `ip addr | grep "inet "` 會列出完整清單。這裡要特別注意，127.0.0.1 不能拿來當作配置使用。

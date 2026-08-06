@@ -4,21 +4,20 @@
 
 ## 備份
 
-Pterodactyl Panel 允許使用者建立伺服器備份。若要建立備份，必須先設定備份儲存方式。
+Pterodactyl Panel 支援建立伺服器備份，不過在開始使用之前，你需要先設定備份要儲存在哪裡。
 
-變更 Pterodactyl Panel 的備份儲存方式後，使用者仍可從先前的儲存驅動程式下載或刪除既有備份。如果要從 S3 遷移至本機備份，
-切換至本機備份儲存方式後，仍必須保留 S3 憑證設定。
+這裡有個小細節要注意：更換備份儲存方式之後，先前用舊儲存驅動程式建立的備份並不會消失，使用者仍然可以下載或刪除它們。舉例來說，如果你打算把備份從 S3 遷移回本機儲存，切換過去之後別急著刪掉 S3 的憑證設定，因為舊備份仍然要靠這組憑證才能存取。
 
 ### 使用本機備份
 
-Pterodactyl Panel 預設透過 Wings 使用本機儲存空間進行備份。你也可以在 `.env` 檔案中加入以下設定，明確指定此備份儲存方式：
+Pterodactyl Panel 預設就是透過 Wings 把備份存在本機儲存空間，不需要額外設定。如果你想明確指定這個行為，也可以在 `.env` 檔案中加入以下設定：
 
 ```bash
 # Sets your panel to use local storage via Wings for backups
 APP_BACKUP_DRIVER=wings
 ```
 
-請注意，透過 Wings 使用本機儲存空間時，備份目的地要在 Wings 的 `config.yml` 中使用以下設定金鑰指定：
+有一點要提醒你：走本機儲存時，備份實際存放的路徑是由 Wings 決定的，而不是 Panel。你需要在 Wings 的 `config.yml` 中用以下設定金鑰指定目的地：
 
 ```yml
 system:
@@ -27,7 +26,7 @@ system:
 
 ### 使用 S3 備份
 
-AWS S3（或相容的儲存服務）可用來儲存遠端或雲端備份。若要啟用此功能，必須在 `.env` 檔案或環境變數中設定以下選項：
+如果你想把備份存到遠端或雲端，AWS S3（或相容的儲存服務）是個好選擇。要啟用這個功能，只要在 `.env` 檔案或環境變數中設定以下選項即可：
 
 ```bash
 # Sets your panel to use s3 for backups
@@ -41,17 +40,15 @@ AWS_BACKUPS_BUCKET=
 AWS_ENDPOINT=
 ```
 
-某些設定可能需要將 S3 URL 從 `bucket.domain.com` 改為 `domain.com/bucket`。若要達成此目的，請在 `.env` 檔案加入 `AWS_USE_PATH_STYLE_ENDPOINT=true`。
+小提醒：有些服務商需要把 S3 URL 的格式從 `bucket.domain.com` 改成 `domain.com/bucket` 才能正常運作。遇到這種情況，只要在 `.env` 檔案加入 `AWS_USE_PATH_STYLE_ENDPOINT=true` 就能解決。
 
 #### 分段上傳
 
-S3 備份使用 S3 的分段上傳功能。在少數情況下，你可能需要調整單一分段的大小或產生的預簽章 URL 有效期限。
-預設分段大小為 5GB，預設預簽章 URL 有效期限為 60 分鐘。
+S3 備份底層是靠 S3 的分段上傳功能來運作的。多數情況下你完全不用理會這個機制，但少數情況下，你可能會想調整單一分段的大小，或是預簽章 URL 的有效期限。預設值分別是分段大小 5GB、預簽章 URL 有效期限 60 分鐘。
 
-你可以使用 `BACKUP_MAX_PART_SIZE` 環境變數設定分段大小上限，大小必須以位元組指定。若要設定預簽章 URL 有效期限，
-請使用 `BACKUP_PRESIGNED_URL_LIFESPAN` 變數，單位為分鐘。
+如果想自行調整，可以用 `BACKUP_MAX_PART_SIZE` 環境變數設定分段大小上限（單位是位元組），並用 `BACKUP_PRESIGNED_URL_LIFESPAN` 變數設定預簽章 URL 有效期限（單位是分鐘）。
 
-The following `.env` snippet configures 1GB parts and uses 120 minutes as the pre-signed URL lifespan:
+舉個例子，以下 `.env` 設定會把分段大小設為 1GB，並將預簽章 URL 有效期限設為 120 分鐘：
 
 ```bash
 BACKUP_MAX_PART_SIZE=1073741824
@@ -60,28 +57,26 @@ BACKUP_PRESIGNED_URL_LIFESPAN=120
 
 #### 儲存類別
 
-若需要指定儲存類別，請使用 `AWS_BACKUPS_STORAGE_CLASS` 環境變數。預設選項為 `STANDARD`（S3 Standard）。
+如果需要指定 S3 的儲存類別，可以使用 `AWS_BACKUPS_STORAGE_CLASS` 環境變數，預設值是 `STANDARD`（也就是 S3 Standard）。
 
-The following `.env` snippet sets the class to `STANDARD_IA` (this is an example).
+以下範例示範如何把儲存類別改成 `STANDARD_IA`（這裡僅作示範，實際要用哪個類別依你的需求決定）：
 
 ```bash
 # STANDARD_IA is an example.
 AWS_BACKUPS_STORAGE_CLASS=STANDARD_IA
 ```
 
-## 反向 Proxy 設定
+## 反向代理設定
 
-當 Pterodactyl 執行於反向 Proxy 後方，例如 [Cloudflare Flexible SSL](https://support.cloudflare.com/hc/en-us/articles/200170416-What-do-the-SSL-options-mean-)
-或 NGINX／Apache／Caddy 等，你需要稍微修改 Panel，確保其正常運作。使用這些反向 Proxy 時，Panel 預設無法正確處理要求，
-你很可能無法登入，或在瀏覽器主控台看到載入不安全資源的安全性警告。這是因為 Panel 用來判斷連結產生方式的內部邏輯，
-會認為自己執行於 HTTP，而不是 HTTPS。
+如果你把 Pterodactyl 架在反向代理後方（例如 [Cloudflare Flexible SSL](https://support.cloudflare.com/hc/en-us/articles/200170416-What-do-the-SSL-options-mean-)，或是 NGINX、Apache、Caddy 這類反向代理），就需要對 Panel 做一點小修改才能正常運作。
 
-你至少需要編輯 Panel 根目錄中的 `.env` 檔案，加入 `TRUSTED_PROXIES=*`。我們強烈建議提供特定 IP 位址（或以逗號分隔的 IP 清單），
-而不是允許 `*`。例如，如果 Proxy 與伺服器執行於同一台機器，使用 `TRUSTED_PROXIES=127.0.0.1` 通常即可正常運作。
+這裡先解釋一下為什麼：Panel 預設並不知道自己是透過反向代理接收請求的，判斷連結產生方式時，它會誤以為自己執行在 HTTP 而不是 HTTPS。結果就是你可能會登入失敗，或是在瀏覽器主控台看到「載入不安全資源」的警告。
+
+解法是編輯 Panel 根目錄中的 `.env` 檔案，加入 `TRUSTED_PROXIES=*`。不過這裡建議你不要偷懶用 `*`，而是明確填入實際會轉發流量的 IP 位址（可以用逗號分隔多個）。舉例來說，如果反向代理跟 Panel 是架在同一台機器上，通常只要 `TRUSTED_PROXIES=127.0.0.1` 就夠了。
 
 ### NGINX 專用設定
 
-若要讓 Pterodactyl 正確回應 NGINX 反向 Proxy，NGINX 的 `location` 設定必須包含以下內容：
+如果你用的是 NGINX，記得在 `location` 設定區塊中加入以下內容，Pterodactyl 才能正確回應：
 
 ```Nginx
 proxy_set_header X-Real-IP $remote_addr;
@@ -95,7 +90,7 @@ proxy_request_buffering off;
 
 ### Cloudflare 專用設定
 
-如果使用 Cloudflare Flexible SSL，應將 `TRUSTED_PROXIES` 設為包含[其 IP 位址](https://www.cloudflare.com/ips/)。以下是設定範例。
+如果你是透過 Cloudflare Flexible SSL 使用反向代理，`TRUSTED_PROXIES` 就要填入 [Cloudflare 的 IP 位址清單](https://www.cloudflare.com/ips/)，設定範例如下：
 
 ```text
 TRUSTED_PROXIES=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/13,104.24.0.0/14,172.64.0.0/13,131.0.72.0/22
@@ -103,29 +98,27 @@ TRUSTED_PROXIES=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,14
 
 ## reCAPTCHA
 
-Panel 使用隱形 reCAPTCHA 保護登入頁面，防止暴力破解攻擊。如果登入嘗試被判定為可疑，使用者可能需要完成 reCAPTCHA 驗證。
+Panel 會用隱形 reCAPTCHA 保護登入頁面，防止有心人士暴力破解密碼。簡單來說，只有在系統判斷某次登入嘗試可疑時，使用者才需要額外完成 reCAPTCHA 驗證。
 
 ### 設定 reCAPTCHA
 
-雖然系統預設提供全域 Site Key 與 Secret Key，我們仍強烈建議為自己的環境更換金鑰。
+系統預設會提供一組全域的 Site Key 與 Secret Key 可以直接用，但強烈建議你換成自己的金鑰，這樣安全性才有保障。
 
-You can generate your own keys in the [reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin).
-
-接著可以在管理面板的設定中套用金鑰。reCAPTCHA 設定位於 **Advanced** 分頁。
+你可以到 [reCAPTCHA 管理主控台](https://www.google.com/recaptcha/admin)自行產生一組金鑰，接著在管理面板的 **Advanced** 分頁套用即可。
 
 ### 停用 reCAPTCHA
 
 :::warning 安全性警告
-我們不建議停用 reCAPTCHA。它是一項能提高使用者帳戶暴力破解難度的安全機制。
+不建議停用 reCAPTCHA，它是提高帳戶被暴力破解難度的重要安全機制。
 :::
 
-如果使用者難以登入，或你的 Panel 沒有暴露在網際網路上，停用 reCAPTCHA 可能是合理的做法。
+話雖如此，如果使用者反映登入太麻煩，或是你的 Panel 根本沒有對外網公開，停用 reCAPTCHA 也是合理的選擇。
 
-你可以使用管理面板輕鬆停用 reCAPTCHA。在設定中選取 **Advanced** 分頁，將 reCAPTCHA 的 **Status** 設為 **disabled**。
+要停用很簡單，到管理面板的 **Advanced** 分頁，把 reCAPTCHA 的 **Status** 改成 **disabled** 就完成了。
 
 #### 編輯資料庫
 
-如果無法存取 Panel，可以使用以下命令直接修改資料庫。
+萬一你完全無法存取 Panel 介面，也可以直接修改資料庫來達成同樣效果：
 
 ```sql
 # If using MariaDB (v11.0.0+)
@@ -140,7 +133,7 @@ UPDATE panel.settings SET value = 'false' WHERE `key` = 'settings::recaptcha:ena
 
 ## 雙因素驗證（2FA）
 
-如果可以，應使用 Panel 更新 2FA 設定。如果因任何原因無法存取 Panel，可以使用以下步驟。
+一般情況下，2FA 相關設定都應該透過 Panel 介面調整。以下步驟是留給萬一無法存取 Panel 時的備用手段。
 
 ### 停用 2FA 要求
 
@@ -157,7 +150,7 @@ UPDATE panel.settings SET value = 0 WHERE `key` = 'settings::pterodactyl:auth:2f
 
 ### 停用特定使用者的 2FA
 
-請在 `/var/www/pterodactyl` 目錄中執行以下命令。
+在 `/var/www/pterodactyl` 目錄中執行以下命令即可：
 
 ``` bash
 php artisan p:user:disable2fa
@@ -165,24 +158,21 @@ php artisan p:user:disable2fa
 
 ## 遙測
 
-自 1.11 起，Panel 會收集 Panel 與所有已連線節點的匿名指標。
-此功能預設啟用，但可以停用。
+從 1.11 版開始，Panel 會蒐集自身與所有已連線節點的匿名指標資料。這項功能預設是開啟的，不過你隨時可以關閉它。
 
-此功能收集的資料不會出售，也不會用於廣告用途。為了改善軟體，彙總統計資料可能會公開或與第三方分享。
+先說清楚一件事：這些資料絕對不會被出售，也不會用於廣告。蒐集彙總統計資料的唯一目的，是幫助我們把軟體做得更好，必要時可能會公開或與第三方分享彙總後的結果。
 
 ### 運作方式
 
-遙測系統會先為 Panel 安裝產生隨機的 UUIDv4 識別碼。此識別碼會儲存在資料庫中，讓使用多個 Panel 執行個體進行負載平衡的使用者
-仍能擁有唯一識別碼。接著，系統會將此識別碼與相關遙測資料一併傳送至遠端伺服器。遙測資料每 24 小時收集一次，
-不會持續收集，也不會在本機儲存遙測資料；系統會在傳送至遠端伺服器前才收集資料。
+遙測系統的運作邏輯是這樣的：Panel 安裝時會先產生一組隨機的 UUIDv4 識別碼並存入資料庫，這樣一來，即使你用多個 Panel 執行個體做負載平衡，每個執行個體依然擁有各自唯一的識別碼。之後，系統會把這組識別碼連同相關遙測資料一起傳送到遠端伺服器。
 
-目前，所有遙測收集邏輯都由 Panel 中的 [TelemetryCollectionService](https://github.com/pterodactyl/panel/blob/1.0-develop/app/Services/Telemetry/TelemetryCollectionService.php#L53)
-處理。此服務負責收集要傳送至遠端伺服器的所有資料。
+值得注意的是，遙測資料每 24 小時才收集傳送一次，並不是持續蒐集，也不會事先存在本機，而是在真正要傳送前才即時收集。
+
+目前所有遙測收集邏輯都寫在 Panel 的 [TelemetryCollectionService](https://github.com/Pterodactyl-TW/panel/blob/1.0-develop/app/Services/Telemetry/TelemetryCollectionService.php#L53) 裡，負責彙整所有要送往遠端伺服器的資料。
 
 ### 收集哪些資料？
 
-如果你想查看完整的收集資料，請參閱上方連結的 TelemetryCollectionService，或使用 `php artisan p:telemetry` 命令查看
-將傳送至遠端伺服器的確切資料。
+如果你想確認完整的收集內容，可以直接參考上面連結的原始碼，或是在伺服器上執行 `php artisan p:telemetry` 命令，就能看到實際會送出的資料內容。
 
 截至 2022-12-12，收集的資料包括：
 
@@ -245,39 +235,32 @@ php artisan p:user:disable2fa
 
 ### 資料如何儲存？
 
-目前資料儲存在 Cloudflare。我們使用 Worker 接收所有遙測資料，執行驗證等基本處理後，再將資料寫入 Cloudflare D1。
-目前沒有任何收集資料的 API 或視覺化介面，只能手動查詢。現階段只有 Matthew 能查詢資料，但我們正在研究替代方案，
-讓這些資料更容易存取。
+目前這些資料存放在 Cloudflare：我們用一個 Worker 接收所有遙測資料，做完基本的驗證等處理後，再寫入 Cloudflare D1。老實說，目前還沒有任何查詢用的 API 或視覺化介面，只能靠手動查詢，而且現階段只有 Matthew 一個人能查得到。我們正在研究更方便的替代方案，讓這些資料未來更容易被存取。
 
-### 為什麼收集？
+### 為什麼要收集？
 
-收集這些資料的主要原因，是協助我們為這套軟體的未來做出更好的決策。1.11 發行時，最低 PHP 版本需求從 7.4 提升至 8.0；
-然而，我們想加入一項需要 PHP 8.1 的功能，這會進一步提高版本需求，並可能為部分使用者帶來問題。透過收集這些資料，
-我們希望更了解這類變更會如何影響社群，並在未來做出更好的決策。節點使用的架構、核心版本與作業系統等資訊尤其重要。
-例如，我們想採用只有部分檔案系統支援的功能，但不知道有多少人使用那些檔案系統，因此無法判斷是否值得投入實作。
+收集這些資料，最主要是想幫助我們對這套軟體的未來做出更好的判斷。舉個實際的例子：1.11 版發行時，最低 PHP 版本需求從 7.4 提升到了 8.0；而我們其實還想加入一項需要 PHP 8.1 的功能，這會進一步墊高版本門檻，可能讓部分使用者感到不便。有了這些資料，我們就能更清楚了解這類變更實際上會影響多少人，進而做出更周全的決策。節點的架構、核心版本、作業系統這些資訊尤其重要，例如我們想採用某個只有特定檔案系統才支援的功能時，如果不知道有多少人在用那些檔案系統，就很難判斷值不值得投入開發資源。
 
-部分資料對決策的幫助較小，但我們仍希望了解這些資訊。例如，你是否曾想知道目前有多少個 Panel 執行個體？
-所有執行個體總共執行多少台伺服器？有多少使用者正在使用 Panel？其中有多少是管理員？有多少伺服器使用特定 Egg？
-有多少伺服器使用特定 Nest？我們收集的資料可以回答所有這些問題，並協助我們與社群更了解軟體的使用方式。
+當然，也有一部分資料的決策價值沒那麼高，純粹是因為我們也好奇。比如說，你有沒有想過目前全世界到底有多少個 Panel 執行個體在運作？這些執行個體加起來總共跑了多少台伺服器？有多少使用者、其中有多少是管理員？又有多少伺服器在用某個特定的 Egg 或 Nest？這些問題的答案，都藏在我們收集的資料裡，也能幫助我們和社群一起更了解這套軟體實際上是怎麼被使用的。
 
-如果你對我們收集的資料有任何疑問，歡迎在 Discord 聯絡我們。我們的目標是盡可能透明，並確保社群了解我們正在做什麼以及原因。
+如果你對我們蒐集的資料有任何疑問，歡迎到 Discord 找我們聊聊。我們的目標是盡可能保持透明，讓社群清楚知道我們在做什麼、為什麼要這麼做。
 
 ### 啟用遙測
 
-遙測預設啟用。如果停用後想重新啟用，請編輯 `.env` 檔案，移除 `PTERODACTYL_TELEMETRY_ENABLED` 行，或將其設為 `true`。
+遙測預設就是啟用狀態。如果你之前手動關閉過，想重新打開的話，只要編輯 `.env` 檔案，把 `PTERODACTYL_TELEMETRY_ENABLED` 這一行刪掉，或是直接設為 `true` 即可：
 
 ```text
 PTERODACTYL_TELEMETRY_ENABLED=true
 ```
 
-你也可以使用 `php artisan p:environment:setup` 命令啟用遙測；非互動式設定時可選擇搭配 `--telemetry` 旗標。
+也可以改用 `php artisan p:environment:setup` 命令來啟用；如果是走非互動式設定，可以搭配 `--telemetry` 旗標。
 
 ### 停用遙測
 
-若要停用遙測，請編輯 `.env` 檔案，將 `PTERODACTYL_TELEMETRY_ENABLED` 設為 `false`。
+想停用的話，編輯 `.env` 檔案，把 `PTERODACTYL_TELEMETRY_ENABLED` 設為 `false` 即可：
 
 ```text
 PTERODACTYL_TELEMETRY_ENABLED=false
 ```
 
-你也可以使用 `php artisan p:environment:setup` 命令停用遙測；非互動式設定時可選擇搭配 `--telemetry=false` 旗標。
+同樣地，也可以使用 `php artisan p:environment:setup` 命令來停用；非互動式設定時可搭配 `--telemetry=false` 旗標。

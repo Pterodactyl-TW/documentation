@@ -8,22 +8,24 @@ meta:
 ::: danger 此版本已終止支援
 本文件適用於**已終止支援的軟體**，不再提供任何安全性更新或社群支援。基於歷史原因，本文件仍保留供查閱。
 
-在正式環境中，您應使用 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md)。
+在正式環境中，你應使用 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md)。
 :::
 
-Pterodactyl Panel 設計為在您自己的 Web 伺服器上執行。您需要具備伺服器的 Root 存取權限，才能安裝與使用此控制面板。
+Pterodactyl Panel 是設計來跑在你自己的 Web 伺服器上的，所以你需要具備伺服器的 Root 存取權限，才有辦法安裝並使用它。
 
-此控制面板不是能以拖放方式執行伺服器的服務，而是一個需要多個相依套件的複雜系統，並要求管理員投入時間學習如何使用。  
-**如果您不具備基本的 Linux 系統管理知識，卻期望能直接完成安裝，請現在停止操作。**
+這裡要先說清楚一件事：這套控制面板並不是那種拖拉幾下就能架起伺服器的懶人服務，而是一套需要多個相依套件、結構相對複雜的
+系統，需要管理員花一點時間學習才能上手。
+**如果你還沒有基本的 Linux 系統管理知識，卻期待能一路直接裝完，建議先停下來，補一些基礎知識會比較保險。**
 
 [[toc]]
 
 ## 選擇伺服器作業系統
 
-Pterodactyl 支援多種作業系統，請選擇您最熟悉的系統。
+Pterodactyl 支援多種作業系統，挑一個你自己最熟悉的系統就好。
 
 ::: warning
-由於 Docker 相容性問題，Pterodactyl 不支援大多數 OpenVZ 系統。如果您打算在 OpenVZ 系統上執行此軟體，成功的可能性很低。
+由於 Docker 相容性問題，Pterodactyl 並不支援大多數 OpenVZ 系統。如果你打算在 OpenVZ 上安裝，成功的機率不高，
+建議提前有心理準備。
 :::
 
 | 作業系統 | 版本 | 支援狀態 | 備註 |
@@ -37,9 +39,11 @@ Pterodactyl 支援多種作業系統，請選擇您最熟悉的系統。
 
 ## 相依套件
 
-- PHP `7.2`，以及以下擴充功能：`cli`、`openssl`、`gd`、`mysql`、`PDO`、`mbstring`、`tokenizer`、`bcmath`、`xml` 或 `dom`、`curl`、`zip`。如果使用 Nginx，還需要 `fpm`。
+在開始安裝之前，先確認你的系統上有以下這些相依套件：
+
+- PHP `7.2`，並包含以下擴充功能：`cli`、`openssl`、`gd`、`mysql`、`PDO`、`mbstring`、`tokenizer`、`bcmath`、`xml` 或 `dom`、`curl`、`zip`。如果你用的是 Nginx，還需要額外裝 `fpm`。
 - MySQL `5.7` **或** MariaDB `10.1.3` 以上版本。
-- Web 伺服器（Apache、Nginx、Caddy 等）。
+- 一套 Web 伺服器（Apache、Nginx、Caddy 等，任選一種即可）。
 - `curl`
 - `tar`
 - `unzip`
@@ -48,7 +52,8 @@ Pterodactyl 支援多種作業系統，請選擇您最熟悉的系統。
 
 ### 安裝相依套件範例
 
-以下指令僅為安裝這些相依套件的範例。請參閱您所使用作業系統的套件管理工具，以確認正確的安裝套件名稱。
+以下指令只是示範怎麼安裝這些相依套件，實際套件名稱可能因作業系統而異，建議先查一下你所用系統的套件管理工具，
+確認名稱正確再執行。
 
 ```bash
 # 新增「add-apt-repository」指令
@@ -71,7 +76,8 @@ apt -y install php7.2 php7.2-cli php7.2-gd php7.2-mysql php7.2-pdo php7.2-mbstri
 
 ### 安裝 Composer
 
-Composer 是 PHP 的相依套件管理工具，可用來提供執行控制面板所需的程式碼相依套件。在繼續此安裝流程之前，您需要先安裝 Composer。
+Composer 是 PHP 的相依套件管理工具，控制面板執行時需要的程式碼相依套件，都要靠它來安裝，所以在往下走之前，
+記得先把 Composer 裝起來。
 
 ```bash
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer --1
@@ -79,14 +85,19 @@ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/loca
 
 ## 下載檔案
 
-首先，建立控制面板所需的資料夾，然後切換至該資料夾。以下是範例操作方式：
+首先，建立控制面板要用的資料夾，然後切換進去，範例如下：
 
 ```bash
 mkdir -p /var/www/pterodactyl
 cd /var/www/pterodactyl
 ```
 
-建立控制面板目錄並切換進入後，您需要下載控制面板檔案。只要使用 `curl` 下載預先打包的檔案即可。下載完成後，解壓縮套件，並為 `storage/` 與 `bootstrap/cache/` 目錄設定正確權限。這些目錄用於儲存檔案，以及保存快取以縮短載入時間。
+進到目錄之後，接下來就是下載控制面板的檔案。直接用 `curl` 抓取官方預先打包好的壓縮檔即可。下載完成後記得解壓縮，
+並幫 `storage/` 與 `bootstrap/cache/` 這兩個目錄設定正確的權限，這兩個目錄分別用來存放檔案，以及保存快取資料以加快
+之後的載入速度。
+
+> [!NOTE]
+> 由於我們僅提供最新版本文件的翻譯，通常只有依照我們的文件說明操作、或使用我們的一鍵安裝程式，才會套用我們的繁體中文化版本。若你選擇安裝舊版本，即代表你將安裝官方的英文版本，我們將不提供翻譯內容上的支援；但技術問題仍可透過 [Discord](https://pterodactyl.tw/discord) 與我們聯絡，或與其他使用者討論翻譯相關問題。
 
 ```bash
 curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/download/v0.7.19/panel.tar.gz
@@ -99,15 +110,16 @@ chmod -R 755 storage/* bootstrap/cache/
 ::: danger 此版本已終止支援
 本文件適用於**已終止支援的軟體**，不再提供任何安全性更新或社群支援。基於歷史原因，本文件仍保留供查閱。
 
-在正式環境中，您應安裝並使用 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md)。
+在正式環境中，你應安裝並使用 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md)。
 :::
 
-現在所有檔案都已下載完成，接著需要設定控制面板的一些核心項目。
+檔案都下載好之後，接下來要設定控制面板的一些核心項目。
 
 ::: tip 資料庫設定
-在繼續之前，您需要先建立資料庫，以及一個具備正確權限的資料庫使用者。如果您不確定如何操作，或想了解更多資訊，請參閱[設定 MySQL](/tutorials/mysql_setup.html)。
+在繼續之前，你需要先建立一個資料庫，以及一個具備正確權限的資料庫使用者。如果不確定怎麼做，或想多了解一些細節，
+可以參考[設定 MySQL](/tutorials/mysql_setup.html)這篇文件。
 
-以下指令可快速建立 Pterodactyl 控制面板所需的資料庫與使用者：
+如果只是想快速建立 Pterodactyl 控制面板需要的資料庫與使用者，可以直接執行以下指令：
 
 ```sql
 $ mysql -u root -p
@@ -119,7 +131,7 @@ mysql> GRANT ALL ON panel.* TO 'pterodactyl'@'localhost' WITH GRANT OPTION;
 
 :::
 
-首先，複製預設的環境設定檔、安裝核心相依套件，然後產生新的應用程式加密金鑰。
+接下來，先複製一份預設的環境設定檔，安裝核心相依套件，再產生一組新的應用程式加密金鑰。
 
 ```bash
 cp .env.example .env
@@ -131,14 +143,17 @@ php artisan key:generate --force
 ```
 
 ::: danger
-請備份您的加密金鑰（`.env` 檔案中的 `APP_KEY`）。此金鑰會用來加密所有需要安全儲存的資料，例如 API 金鑰。
+這裡要特別提醒：務必備份你的加密金鑰（`.env` 檔案中的 `APP_KEY`）。這組金鑰會用來加密所有需要安全儲存的資料，
+例如 API 金鑰。
 
-請將它儲存在安全的位置，而不只是伺服器上。如果遺失此金鑰，所有已加密的資料都將無法使用且無法復原，即使您擁有資料庫備份也一樣。
+請把它存放在安全的地方，不要只留在伺服器上。萬一遺失這組金鑰，所有已加密的資料就會永久無法還原，即使你手上有
+完整的資料庫備份也一樣救不回來。
 :::
 
 ### 環境設定
 
-Pterodactyl 的核心環境可以透過應用程式內建的數個 CLI 指令輕鬆設定。本步驟將設定工作階段、快取、資料庫憑證與電子郵件傳送等項目。
+Pterodactyl 的核心環境，可以透過幾個應用程式內建的 CLI 指令輕鬆完成設定。這一步會依序處理工作階段、快取、
+資料庫憑證，以及電子郵件傳送等項目。
 
 ```bash
 php artisan p:environment:setup
@@ -151,9 +166,10 @@ php artisan p:environment:mail
 
 ### 設定資料庫
 
-現在需要將控制面板的所有基本資料寫入先前建立的資料庫。**以下指令可能需要一段時間才能完成，實際時間取決於您的機器效能。請勿在程序完成前退出！**
+接著要把控制面板運作所需的所有基本資料，寫入剛才建立好的資料庫。**這道指令執行起來可能需要一點時間，實際快慢要看
+機器效能，請耐心等它跑完，不要中途退出！**
 
-此指令會建立資料庫資料表，並加入運作 Pterodactyl 所需的所有 Nest 與 Egg。
+簡單來說，這道指令會建立資料庫資料表，並把 Pterodactyl 運作所需的所有 Nest 與 Egg 一併加進去。
 
 ```bash
 php artisan migrate --seed
@@ -161,7 +177,8 @@ php artisan migrate --seed
 
 ### 新增第一位使用者
 
-接著，您需要建立一名管理員使用者，才能登入控制面板。請執行以下指令。目前密碼**必須**符合以下要求：至少 8 個字元、包含大小寫字母，並至少包含一個數字。
+再來，你需要建立一名管理員使用者，才能真正登入控制面板，執行以下指令即可。這裡提醒一下，密碼**必須**符合以下規則：
+至少 8 個字元、大小寫字母都要有，並且至少包含一個數字。
 
 ```bash
 php artisan p:user:make
@@ -169,7 +186,7 @@ php artisan p:user:make
 
 ### 設定權限
 
-安裝流程的最後一步，是為控制面板檔案設定正確的擁有者，讓 Web 伺服器可以正常使用這些檔案。
+安裝流程的最後一步，是幫控制面板檔案設定正確的擁有者，這樣 Web 伺服器才有辦法正常讀寫這些檔案。
 
 ```bash
 # 使用 Nginx 或 Apache（CentOS 除外）
@@ -184,11 +201,13 @@ chown -R apache:apache *
 
 ## 佇列監聽器
 
-我們使用佇列讓應用程式執行得更快，並在背景處理電子郵件傳送與其他工作。您需要設定佇列工作程序，才能處理這些工作。
+Pterodactyl 使用佇列機制，讓應用程式執行得更快，把電子郵件傳送之類的工作丟到背景處理。因此，你還需要設定佇列
+工作程序，才能真正把這些工作處理掉。
 
 ### Crontab 設定
 
-首先，需要建立一項每分鐘執行一次的 Cron 工作，用於處理特定的 Pterodactyl 工作，例如清理工作階段，以及將排程工作傳送至 Daemon。請使用 `sudo crontab -e` 開啟 Crontab，然後貼上以下內容：
+首先，需要建立一項每分鐘執行一次的 Cron 工作，用來處理一些 Pterodactyl 專屬的排程任務，例如清理過期的工作階段，
+以及把排定的工作傳送給 Wings。請用 `sudo crontab -e` 開啟 Crontab，然後貼上以下內容：
 
 ```bash
 * * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1
@@ -196,9 +215,10 @@ chown -R apache:apache *
 
 ### 建立佇列工作程序
 
-接著，需要建立新的 systemd 工作程序，讓佇列程序持續在背景執行。此佇列負責傳送電子郵件，以及處理 Pterodactyl 的許多其他背景工作。
+接著，需要建立一個新的 systemd 工作程序，讓佇列可以持續在背景運作。這個佇列負責寄送電子郵件，也負責處理
+Pterodactyl 許多其他的背景工作。
 
-在 `/etc/systemd/system` 中建立名為 `pteroq.service` 的檔案，內容如下：
+在 `/etc/systemd/system` 目錄下建立一個名為 `pteroq.service` 的檔案，內容如下：
 
 ```text
 # Pterodactyl 佇列工作程序檔案
@@ -221,20 +241,21 @@ WantedBy=multi-user.target
 ```
 
 ::: tip CentOS 上的 Redis
-如果您使用 CentOS，需要將 `After=` 行中的 `redis-server.service` 替換為 `redis.service`，以確保 Redis 會在佇列工作程序之前啟動。
+如果你用的是 CentOS，記得把 `After=` 這一行裡的 `redis-server.service` 換成 `redis.service`，這樣才能確保 Redis
+會在佇列工作程序啟動前先跑起來。
 :::
 
 ::: tip
-如果您沒有將 Redis 用於任何用途，應移除 `After=` 行，否則服務啟動時可能會發生錯誤。
+如果你根本沒在用 Redis，建議直接移除 `After=` 這一行，不然服務啟動時可能會跳出錯誤。
 :::
 
-如果您的系統使用 Redis，請確認已將 Redis 設定為開機時自動啟動。執行以下指令即可：
+如果系統上有裝 Redis，記得確認它已設定為開機自動啟動，執行以下指令就能完成：
 
 ```bash
 sudo systemctl enable --now redis-server
 ```
 
-最後，啟用服務，並將其設定為在機器啟動時自動執行：
+最後，啟用這個服務，並設定成開機時自動執行：
 
 ```bash
 sudo systemctl enable --now pteroq.service

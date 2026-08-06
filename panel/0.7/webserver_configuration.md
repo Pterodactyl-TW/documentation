@@ -15,52 +15,52 @@ meta:
 [[toc]]
 
 ::: danger
-你應移除預設的 Apache 或 NGINX 設定，因為預設設定可能會將應用程式機密暴露給惡意使用者。
+記得移除 Apache 或 NGINX 的預設設定，因為這些預設設定可能會把應用程式的機密資訊暴露給有心人士。
 :::
 
 ## NGINX
-請將下方檔案內容貼上，將 `<domain>` 替換為使用的網域名稱，存入名為 `pterodactyl.conf` 的檔案，
-並放在 `/etc/nginx/sites-available/`；如果使用 CentOS，則放在 `/etc/nginx/conf.d/`。
+把下方的檔案內容貼上，並將其中的 `<domain>` 換成你實際使用的網域名稱，存成一個叫做 `pterodactyl.conf` 的檔案，
+放到 `/etc/nginx/sites-available/` 目錄下；如果你用的是 CentOS，則放到 `/etc/nginx/conf.d/`。
 
 ### 使用 SSL 的 NGINX
-此設定假設 Panel 與 Daemon 都使用 SSL，以大幅提升使用者與 Panel 之間的通訊安全性。你需要取得有效的 SSL 憑證，
-可以免費使用 Let's Encrypt 取得。
+這份設定假設 Panel 與 Wings 都會啟用 SSL，這樣一來，使用者與 Panel 之間的通訊安全性會大幅提升。要做到這點，
+你需要先準備好一張有效的 SSL 憑證，而 Let's Encrypt 就能免費申請到。
 
 ::: warning
-使用 SSL 設定時，**必須**建立 SSL 憑證，否則 NGINX 將無法啟動。繼續之前，請參閱[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)文件，
-了解如何建立這些憑證。
+使用這份 SSL 設定時，**一定要**先建立好 SSL 憑證，不然 NGINX 會直接無法啟動。繼續之前，建議先參考
+[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)這篇文件，了解該怎麼建立。
 :::
 
 <<< @/.snippets/webservers/nginx.conf{5,11,26-27}
 
-請繼續閱讀本節底部，完成 NGINX 的最後步驟！
+設定完之後別急著結束，請繼續往下看完本節最後的步驟，才算真正完成 NGINX 的設定！
 
 ### 不使用 SSL 的 NGINX
 
 <<< @/.snippets/webservers/nginx-nossl.conf{3}
 
 ### 啟用設定
-最後一步是啟用 NGINX 設定並重新啟動 NGINX。
+最後一步是啟用這份 NGINX 設定，並重新啟動 NGINX。
 ``` bash
-# You do not need to symlink this file if you are using CentOS.
+# 如果使用 CentOS，則不需要為此檔案建立符號連結。
 sudo ln -s /etc/nginx/sites-available/pterodactyl.conf /etc/nginx/sites-enabled/pterodactyl.conf
 
-# You need to restart nginx regardless of OS.
+# 無論使用哪種作業系統，都需要重新啟動 nginx。
 systemctl restart nginx
 ```
 
 ## Apache
-請將下方檔案內容貼上，將 `<domain>` 替換為使用的網域名稱，存入名為 `pterodactyl.conf` 的檔案，
-並放在 `/etc/apache2/sites-available`；如果使用 CentOS，則放在 `/etc/httpd/conf.d/`。
+把下方的檔案內容貼上，並將其中的 `<domain>` 換成你實際使用的網域名稱，存成一個叫做 `pterodactyl.conf` 的檔案，
+放到 `/etc/apache2/sites-available` 目錄下；如果你用的是 CentOS，則放到 `/etc/httpd/conf.d/`。
 
-注意：使用 Apache 時，請確認已安裝 `libapache2-mod-php` 套件，否則 PHP 不會在網頁伺服器上顯示。
+小提醒：使用 Apache 時，記得先確認已經安裝 `libapache2-mod-php` 這個套件，不然 PHP 不會在網頁伺服器上正常運作。
 
 ### 使用 SSL 的 Apache
-與 NGINX 設定一樣，此設定假設 Panel 與 Daemon 都使用 SSL，以提升安全性。
+跟 NGINX 的設定一樣，這份設定同樣假設 Panel 與 Wings 都會啟用 SSL，以提升整體安全性。
 
 ::: warning
-使用 SSL 設定時，**必須**建立 SSL 憑證，否則 Apache 將無法啟動。繼續之前，請參閱[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)文件，
-了解如何建立這些憑證。
+使用這份 SSL 設定時，**一定要**先建立好 SSL 憑證，不然 Apache 會直接無法啟動。繼續之前，建議先參考
+[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)這篇文件，了解該怎麼建立。
 :::
 
 <<< @/.snippets/webservers/apache.conf{2,8,17-18}
@@ -70,10 +70,11 @@ systemctl restart nginx
 <<< @/.snippets/webservers/apache-nossl.conf{2}
 
 ### 啟用設定
-建立上方檔案後，執行下方命令即可。如果使用 CentOS，_不需要執行下方命令！_ 只需執行 `systemctl restart httpd`。
+建立好上面的檔案後，執行下方指令即可啟用。如果你用的是 CentOS，_不需要執行下方指令！_ 只要執行
+`systemctl restart httpd` 就完成了。
 
 ``` bash
-# You do not need to run any of these commands on CentOS
+# 如果使用 CentOS，則不需要執行以下任何指令
 sudo ln -s /etc/apache2/sites-available/pterodactyl.conf /etc/apache2/sites-enabled/pterodactyl.conf
 sudo a2enmod rewrite
 systemctl restart apache2
