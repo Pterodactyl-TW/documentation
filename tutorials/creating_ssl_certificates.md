@@ -29,9 +29,9 @@ sudo apt install -y python3-certbot-apache
 HTTP 挑戰需要開放 80 連接埠，以進行驗證。
 
 ```bash
-# Nginx
+# Nginx 版本
 certbot certonly --nginx -d example.com
-# Apache
+# Apache 版本
 certbot certonly --apache -d example.com
 # 獨立模式－如果上述方法都無法使用，請採用此方法。使用前請先停止 Web 伺服器。
 certbot certonly --standalone -d example.com

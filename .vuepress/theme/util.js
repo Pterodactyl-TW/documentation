@@ -216,11 +216,14 @@ function resolveItem(item, pages, base, isNested) {
       ...item,
       children: children.map(child => resolveItem(child, pages, base, true)),
       collapsable: item.collapsable !== false,
-      versions: versions.map(version => ({
-        ...version,
-        status: version.name === item.currentVersion ? "current" : version.status,
-        children: version.children.map(child => resolveItem(item.path + version.name + child, pages, base, true))
-      })),
+      versions: versions.map(version => {
+        const prefix = version.basePath !== undefined ? version.basePath : item.path + version.name
+        return {
+          ...version,
+          status: version.name === item.currentVersion ? "current" : version.status,
+          children: version.children.map(child => resolveItem(prefix + child, pages, base, true))
+        }
+      }),
     }
   }
 }

@@ -14,7 +14,7 @@ Pterodactyl Panel 是設計來架設在你自己的網頁伺服器上的，所�
 
 Pterodactyl 支援多種作業系統，挑一個你自己最熟悉的就好。
 
-::: warning
+::: warning 警告
 由於 Docker 相容性問題，Pterodactyl 目前不支援大多數的 OpenVZ 系統。如果你打算在 OpenVZ 上安裝，先說在前面，成功機率非常低。
 :::
 
@@ -47,20 +47,20 @@ Pterodactyl 支援多種作業系統，挑一個你自己最熟悉的就好。
 下面這段命令只是示範怎麼安裝這些相依套件，實際套件名稱可能因你的作業系統版本而略有不同，安裝前建議先確認一下自己系統的套件管理器。
 
 ``` bash
-# Add "add-apt-repository" command
+# 加入 "add-apt-repository" 指令
 apt -y install software-properties-common curl apt-transport-https ca-certificates gnupg
 
-# Add additional repositories for PHP (Ubuntu 22.04)
+# 加入 PHP 的額外套件庫（Ubuntu 22.04）
 LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 
-# Add Redis official APT repository
+# 加入 Redis 官方 APT 套件庫
 curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
 
-# Update repositories list
+# 更新套件庫清單
 apt update
 
-# Install Dependencies
+# 安裝相依套件
 apt -y install php8.3 php8.3-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx tar unzip git redis-server
 ```
 
@@ -83,11 +83,8 @@ cd /var/www/pterodactyl
 
 進到資料夾之後，接著要把 Panel 的檔案下載下來。這裡直接用 `curl` 抓取我們預先打包好的內容，下載完解壓縮，再把 `storage/` 與 `bootstrap/cache/` 兩個目錄設定成正確的權限即可。簡單說明一下：這兩個目錄分別用來存放檔案，以及提供快取加速頁面載入，所以權限一定要設對，之後 Panel 才能正常寫入資料。
 
-> [!NOTE]
-> 由於我們僅提供最新版本文件的翻譯，通常只有依照我們的文件說明操作、或使用我們的一鍵安裝程式，才會套用我們的繁體中文化版本。若你選擇安裝舊版本，即代表你將安裝官方的英文版本，我們將不提供翻譯內容上的支援；但技術問題仍可透過 [Discord](https://pterodactyl.tw/discord) 與我們聯絡，或與其他使用者討論翻譯相關問題。
-
 ``` bash
-curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz
+curl -Lo panel.tar.gz https://github.com/Pterodactyl-TW/panel/releases/latest/download/panel.tar.gz
 tar -xzvf panel.tar.gz
 chmod -R 755 storage/* bootstrap/cache/
 ```
@@ -100,15 +97,15 @@ chmod -R 755 storage/* bootstrap/cache/
 在繼續往下之前，你需要先建立一個資料庫，以及一個具備正確權限的使用者。下面示範怎麼快速幫 Pterodactyl Panel 建立專用的使用者與資料庫；如果想看更完整的說明，可以參考[設定 MySQL](/tutorials/mysql_setup.html)。
 
 ```sql
-# If using MariaDB (v11.0.0+) (This is the default when installing Pterodactyl by following the documentation.)
+# 若使用 MariaDB（v11.0.0+，依照本文件安裝時預設就是這個）
 mariadb -u root -p
 
-# If using MySQL
+# 若使用 MySQL
 mysql -u root -p
 ```
 ```sql
 
-# Remember to change 'yourPassword' below to be a unique password
+# 記得把下方的 'yourPassword' 換成獨一無二的密碼
 CREATE USER 'pterodactyl'@'127.0.0.1' IDENTIFIED BY 'yourPassword';
 CREATE DATABASE panel;
 GRANT ALL PRIVILEGES ON panel.* TO 'pterodactyl'@'127.0.0.1' WITH GRANT OPTION;
@@ -123,12 +120,12 @@ exit
 cp .env.example .env
 COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
 
-# Only run the command below if you are installing this Panel for
-# the first time and do not have any Pterodactyl Panel data in the database.
+# 只有在你第一次安裝這套 Panel、資料庫裡還沒有任何 Pterodactyl Panel 資料時，
+# 才需要執行以下命令。
 php artisan key:generate --force
 ```
 
-::: danger
+::: danger 危險
 這一步請務必留意：一定要備份好你的加密金鑰（也就是 `.env` 檔案中的 `APP_KEY`）。這組金鑰是用來加密所有需要安全儲存的資料（例如 API 金鑰）的，一旦遺失，就算你有完整的資料庫備份，所有被加密過的資料也永遠救不回來了，所以千萬別只把它留在伺服器上。
 
 想取得目前的 `APP_KEY`，開啟終端機，在你的 panel 目錄中執行以下命令：
@@ -160,8 +157,8 @@ Pterodactyl 的核心環境可以透過內建的幾個 CLI 命令快速設定完
 php artisan p:environment:setup
 php artisan p:environment:database
 
-# To use PHP's internal mail sending (not recommended), select "mail". To use a
-# custom SMTP server, select "smtp".
+# 若要使用 PHP 內建的寄信功能（不建議），請選擇 "mail"；
+# 若要使用自訂的 SMTP 伺服器，請選擇 "smtp"。
 php artisan p:environment:mail
 ```
 
@@ -186,13 +183,13 @@ php artisan p:user:make
 安裝流程的最後一步，是把 Panel 檔案的權限設定正確，讓網頁伺服器能夠順利存取這些檔案：
 
 ``` bash
-# If using NGINX, Apache or Caddy (not on RHEL / Rocky Linux / AlmaLinux)
+# 若使用 NGINX、Apache 或 Caddy（RHEL／Rocky Linux／AlmaLinux 除外）
 chown -R www-data:www-data /var/www/pterodactyl/*
 
-# If using NGINX on RHEL / Rocky Linux / AlmaLinux
+# 若在 RHEL／Rocky Linux／AlmaLinux 上使用 NGINX
 chown -R nginx:nginx /var/www/pterodactyl/*
 
-# If using Apache on RHEL / Rocky Linux / AlmaLinux
+# 若在 RHEL／Rocky Linux／AlmaLinux 上使用 Apache
 chown -R apache:apache /var/www/pterodactyl/*
 ```
 
@@ -215,7 +212,7 @@ Panel 內部使用佇列（queue）機制，讓應用程式反應更快，並把
 在 `/etc/systemd/system` 目錄下建立一個名為 `pteroq.service` 的檔案，內容如下：
 
 ``` text
-# Pterodactyl Queue Worker File
+# Pterodactyl 佇列工作程序檔案
 # ----------------------------------
 
 [Unit]
@@ -223,8 +220,8 @@ Description=Pterodactyl Queue Worker
 After=redis-server.service
 
 [Service]
-# On some systems the user and group might be different.
-# Some systems use `apache` or `nginx` as the user and group.
+# 在某些系統上，這裡的使用者與群組可能會不一樣。
+# 有些系統會用 `apache` 或 `nginx` 作為使用者與群組。
 User=www-data
 Group=www-data
 Restart=always
@@ -241,7 +238,7 @@ WantedBy=multi-user.target
 如果你是在 RHEL、Rocky Linux 或 AlmaLinux 上安裝，記得把 `After=` 那一行的 `redis-server.service` 改成 `redis.service`，這樣才能確保 `redis` 會在 queue worker 啟動之前先跑起來。
 :::
 
-::: tip
+::: tip 提示
 如果你的系統完全沒有安裝 `redis`，就把 `After=` 這一行整個移除，不然服務啟動時會噴錯誤。
 :::
 

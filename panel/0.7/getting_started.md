@@ -23,7 +23,7 @@ Pterodactyl Panel 是設計來跑在你自己的 Web 伺服器上的，所以你
 
 Pterodactyl 支援多種作業系統，挑一個你自己最熟悉的系統就好。
 
-::: warning
+::: warning 警告
 由於 Docker 相容性問題，Pterodactyl 並不支援大多數 OpenVZ 系統。如果你打算在 OpenVZ 上安裝，成功的機率不高，
 建議提前有心理準備。
 :::
@@ -96,8 +96,9 @@ cd /var/www/pterodactyl
 並幫 `storage/` 與 `bootstrap/cache/` 這兩個目錄設定正確的權限，這兩個目錄分別用來存放檔案，以及保存快取資料以加快
 之後的載入速度。
 
-> [!NOTE]
-> 由於我們僅提供最新版本文件的翻譯，通常只有依照我們的文件說明操作、或使用我們的一鍵安裝程式，才會套用我們的繁體中文化版本。若你選擇安裝舊版本，即代表你將安裝官方的英文版本，我們將不提供翻譯內容上的支援；但技術問題仍可透過 [Discord](https://pterodactyl.tw/discord) 與我們聯絡，或與其他使用者討論翻譯相關問題。
+::: warning 警告
+由於我們僅提供最新版本文件的翻譯，通常只有依照我們的文件說明操作、或使用我們的一鍵安裝程式，才會套用我們的繁體中文化版本。若你選擇安裝舊版本，即代表你將安裝官方的英文版本，我們將不提供翻譯內容上的支援；但技術問題仍可透過 [Discord](https://pterodactyl.tw/discord) 與我們聯絡，或與其他使用者討論翻譯相關問題。
+:::
 
 ```bash
 curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/download/v0.7.19/panel.tar.gz
@@ -142,7 +143,7 @@ composer install --no-dev --optimize-autoloader
 php artisan key:generate --force
 ```
 
-::: danger
+::: danger 危險
 這裡要特別提醒：務必備份你的加密金鑰（`.env` 檔案中的 `APP_KEY`）。這組金鑰會用來加密所有需要安全儲存的資料，
 例如 API 金鑰。
 
@@ -245,7 +246,7 @@ WantedBy=multi-user.target
 會在佇列工作程序啟動前先跑起來。
 :::
 
-::: tip
+::: tip 提示
 如果你根本沒在用 Redis，建議直接移除 `After=` 這一行，不然服務啟動時可能會跳出錯誤。
 :::
 

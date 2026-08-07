@@ -14,7 +14,7 @@ meta:
 
 [[toc]]
 
-::: danger
+::: danger 危險
 記得移除 Apache 或 NGINX 的預設設定，因為這些預設設定可能會把應用程式的機密資訊暴露給有心人士。
 :::
 
@@ -26,7 +26,7 @@ meta:
 這份設定假設 Panel 與 Wings 都會啟用 SSL，這樣一來，使用者與 Panel 之間的通訊安全性會大幅提升。要做到這點，
 你需要先準備好一張有效的 SSL 憑證，而 Let's Encrypt 就能免費申請到。
 
-::: warning
+::: warning 警告
 使用這份 SSL 設定時，**一定要**先建立好 SSL 憑證，不然 NGINX 會直接無法啟動。繼續之前，建議先參考
 [建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)這篇文件，了解該怎麼建立。
 :::
@@ -58,7 +58,7 @@ systemctl restart nginx
 ### 使用 SSL 的 Apache
 跟 NGINX 的設定一樣，這份設定同樣假設 Panel 與 Wings 都會啟用 SSL，以提升整體安全性。
 
-::: warning
+::: warning 警告
 使用這份 SSL 設定時，**一定要**先建立好 SSL 憑證，不然 Apache 會直接無法啟動。繼續之前，建議先參考
 [建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)這篇文件，了解該怎麼建立。
 :::

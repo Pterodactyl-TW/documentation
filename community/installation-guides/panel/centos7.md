@@ -100,6 +100,6 @@ setsebool -P httpd_unified 1
 
 到這裡，所有必要的相依套件都已經裝好也設定完成了。接下來只要接著照[官方控制面板安裝文件](/panel/1.0/getting_started.md#download-files)繼續操作即可。
 
-::: tip
+::: tip 提示
 這裡有個小提醒，設定 Nginx 時記得把 `fastcgi_pass` 的路徑改成 `/var/run/php-fpm/pterodactyl.sock`，跟前面設定的 PHP-FPM socket 對應起來。
 :::

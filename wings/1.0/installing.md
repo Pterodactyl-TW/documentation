@@ -2,7 +2,7 @@
 
 Wings 是 Pterodactyl 全新一代的伺服器控制平面，用 Go 語言從頭打造，並吸收了初代 Node.js Daemon 累積下來的經驗。
 
-::: warning
+::: warning 警告
 Wings 只能安裝在 **Pterodactyl 1.x** 上，千萬不要拿去裝在舊版的 Pterodactyl。
 :::
 
@@ -89,12 +89,9 @@ GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1"
 
 安裝 Wings 的第一步，是先把需要的目錄結構建起來。執行下面的指令，建立基礎目錄並下載 Wings 的執行檔。
 
-> [!NOTE]
-> 我們目前只翻譯最新版本的文件，所以一般來說，只有照著這份文件操作，或是使用我們的一鍵安裝程式，才會裝到繁體中文化版本。如果你選擇安裝的是舊版本，那就代表你裝的是官方英文版，我們沒辦法在翻譯內容上提供支援；不過技術層面的問題，還是歡迎到 [Discord](https://pterodactyl.tw/discord) 找我們，或跟其他使用者一起討論。
-
 ```bash
 sudo mkdir -p /etc/pterodactyl
-curl -L -o /usr/local/bin/wings "https://github.com/pterodactyl/wings/releases/latest/download/wings_linux_$([[ "$(uname -m)" == "x86_64" ]] && echo "amd64" || echo "arm64")"
+curl -L -o /usr/local/bin/wings "https://github.com/Pterodactyl-TW/wings/releases/latest/download/wings_linux_$([[ "$(uname -m)" == "x86_64" ]] && echo "amd64" || echo "arm64")"
 sudo chmod u+x /usr/local/bin/wings
 ```
 
@@ -112,7 +109,7 @@ sudo chmod u+x /usr/local/bin/wings
 
 ![example image of wings configuration](./../../.vuepress/public/wings_configuration_example.png)
 
-::: warning
+::: warning 警告
 如果你的 Panel 有啟用 SSL，那 Wings 的 FQDN 也需要一份對應的 SSL 憑證才行。繼續下一步之前，建議先看一下[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)這篇文件，了解怎麼把憑證準備好。
 :::
 

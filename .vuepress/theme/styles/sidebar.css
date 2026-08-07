@@ -55,6 +55,12 @@ $arrow-bg: #000;
         @apply .text-blue .text-lg .font-bold .px-6 .mt-0 .mb-2 .cursor-pointer;
         transition: color 200ms ease;
 
+        &::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
         &.open, &:hover {
             color: inherit;
         }

@@ -22,7 +22,8 @@ export default {
         deprecated: "已棄用",
         current: "目前版本",
         stable: "穩定版",
-        beta: "測試版"
+        beta: "測試版",
+        eol: "已終止支援"
       }[this.version.status] || this.version.status;
     },
     classes() {
@@ -31,7 +32,8 @@ export default {
           deprecated: ["text-orange"],
           current: ["text-green-dark"],
           stable: ["text-green-dark"],
-          beta: ["text-blue"]
+          beta: ["text-blue"],
+          eol: ["text-red"]
         }[this.version.status] || ["text-grey"]
       );
     }

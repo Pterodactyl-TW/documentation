@@ -8,7 +8,7 @@
                     </div>
                     <div class="mt-4">
                         <!-- <a class="btn hidden md:inline-block" href="https://demo.pterodactyl.io" target="_blank" rel="nofollow noopener">Demo</a> -->
-                        <router-link class="btn inline-block" to="/panel/getting_started.html">開始使用！</router-link>
+                        <router-link class="btn inline-block" to="/panel/1.0/getting_started.html">開始使用！</router-link>
                     </div>
                 </div>
             </div>
@@ -37,32 +37,32 @@
                     <div class="feature">
                         <span><i class="icon icon-lock"></i></span>
                         <h3>安全至上</h3>
-                        <p>平台將安全性視為核心要務，內建 bcrypt 雜湊、AES-256-CBC 加密與 HTTPS 支援。</p>
+                        <p>安全性是打從一開始就寫進設計核心的，而不是事後補上去的。bcrypt 雜湊、AES-256-CBC 加密、HTTPS 通通內建，你不用另外操心。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-beaker"></i></span>
                         <h3>現代化工具</h3>
-                        <p>採用現代技術堆疊與最佳設計實務，讓你能輕鬆開始使用並進行修改。</p>
+                        <p>用的是現代技術堆疊，架構也照著業界最佳實務打造，不管是上手還是日後客製化，都不會讓你卡關。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-anchor"></i></span>
                         <h3>以 Docker 為核心</h3>
-                        <p>所有伺服器都執行於隔離的 Docker 容器中，以降低攻擊面、提供嚴格的資源限制，並為各款遊戲提供量身打造的環境。</p>
+                        <p>每個伺服器都跑在各自獨立的 Docker 容器裡，攻擊面小、資源限制抓得緊，還能替不同遊戲量身打造專屬環境。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-wallet"></i></span>
                         <h3>免費且開放原始碼</h3>
-                        <p>Pterodactyl 完全免費，採用 MIT 授權條款，所有程式碼也都完全開放原始碼。</p>
+                        <p>不收費、不藏私。Pterodactyl 採用 MIT 授權條款，程式碼完全公開，你可以自由查看、修改，甚至拿去二次開發。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-browser"></i></span>
                         <h3>易於使用</h3>
-                        <p>把瘋狂點擊與吶喊留給 Overwatch 吧。Pterodactyl 的介面設計得如此完善，就連新手也能輕鬆使用。</p>
+                        <p>介面該有的都有，不該有的複雜通通拿掉。就算你完全沒管理過伺服器，也能很快摸清楚怎麼操作。</p>
                     </div>
                     <div class="feature">
                         <span><i class="icon icon-expand"></i></span>
                         <h3>可擴充</h3>
-                        <p>無論你是託管商、下一個 Hyplex，還是只想和朋友玩遊戲，我們都能滿足你的需求。</p>
+                        <p>不管你是要開代管服務、經營大型社群，還是單純想跟朋友一起玩，Pterodactyl 都能跟著你的規模一起長大。</p>
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                         <p><a class="text-grey-lightest" href="https://github.com/Pterodactyl-TW">GitHub</a></p>
                         <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">贊助</a></p>
                         <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">捐款</a></p>
-                        <p><a class="text-grey-lightest" href="/panel/troubleshooting.html">疑難排解</a></p>
+                        <p><a class="text-grey-lightest" href="/panel/1.0/troubleshooting.html">疑難排解</a></p>
                         <p><a class="text-grey-lightest" href="https://eggs.pterodactyl.tw">其他遊戲設定</a></p>
                     </div>
                     <div class="text-center mt-8 md:flex-1 md:mt-0">

@@ -50,7 +50,7 @@ Composer version 2.3.5 2022-04-13 16:43:00
 
 ## 自動升級
 
-::: warning
+::: warning 警告
 由於部分相依套件存在問題，目前無法使用自動升級。
 在問題解決前，請先執行手動升級。
 :::
@@ -59,7 +59,7 @@ Composer version 2.3.5 2022-04-13 16:43:00
 
 如果你不想執行自動升級，或需要查閱升級步驟，可以依照下方文件操作。
 
-::: warning
+::: warning 警告
 如果你已成功執行自動升級，就不需要再進行本頁的其他操作。
 :::
 
@@ -78,11 +78,8 @@ php artisan down
 更新流程的第一步是從 GitHub 下載新的 Panel 檔案。下方命令會下載最新 Pterodactyl 版本的發行壓縮檔，
 將其儲存到目前目錄，並自動解壓縮到目前資料夾。
 
-> [!NOTE]
-> 由於我們僅提供最新版本文件的翻譯，通常只有依照我們的文件說明操作、或使用我們的一鍵安裝程式，才會套用我們的繁體中文化版本。若你選擇安裝舊版本，即代表你將安裝官方的英文版本，我們將不提供翻譯內容上的支援；但技術問題仍可透過 [Discord](https://pterodactyl.tw/discord) 與我們聯絡，或與其他使用者討論翻譯相關問題。
-
 ```bash
-curl -L https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz | tar -xzv
+curl -L https://github.com/Pterodactyl-TW/panel/releases/latest/download/panel.tar.gz | tar -xzv
 ```
 
 下載所有檔案後，需要為快取與儲存目錄設定正確權限，以避免網頁伺服器相關錯誤。
@@ -123,13 +120,13 @@ php artisan migrate --seed --force
 有時會是 `nginx`、`caddy`、`apache`，甚至是 `nobody`。
 
 ```bash
-# If using NGINX or Apache (not on CentOS)
+# 若使用 NGINX 或 Apache（CentOS 除外）
 chown -R www-data:www-data /var/www/pterodactyl/*
 
-# If using NGINX on CentOS
+# 若在 CentOS 上使用 NGINX
 chown -R nginx:nginx /var/www/pterodactyl/*
 
-# If using Apache on CentOS
+# 若在 CentOS 上使用 Apache
 chown -R apache:apache /var/www/pterodactyl/*
 ```
 

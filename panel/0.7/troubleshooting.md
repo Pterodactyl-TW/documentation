@@ -115,7 +115,7 @@ tail -n 1000 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log | grep "\
 
 ## Invalid MAC 例外
 
-::: warning
+::: warning 警告
 如果你有確實照著我們的安裝與升級指南操作，理論上不應該遇到這個錯誤。這個錯誤通常只會在用備份還原控制面板資料庫，
 卻搭配一套全新安裝的控制面板時才會出現。
 

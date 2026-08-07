@@ -36,13 +36,10 @@ php artisan down
 
 另外，這裡也會一併刪除 `app/` 目錄。原因是安裝與升級的處理方式，導致某些已刪除的檔案不一定會被正確偵測到，如果直接在原地覆寫，反而可能造成一些難以排查的問題，所以乾脆先清乾淨再重新展開。
 
-> [!NOTE]
-> 由於我們僅提供最新版本文件的翻譯，通常只有依照我們的文件說明操作、或使用我們的一鍵安裝程式，才會套用我們的繁體中文化版本。若你選擇安裝舊版本，即代表你將安裝官方的英文版本，我們將不提供翻譯內容上的支援；但技術問題仍可透過 [Discord](https://pterodactyl.tw/discord) 與我們聯絡，或與其他使用者討論翻譯相關問題。
-
 ```bash
 # 刪除 app 目錄，確保從乾淨的狀態開始。
 # 此操作不會影響任何設定或伺服器。
-curl -L -o panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz
+curl -L -o panel.tar.gz https://github.com/Pterodactyl-TW/panel/releases/latest/download/panel.tar.gz
 rm -rf $(find app public resources -depth | head -n -1 | grep -Fv "$(tar -tf panel.tar.gz)")
 
 # 下載更新後的檔案，並刪除壓縮檔
@@ -76,7 +73,7 @@ php artisan config:clear
 
 接下來要更新資料庫結構，讓它符合最新版本 Pterodactyl 的要求。執行以下兩道指令之後，系統會自動更新資料庫結構，並確保內建的預設 Egg 維持在最新狀態（同時補上可能新增的 Egg）。這裡務必記住一件事：_千萬別自己去改我們提供的核心 Egg_，因為這些修改在更新過程中都會被直接覆寫掉。
 
-::: warning
+::: warning 警告
 如果你在 0.7 版本時曾經使用過允許伺服器轉移的自訂外掛，繼續之前**務必**先刪除或重新命名 `server_transfers` 資料表，不然後續步驟可能會出問題。
 :::
 

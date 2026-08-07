@@ -67,7 +67,7 @@ tail -n 1000 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log | grep "\
 * 如果 Wings 跟 Panel 是分別跑在使用相同網卡的不同虛擬機上，記得確認這些虛擬機彼此能互相連線，有時候需要開啟混雜模式（Promiscuous mode）才行。
 
 ## Invalid MAC 例外狀況
-::: warning
+::: warning 警告
 只要有按照我們的安裝與升級指南操作，理論上不會遇到這個錯誤。我們目前唯一看過這個錯誤出現的情況，是使用者直接拿舊備份還原 Panel 資料庫，卻搭配一份全新安裝的 Panel。
 
 這裡提醒一下：還原備份時，`.env` 檔案也要 _一併_ 還原才行！
@@ -97,11 +97,11 @@ semodule -i http_port_t.pp
 
 這裡要提醒的是：如果你用的主機服務商會封鎖 Cloudflare DNS，就必須改用其他 DNS 伺服器，通常直接跟你主機系統本身使用的 DNS 伺服器保持一致就行。依你作業系統處理網路的方式不同，查看主機實際使用的 DNS 伺服器也有好幾種方法，如果其中一種查不到，可以換另一種試試看。
 ```bash
-# Network Manager (This will show both your IPV4 DNS and IPV6 DNS Servers in case you want to add the IPV6 DNS Server(s) from your host to your Wings Config as well.
+# Network Manager（這裡會同時顯示 IPv4 與 IPv6 的 DNS 伺服器，方便你順便把 IPv6 DNS 伺服器也加進 Wings 設定）
 nmcli -g ip4.dns,ip6.dns dev show
-# Resolve-CTL (Newer Versions of Ubuntu)
+# Resolve-CTL（較新版本的 Ubuntu）
 resolvectl status
-# Raw file locations that may have your host system's DNS Servers for various distributions
+# 各發行版中可能存放主機系統 DNS 伺服器設定的原始檔案位置
 /etc/resolv.conf
 /etc/network/interfaces
 ```

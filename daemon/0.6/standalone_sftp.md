@@ -12,7 +12,7 @@ meta:
 在正式環境中，你應搭配 [Pterodactyl Panel 1.0](/panel/1.0/getting_started.md) 安裝並使用 [Wings](/wings/1.0/installing.md)。
 :::
 
-::: warning
+::: warning 警告
 獨立 SFTP 支援是在 `Panel@v0.7.11` 與 `Daemon@v0.6.8` 中才引入的，舊版本並不支援這項功能。
 :::
 

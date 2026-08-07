@@ -79,6 +79,6 @@ sudo systemctl enable --now php-fpm
 
 到這裡，所有必要的相依套件都已經安裝並設定完成了。接下來只要接著照[官方控制面板安裝文件](/panel/1.0/getting_started.md#download-files)繼續操作就可以了。
 
-::: tip
+::: tip 提示
 小提醒，設定 Nginx 時記得把 `fastcgi_pass` 的路徑改成 `/var/run/php-fpm/pterodactyl.sock`，這樣才會對應到前面設定好的 PHP-FPM socket。
 :::

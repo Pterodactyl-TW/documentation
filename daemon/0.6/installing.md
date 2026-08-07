@@ -12,7 +12,7 @@ meta:
 在正式環境中，你應安裝並使用 [Wings](/wings/1.0/installing.md) 以及 [Pterodactyl 控制面板 1.0](/panel/1.0/getting_started.md)。
 :::
 
-::: warning
+::: warning 警告
 此軟體僅適用於 Pterodactyl v0.7，**不得用於 Pterodactyl v1.0**。如果你已經安裝了 1.0，請改用 [Wings](/wings/1.0/installing.html)。
 :::
 

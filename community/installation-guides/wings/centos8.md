@@ -33,6 +33,6 @@ firewall-cmd --reload
 
 到這裡，相依套件跟防火牆規則都已經處理好了。接下來只要接著照[官方 Wings 安裝文件](/wings/1.0/installing.html#enabling-swap)繼續操作即可。
 
-::: tip
+::: tip 提示
 這裡有個小提醒：如果你的系統已經啟用 SELinux 強制執行模式，而且容器出現了 AVC 拒絕訊息，可以試著把 Wings 的資料目錄從 `/var/lib/pterodactyl` 搬到 `/var/srv/containers/pterodactyl`。之所以這樣做，是因為目標原則（targeted policy）預期 Docker 是從這個位置讀寫資料的，換個路徑通常就能解決這類權限問題。
 :::

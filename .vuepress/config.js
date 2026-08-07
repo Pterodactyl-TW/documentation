@@ -158,6 +158,18 @@ module.exports = {
                                 '/troubleshooting',
                                 '/legacy_upgrade',
                             ]
+                        },
+                        {
+                            title: '0.7',
+                            name: '0.7',
+                            status: 'eol',
+                            children: [
+                                '/getting_started',
+                                '/webserver_configuration',
+                                '/configuration',
+                                '/upgrading',
+                                '/troubleshooting',
+                            ]
                         }
                     ]
                 },
@@ -176,6 +188,19 @@ module.exports = {
                                 '/upgrading',
                                 '/migrating',
                                 '/configuration',
+                            ]
+                        },
+                        {
+                            title: 'Daemon 0.6',
+                            name: '0.6',
+                            status: 'eol',
+                            basePath: '/daemon/0.6',
+                            children: [
+                                '/installing',
+                                '/configuration',
+                                '/kernel_modifications',
+                                '/standalone_sftp',
+                                '/upgrading',
                             ]
                         }
                     ]

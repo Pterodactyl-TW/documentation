@@ -1,10 +1,10 @@
 # Web 伺服器設定
 
-::: warning
+::: warning 警告
 使用 SSL 設定時，**必須先建立 SSL 憑證**，否則 Web 伺服器將無法啟動。請參閱[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)文件，先完成憑證建立，再繼續以下步驟。
 :::
 
-::: tip
+::: tip 提示
 如果你使用的是[具備自動 SSL 功能的 Caddy](#caddy-with-automatic-ssl)，則不需要手動建立 SSL 憑證，Caddy 會自動處理。
 :::
 
@@ -128,7 +128,7 @@ rm /etc/caddy/Caddyfile
 
 <<< @/.snippets/webservers/Caddyfile{10}
 
-::: tip
+::: tip 提示
 如果你使用 Cloudflare DNS Proxy 模式，請參閱[此教學](/tutorials/creating_ssl_certificates.html#method-3:-caddy-(using-cloudflare-api))，了解如何設定 Caddy，使用 DNS 挑戰取得 SSL 憑證。
 :::
 

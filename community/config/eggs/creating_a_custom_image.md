@@ -2,7 +2,7 @@
 
 [[toc]]
 
-::: warning
+::: warning 警告
 本教學使用我們的 [`core:java`](https://github.com/pterodactyl/images/tree/java) Docker 映像檔作為範例，你可以在 GitHub 上找到它。另外也提醒一下，本教學預設你已經具備一些 [Docker](https://docker.io/) 的基本知識，如果你對 Docker 還不熟悉，建議先花點時間讀一下官方文件，之後再回來看會比較好懂。
 :::
 
@@ -55,7 +55,7 @@ FROM openjdk:8-jdk-alpine
 adduser -D -h /home/container container
 ```
 
-::: warning
+::: warning 警告
 這裡要特別提醒，所有 Pterodactyl 容器都必須有一個名為 `container` 的使用者，而且這個使用者的家目錄**必須**是 `/home/container`，這是硬性規定，不能省略或改名。
 :::
 

@@ -18,10 +18,10 @@ meta:
 都升級完成後，才讓使用者看到新功能。
 
 ``` bash
-# Put the Panel into maintenance mode and deny user access
+# 讓 Panel 進入維護模式，拒絕使用者存取
 php artisan down
 
-# Bring the Panel back up to receive connections.
+# 讓 Panel 恢復運作，重新開始接受連線。
 php artisan up
 ```
 

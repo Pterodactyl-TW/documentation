@@ -43,7 +43,7 @@ a.header-anchor {
     margin-top: 0.125em;
 }
 
-.content:not(.custom) {
+.content:not(.custom):not(.error-page) {
     & > h1, h2, h3, h4, h5, h6 {
         margin-top: calc(.5rem - 56px);
         padding-top: calc(56px + 1rem);

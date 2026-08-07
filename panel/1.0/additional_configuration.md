@@ -13,7 +13,7 @@ Pterodactyl Panel 支援建立伺服器備份，不過在開始使用之前，�
 Pterodactyl Panel 預設就是透過 Wings 把備份存在本機儲存空間，不需要額外設定。如果你想明確指定這個行為，也可以在 `.env` 檔案中加入以下設定：
 
 ```bash
-# Sets your panel to use local storage via Wings for backups
+# 設定你的 panel 透過 Wings 使用本機儲存空間來備份
 APP_BACKUP_DRIVER=wings
 ```
 
@@ -29,10 +29,10 @@ system:
 如果你想把備份存到遠端或雲端，AWS S3（或相容的儲存服務）是個好選擇。要啟用這個功能，只要在 `.env` 檔案或環境變數中設定以下選項即可：
 
 ```bash
-# Sets your panel to use s3 for backups
+# 設定你的 panel 使用 s3 來備份
 APP_BACKUP_DRIVER=s3
 
-# Info to actually use s3
+# 實際使用 s3 所需的資訊
 AWS_DEFAULT_REGION=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
@@ -62,7 +62,7 @@ BACKUP_PRESIGNED_URL_LIFESPAN=120
 以下範例示範如何把儲存類別改成 `STANDARD_IA`（這裡僅作示範，實際要用哪個類別依你的需求決定）：
 
 ```bash
-# STANDARD_IA is an example.
+# 這裡的 STANDARD_IA 只是範例。
 AWS_BACKUPS_STORAGE_CLASS=STANDARD_IA
 ```
 
@@ -121,10 +121,10 @@ Panel 會用隱形 reCAPTCHA 保護登入頁面，防止有心人士暴力破解
 萬一你完全無法存取 Panel 介面，也可以直接修改資料庫來達成同樣效果：
 
 ```sql
-# If using MariaDB (v11.0.0+)
+# 若使用 MariaDB（v11.0.0+）
 mariadb -u root -p
 
-# If using MySQL
+# 若使用 MySQL
 mysql -u root -p
 ```
 ```sql
@@ -138,10 +138,10 @@ UPDATE panel.settings SET value = 'false' WHERE `key` = 'settings::recaptcha:ena
 ### 停用 2FA 要求
 
 ```sql
-# If using MariaDB (v11.0.0+)
+# 若使用 MariaDB（v11.0.0+）
 mariadb -u root -p
 
-# If using MySQL
+# 若使用 MySQL
 mysql -u root -p
 ```
 ```sql

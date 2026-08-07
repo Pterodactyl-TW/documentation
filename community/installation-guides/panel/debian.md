@@ -2,7 +2,7 @@
 
 [[toc]]
 
-::: tip
+::: tip 提示
 本指南是以[官方安裝文件](/panel/1.0/getting_started.md)為基礎，再針對 Debian 11、12 與 13 做了些微調整，方便你照著做。
 :::
 

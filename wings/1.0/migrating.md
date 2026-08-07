@@ -12,12 +12,9 @@
 
 安裝 Wings 的第一步，是先把需要的目錄結構建起來。執行下面的指令，建立基礎目錄並下載 Wings 執行檔。
 
-> [!NOTE]
-> 我們目前只翻譯最新版本的文件，所以一般來說，只有照著這份文件操作，或是使用我們的一鍵安裝程式，才會裝到繁體中文化版本。如果你選擇安裝的是舊版本，那就代表你裝的是官方英文版，我們沒辦法在翻譯內容上提供支援；不過技術層面的問題，還是歡迎到 [Discord](https://pterodactyl.tw/discord) 找我們，或跟其他使用者一起討論。
-
 ``` bash
 mkdir -p /etc/pterodactyl
-curl -L -o /usr/local/bin/wings https://github.com/pterodactyl/wings/releases/latest/download/wings_linux_amd64
+curl -L -o /usr/local/bin/wings https://github.com/Pterodactyl-TW/wings/releases/latest/download/wings_linux_amd64
 chmod u+x /usr/local/bin/wings
 ```
 
@@ -29,7 +26,7 @@ chmod u+x /usr/local/bin/wings
 
 ![](./../../.vuepress/public/wings_configuration_example.png)
 
-::: warning
+::: warning 警告
 這裡要注意一下：你先前對舊設定做的任何修改，這次都不會被帶過來，會直接遺失。如果你以前有調整過預設設定，比較保險的做法是先用複製來的新設定啟動一次 Wings，讓它自動把其他設定值補齊。
 
 等 Wings 順利跑起來之後，再回頭依需求慢慢調整就好。

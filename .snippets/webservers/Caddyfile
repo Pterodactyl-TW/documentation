@@ -6,7 +6,7 @@
     }
 }
 
-# Replace the example <domain> with your domain name or IP address
+# 請把範例中的 <domain> 換成你的網域名稱或 IP 位址
 <domain> {
     root * /var/www/pterodactyl/public
 

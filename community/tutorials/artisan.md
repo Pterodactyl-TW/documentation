@@ -12,7 +12,7 @@ php artisan list
 php artisan help <command>
 ```
 
-::: tip
+::: tip 提示
 為了讓後面的說明看起來簡潔一點，這裡先統一標記規則，指令用法中會看到以下符號：
 
 `<hello-world>` - 必填引數
@@ -47,7 +47,7 @@ php artisan p:user:delete {--user=username/email/UUID}
 
 ### 停用兩步驟驗證
 
-::: warning
+::: warning 警告
 這裡要提醒一下，停用兩步驟驗證只應該在復原使用者帳戶時，當作最後的手段使用。**請務必謹慎使用這項功能。**
 :::
 
