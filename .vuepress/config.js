@@ -2,6 +2,11 @@ module.exports = {
     base: '/',
     title: 'Pterodactyl',
     description: 'Pterodactyl 是一款採用 PHP、React 與 Go 建置的開源遊戲伺服器管理面板。Pterodactyl 以安全性為設計核心，將所有遊戲伺服器執行於隔離的 Docker 容器中，同時為使用者提供美觀且直覺的使用者介面。',
+    locales: {
+        '/': {
+            lang: 'zh-TW',
+        },
+    },
     plugins: [
         ['@vuepress/search', {
             searchMaxSuggestions: 10
@@ -41,6 +46,23 @@ module.exports = {
         ['link', { rel: 'shortcut icon', href: '/favicons/favicon.ico' }],
         ['meta', { name: 'msapplication-config', content: '/favicons/browserconfig.xml' }],
         ['meta', { name: 'theme-color', content: '#0e4688' }],
+
+        // Open Graph / social embed (Discord, Facebook, etc.)
+        ['meta', { property: 'og:type', content: 'website' }],
+        ['meta', { property: 'og:site_name', content: 'Pterodactyl 繁體中文文件' }],
+        ['meta', { property: 'og:title', content: 'Pterodactyl 繁體中文文件' }],
+        ['meta', { property: 'og:description', content: 'Pterodactyl 是一款採用 PHP、React 與 Go 建置的開源遊戲伺服器管理面板，本站提供完整的繁體中文安裝、設定與疑難排解文件。' }],
+        ['meta', { property: 'og:url', content: 'https://pterodactyl.tw/' }],
+        ['meta', { property: 'og:image', content: 'https://pterodactyl.tw/og-image.png' }],
+        ['meta', { property: 'og:image:width', content: '1200' }],
+        ['meta', { property: 'og:image:height', content: '630' }],
+        ['meta', { property: 'og:locale', content: 'zh_TW' }],
+
+        // Twitter/X card (Discord also respects this as a fallback)
+        ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+        ['meta', { name: 'twitter:title', content: 'Pterodactyl 繁體中文文件' }],
+        ['meta', { name: 'twitter:description', content: 'Pterodactyl 是一款採用 PHP、React 與 Go 建置的開源遊戲伺服器管理面板，本站提供完整的繁體中文安裝、設定與疑難排解文件。' }],
+        ['meta', { name: 'twitter:image', content: 'https://pterodactyl.tw/og-image.png' }],
     ],
     themeConfig: {
         repo: 'Pterodactyl-TW/panel',
