@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 建立 SSL 憑證 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 本教學將簡要說明如何為控制面板與 Wings 建立新的 SSL 憑證。
+- property: og:image
+  content: https://pterodactyl.tw/og/tutorials_creating_ssl_certificates.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 建立 SSL 憑證 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 本教學將簡要說明如何為控制面板與 Wings 建立新的 SSL 憑證。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/tutorials_creating_ssl_certificates.png
+---
 # 建立 SSL 憑證
 
 本教學將簡要說明如何為控制面板與 Wings 建立新的 SSL 憑證。

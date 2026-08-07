@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 遷移至 Wings | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 這篇指南是寫給想從舊版 Node.JS Daemon 遷移到 Wings 的使用者看的。如果你是要在全新的節點上第一次安裝 Wings…
+- property: og:image
+  content: https://pterodactyl.tw/og/wings_1.0_migrating.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 遷移至 Wings | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 這篇指南是寫給想從舊版 Node.JS Daemon 遷移到 Wings 的使用者看的。如果你是要在全新的節點上第一次安裝 Wings…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/wings_1.0_migrating.png
+---
 # 遷移至 Wings
 
 這篇指南是寫給想從舊版 Node.JS Daemon 遷移到 Wings 的使用者看的。如果你是要在全新的節點上第一次安裝 Wings，直接看[安裝指南](/wings/1.0/installing.md)就好，不需要參考這篇。

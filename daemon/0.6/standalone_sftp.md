@@ -1,7 +1,23 @@
 ---
 meta:
-    - name: robots
-      content: noindex
+- name: robots
+  content: noindex
+- property: og:title
+  content: 獨立 SFTP 伺服器 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 本文件適用於已遭棄用的軟體，不再提供任何安全性更新或社群支援。
+- property: og:image
+  content: https://pterodactyl.tw/og/daemon_0.6_standalone_sftp.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 獨立 SFTP 伺服器 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 本文件適用於已遭棄用的軟體，不再提供任何安全性更新或社群支援。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/daemon_0.6_standalone_sftp.png
 ---
 # 獨立 SFTP 伺服器
 

@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: Minecraft | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 如果你想架設 BungeeCord、Waterfall、HexaCord 之類的 Minecraft 代理伺服器，而且是想安全地運行，只…
+- property: og:image
+  content: https://pterodactyl.tw/og/community_games_minecraft.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: Minecraft | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 如果你想架設 BungeeCord、Waterfall、HexaCord 之類的 Minecraft 代理伺服器，而且是想安全地運行，只…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_games_minecraft.png
+---
 # Minecraft
 
 [[toc]]

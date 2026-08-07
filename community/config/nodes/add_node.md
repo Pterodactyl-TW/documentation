@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 建立新的節點 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 首先前往管理控制面板，點選左側側邊欄中的 Nodes 分頁，接著點選右上角的 Create New，就會開啟新增節點的頁面。
+- property: og:image
+  content: https://pterodactyl.tw/og/community_config_nodes_add_node.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 建立新的節點 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 首先前往管理控制面板，點選左側側邊欄中的 Nodes 分頁，接著點選右上角的 Create New，就會開啟新增節點的頁面。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_config_nodes_add_node.png
+---
 # 建立新的節點
 
 [[toc]]

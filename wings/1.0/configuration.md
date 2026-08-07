@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 進階設定 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 以下都是 Wings 的進階設定項目，動到這些等於是在動核心行為，設錯了很容易讓 Wings 整個壞掉，甚至讓容器完全無法使用。
+- property: og:image
+  content: https://pterodactyl.tw/og/wings_1.0_configuration.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 進階設定 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 以下都是 Wings 的進階設定項目，動到這些等於是在動核心行為，設錯了很容易讓 Wings 整個壞掉，甚至讓容器完全無法使用。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/wings_1.0_configuration.png
+---
 # 進階設定
 
 [[toc]]

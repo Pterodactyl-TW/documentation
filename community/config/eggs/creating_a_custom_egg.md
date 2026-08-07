@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 建立自訂 Egg | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 教你如何在控制面板中建立自訂的 Nest 與 Egg，設定專屬的伺服器類型與啟動選項。
+- property: og:image
+  content: https://pterodactyl.tw/og/community_config_eggs_creating_a_custom_egg.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 建立自訂 Egg | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 教你如何在控制面板中建立自訂的 Nest 與 Egg，設定專屬的伺服器類型與啟動選項。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_config_eggs_creating_a_custom_egg.png
+---
 # 建立自訂 Egg
 
 ::: warning 警告

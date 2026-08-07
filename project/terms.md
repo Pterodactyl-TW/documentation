@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 術語 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 剛接觸 Pterodactyl 的時候，常常會被一堆專有名詞搞得一頭霧水。這裡把常見的詞彙都整理在一起，看到不熟悉的名詞時，回來查看一下…
+- property: og:image
+  content: https://pterodactyl.tw/og/project_terms.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 術語 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 剛接觸 Pterodactyl 的時候，常常會被一堆專有名詞搞得一頭霧水。這裡把常見的詞彙都整理在一起，看到不熟悉的名詞時，回來查看一下…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/project_terms.png
+---
 # 術語
 
 剛接觸 Pterodactyl 的時候，常常會被一堆專有名詞搞得一頭霧水。這裡把常見的詞彙都整理在一起，看到不熟悉的名詞時，回來查看一下就好。

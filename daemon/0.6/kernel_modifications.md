@@ -1,7 +1,23 @@
 ---
 meta:
-    - name: robots
-      content: noindex
+- name: robots
+  content: noindex
+- property: og:title
+  content: 核心修改 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 大多數情況下，只有使用 OVH 提供伺服器的使用者，才需要動手修改核心。
+- property: og:image
+  content: https://pterodactyl.tw/og/daemon_0.6_kernel_modifications.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 核心修改 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 大多數情況下，只有使用 OVH 提供伺服器的使用者，才需要動手修改核心。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/daemon_0.6_kernel_modifications.png
 ---
 # 核心修改
 

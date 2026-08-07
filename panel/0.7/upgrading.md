@@ -1,7 +1,23 @@
 ---
 meta:
-    - name: robots
-      content: noindex
+- name: robots
+  content: noindex
+- property: og:title
+  content: 升級 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 升級 Panel 的整體流程其實相對簡單。以下依版本列出對應的文件，帶你完成升級。
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_0.7_upgrading.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 升級 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 升級 Panel 的整體流程其實相對簡單。以下依版本列出對應的文件，帶你完成升級。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_0.7_upgrading.png
 ---
 # 升級
 升級 Panel 的整體流程其實相對簡單。以下依版本列出對應的文件，帶你完成升級。

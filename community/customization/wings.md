@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 建置 Wings | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 教你如何自行修改 Wings 原始碼並重新編譯，打造客製化的執行檔。
+- property: og:image
+  content: https://pterodactyl.tw/og/community_customization_wings.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 建置 Wings | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 教你如何自行修改 Wings 原始碼並重新編譯，打造客製化的執行檔。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_customization_wings.png
+---
 # 建置 Wings
 
 :::warning 警告

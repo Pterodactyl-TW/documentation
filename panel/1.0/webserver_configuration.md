@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: Web 伺服器設定 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 使用 SSL 設定時，必須先建立 SSL 憑證，否則 Web 伺服器將無法啟動。請參閱建立 SSL 憑證文件，先完成憑證建立，再繼續以下…
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_1.0_webserver_configuration.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: Web 伺服器設定 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 使用 SSL 設定時，必須先建立 SSL 憑證，否則 Web 伺服器將無法啟動。請參閱建立 SSL 憑證文件，先完成憑證建立，再繼續以下…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_1.0_webserver_configuration.png
+---
 # Web 伺服器設定
 
 ::: warning 警告

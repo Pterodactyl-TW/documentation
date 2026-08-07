@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 建立自訂 Docker 映像檔 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 本教學使用我們的 core:java Docker 映像檔作為範例，你可以在 GitHub 上找到它。另外也提醒一下，本教學預設你已經具…
+- property: og:image
+  content: https://pterodactyl.tw/og/community_config_eggs_creating_a_custom_image.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 建立自訂 Docker 映像檔 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 本教學使用我們的 core:java Docker 映像檔作為範例，你可以在 GitHub 上找到它。另外也提醒一下，本教學預設你已經具…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_config_eggs_creating_a_custom_image.png
+---
 # 建立自訂 Docker 映像檔
 
 [[toc]]

@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 設定 MySQL | Pterodactyl 繁體中文文件
+- property: og:description
+  content: MySQL 是 Pterodactyl Panel 的核心元件，但如果你從沒接觸過 MySQL，光是要搞懂怎麼設定跟使用，可能就會覺得有…
+- property: og:image
+  content: https://pterodactyl.tw/og/tutorials_mysql_setup.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 設定 MySQL | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: MySQL 是 Pterodactyl Panel 的核心元件，但如果你從沒接觸過 MySQL，光是要搞懂怎麼設定跟使用，可能就會覺得有…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/tutorials_mysql_setup.png
+---
 # 設定 MySQL
 [[toc]]
 

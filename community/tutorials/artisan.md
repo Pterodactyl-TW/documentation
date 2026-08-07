@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: Artisan CLI | Pterodactyl 繁體中文文件
+- property: og:description
+  content: Artisan CLI（命令列介面）其實是 Laravel 框架內建的工具，而 Pterodactyl 正是用 Laravel 打造出來…
+- property: og:image
+  content: https://pterodactyl.tw/og/community_tutorials_artisan.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: Artisan CLI | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: Artisan CLI（命令列介面）其實是 Laravel 框架內建的工具，而 Pterodactyl 正是用 Laravel 打造出來…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_tutorials_artisan.png
+---
 # Artisan CLI
 
 Artisan CLI（命令列介面）其實是 Laravel 框架內建的工具，而 Pterodactyl 正是用 Laravel 打造出來的，所以你也可以直接透過它來管理控制面板。如果你是照著官方指南安裝的，Artisan 檔案會放在 `/var/www/pterodactyl` 這個目錄底下。這篇教學會介紹幾個 Pterodactyl 特有、或跟它相關的 Artisan 指令，這些指令都有個共同特徵：一律以字母 `p` 開頭，例如 `p:user:make`。想看完整的指令清單，可以執行：

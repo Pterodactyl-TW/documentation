@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 社群規範 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: Pterodactyl 社群參與規範，涵蓋官方 Discord、GitHub 以及我們自己的繁體中文社群。
+- property: og:image
+  content: https://pterodactyl.tw/og/project_community.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 社群規範 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: Pterodactyl 社群參與規範，涵蓋官方 Discord、GitHub 以及我們自己的繁體中文社群。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/project_community.png
+---
 # 社群規範
 
 <!--

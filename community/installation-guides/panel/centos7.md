@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: CentOS 7 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 這篇指南會帶你一步步在 CentOS 7 上完整安裝 Pterodactyl v1.X，包含所有相依套件的安裝，以及 SSL 設定都會涵…
+- property: og:image
+  content: https://pterodactyl.tw/og/community_installation-guides_panel_centos7.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: CentOS 7 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 這篇指南會帶你一步步在 CentOS 7 上完整安裝 Pterodactyl v1.X，包含所有相依套件的安裝，以及 SSL 設定都會涵…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_installation-guides_panel_centos7.png
+---
 # CentOS 7
 
 這篇指南會帶你一步步在 CentOS 7 上完整安裝 Pterodactyl v1.X，包含所有相依套件的安裝，以及 SSL 設定都會涵蓋到。

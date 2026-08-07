@@ -1,7 +1,23 @@
 ---
 meta:
-    - name: robots
-      content: noindex
+- name: robots
+  content: noindex
+- property: og:title
+  content: 環境設定 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: Pterodactyl 的環境設定會儲存在 .env 這個環境檔案中，通常位於安裝根目錄，也就是 /var/www/pterodactyl。
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_0.7_configuration.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 環境設定 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: Pterodactyl 的環境設定會儲存在 .env 這個環境檔案中，通常位於安裝根目錄，也就是 /var/www/pterodactyl。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_0.7_configuration.png
 ---
 # 環境設定
 

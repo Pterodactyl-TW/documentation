@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 升級 PHP | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 這篇文件會說明如何把系統的 PHP 升級到最新版本。開始之前，先參考下表確認你目前的 Pterodactyl 版本實際上需要哪個 PHP…
+- property: og:image
+  content: https://pterodactyl.tw/og/guides_php_upgrade.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 升級 PHP | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 這篇文件會說明如何把系統的 PHP 升級到最新版本。開始之前，先參考下表確認你目前的 Pterodactyl 版本實際上需要哪個 PHP…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/guides_php_upgrade.png
+---
 # 升級 PHP
 
 這篇文件會說明如何把系統的 PHP 升級到最新版本。開始之前，先參考下表確認你目前的 Pterodactyl 版本實際上需要哪個 PHP 版本。

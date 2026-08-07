@@ -1,7 +1,23 @@
 ---
 meta:
-    - name: robots
-      content: noindex
+- name: robots
+  content: noindex
+- property: og:title
+  content: 疑難排解 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 如果你在使用控制面板時遇到未預期的錯誤，通常第一步就是被要求提供記錄檔內容。執行以下指令，就能顯示控制面板記錄檔
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_0.7_troubleshooting.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 疑難排解 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 如果你在使用控制面板時遇到未預期的錯誤，通常第一步就是被要求提供記錄檔內容。執行以下指令，就能顯示控制面板記錄檔
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_0.7_troubleshooting.png
 ---
 # 疑難排解
 

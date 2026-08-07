@@ -1,7 +1,23 @@
 ---
 meta:
-    - name: robots
-      content: noindex
+- name: robots
+  content: noindex
+- property: og:title
+  content: 額外設定 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 本文件適用於已停止維護的軟體，該軟體不再取得任何安全性更新，也不再獲得社群支援。本文件僅因歷史原因而繼續保留。
+- property: og:image
+  content: https://pterodactyl.tw/og/daemon_0.6_configuration.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 額外設定 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 本文件適用於已停止維護的軟體，該軟體不再取得任何安全性更新，也不再獲得社群支援。本文件僅因歷史原因而繼續保留。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/daemon_0.6_configuration.png
 ---
 # 額外設定
 

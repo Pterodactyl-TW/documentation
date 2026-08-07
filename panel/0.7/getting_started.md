@@ -1,7 +1,23 @@
 ---
 meta:
-    - name: robots
-      content: noindex
+- name: robots
+  content: noindex
+- property: og:title
+  content: 開始使用 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 本文件適用於已終止支援的軟體，不再提供任何安全性更新或社群支援。基於歷史原因，本文件仍保留供查閱。
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_0.7_getting_started.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 開始使用 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 本文件適用於已終止支援的軟體，不再提供任何安全性更新或社群支援。基於歷史原因，本文件仍保留供查閱。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_0.7_getting_started.png
 ---
 # 開始使用
 

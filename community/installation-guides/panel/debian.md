@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: Debian 11、12 與 13 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 本指南是以官方安裝文件為基礎，再針對 Debian 11、12 與 13 做了些微調整，方便你照著做。
+- property: og:image
+  content: https://pterodactyl.tw/og/community_installation-guides_panel_debian.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: Debian 11、12 與 13 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 本指南是以官方安裝文件為基礎，再針對 Debian 11、12 與 13 做了些微調整，方便你照著做。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_installation-guides_panel_debian.png
+---
 # Debian 11、12 與 13
 
 [[toc]]

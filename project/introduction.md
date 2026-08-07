@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 介紹 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: Pterodactyl 是一套採用 PHP、React 與 Go 建置的開源遊戲伺服器管理面板。從一開始設計就把安全性放在第一位，
+- property: og:image
+  content: https://pterodactyl.tw/og/project_introduction.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 介紹 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: Pterodactyl 是一套採用 PHP、React 與 Go 建置的開源遊戲伺服器管理面板。從一開始設計就把安全性放在第一位，
+- name: twitter:image
+  content: https://pterodactyl.tw/og/project_introduction.png
+---
 # 介紹
 Pterodactyl 是一套採用 PHP、React 與 Go 建置的開源遊戲伺服器管理面板。從一開始設計就把安全性放在第一位，
 所有遊戲伺服器都跑在互相隔離的 Docker 容器裡，同時還提供美觀又直覺的介面，不管是管理員還是一般使用者都能輕鬆上手。

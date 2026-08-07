@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 疑難排解 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: Panel 遇到意外錯誤時，通常第一件事就是請你提供記錄檔內容。執行下方命令，就能看到 Panel 記錄檔最後 100 行的內容。
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_1.0_troubleshooting.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 疑難排解 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: Panel 遇到意外錯誤時，通常第一件事就是請你提供記錄檔內容。執行下方命令，就能看到 Panel 記錄檔最後 100 行的內容。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_1.0_troubleshooting.png
+---
 # 疑難排解
 
 [[toc]]

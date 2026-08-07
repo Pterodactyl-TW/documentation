@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: Enterprise Linux 8 與 Fedora Server 40 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 這篇指南會詳細帶你在 CentOS 8、Rocky Linux 8、AlmaLinux 8，以及 Fedora Server 40 上安…
+- property: og:image
+  content: https://pterodactyl.tw/og/community_installation-guides_panel_centos8.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: Enterprise Linux 8 與 Fedora Server 40 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 這篇指南會詳細帶你在 CentOS 8、Rocky Linux 8、AlmaLinux 8，以及 Fedora Server 40 上安…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_installation-guides_panel_centos8.png
+---
 # Enterprise Linux 8 與 Fedora Server 40
 
 這篇指南會詳細帶你在 CentOS 8、Rocky Linux 8、AlmaLinux 8，以及 Fedora Server 40 上安裝 Pterodactyl v1.X，所有必要的相依套件都會一併說明。

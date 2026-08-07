@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 安裝 Wings | Pterodactyl 繁體中文文件
+- property: og:description
+  content: Wings 是 Pterodactyl 全新一代的伺服器控制平面，用 Go 語言從頭打造，並吸收了初代 Node.js Daemon 累…
+- property: og:image
+  content: https://pterodactyl.tw/og/wings_1.0_installing.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 安裝 Wings | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: Wings 是 Pterodactyl 全新一代的伺服器控制平面，用 Go 語言從頭打造，並吸收了初代 Node.js Daemon 累…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/wings_1.0_installing.png
+---
 # 安裝 Wings
 
 Wings 是 Pterodactyl 全新一代的伺服器控制平面，用 Go 語言從頭打造，並吸收了初代 Node.js Daemon 累積下來的經驗。

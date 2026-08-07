@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 使用掛載 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 掛載功能讓管理員可以把主機檔案系統上的其他目錄，掛載進伺服器的容器裡使用。
+- property: og:image
+  content: https://pterodactyl.tw/og/guides_mounts.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 使用掛載 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 掛載功能讓管理員可以把主機檔案系統上的其他目錄，掛載進伺服器的容器裡使用。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/guides_mounts.png
+---
 # 使用掛載
 
 掛載功能讓管理員可以把主機檔案系統上的其他目錄，掛載進伺服器的容器裡使用。

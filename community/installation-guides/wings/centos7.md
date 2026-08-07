@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: CentOS 7 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 這篇指南會詳細帶你在 CentOS 7 上安裝 Pterodactyl Wings v1.X。
+- property: og:image
+  content: https://pterodactyl.tw/og/community_installation-guides_wings_centos7.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: CentOS 7 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 這篇指南會詳細帶你在 CentOS 7 上安裝 Pterodactyl Wings v1.X。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/community_installation-guides_wings_centos7.png
+---
 # CentOS 7
 
 這篇指南會詳細帶你在 CentOS 7 上安裝 Pterodactyl Wings v1.X。

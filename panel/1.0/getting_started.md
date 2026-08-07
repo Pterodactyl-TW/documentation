@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 開始使用 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: Pterodactyl Panel 是設計來架設在你自己的網頁伺服器上的，所以在開始之前，你需要對伺服器有 root 存取權限，才能完成…
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_1.0_getting_started.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 開始使用 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: Pterodactyl Panel 是設計來架設在你自己的網頁伺服器上的，所以在開始之前，你需要對伺服器有 root 存取權限，才能完成…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_1.0_getting_started.png
+---
 # 開始使用
 
 [[toc]]

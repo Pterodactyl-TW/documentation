@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 關於 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 本站由以下成員維護，提供 Pterodactyl 官方文件的繁體中文化版本：
+- property: og:image
+  content: https://pterodactyl.tw/og/project_about.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 關於 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 本站由以下成員維護，提供 Pterodactyl 官方文件的繁體中文化版本：
+- name: twitter:image
+  content: https://pterodactyl.tw/og/project_about.png
+---
 # 關於
 
 [[toc]]

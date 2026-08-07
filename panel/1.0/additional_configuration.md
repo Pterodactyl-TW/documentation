@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 進階設定 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: Pterodactyl Panel 支援建立伺服器備份，不過在開始使用之前，你需要先設定備份要儲存在哪裡。
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_1.0_additional_configuration.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 進階設定 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: Pterodactyl Panel 支援建立伺服器備份，不過在開始使用之前，你需要先設定備份要儲存在哪裡。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_1.0_additional_configuration.png
+---
 # 進階設定
 
 [[toc]]

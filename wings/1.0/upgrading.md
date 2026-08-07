@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 升級 Wings | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 好消息是，升級 Wings 其實非常簡單，整個流程通常一分鐘內就能搞定。
+- property: og:image
+  content: https://pterodactyl.tw/og/wings_1.0_upgrading.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 升級 Wings | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 好消息是，升級 Wings 其實非常簡單，整個流程通常一分鐘內就能搞定。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/wings_1.0_upgrading.png
+---
 # 升級 Wings
 
 好消息是，升級 Wings 其實非常簡單，整個流程通常一分鐘內就能搞定。

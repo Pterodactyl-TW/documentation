@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 更新 Panel | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 本文件說明 1.x 系列版本內的更新流程，例如從 1.5.0 更新至 1.6.0。請勿使用本指南從 0.7 升級。
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_1.0_updating.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 更新 Panel | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 本文件說明 1.x 系列版本內的更新流程，例如從 1.5.0 更新至 1.6.0。請勿使用本指南從 0.7 升級。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_1.0_updating.png
+---
 # 更新 Panel
 
 本文件說明 `1.x` 系列版本內的更新流程，例如從 `1.5.0` 更新至 `1.6.0`。**請勿使用本指南從 `0.7` 升級。**

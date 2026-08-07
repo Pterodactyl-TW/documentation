@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 舊版升級 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 本升級指南適用於從 0.7.X 升級至 1.3.x 的情境。如果你要升級的是 1.X 版本的控制面板，請改參考這份指南。這裡要先說明一下…
+- property: og:image
+  content: https://pterodactyl.tw/og/panel_1.0_legacy_upgrade.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 舊版升級 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 本升級指南適用於從 0.7.X 升級至 1.3.x 的情境。如果你要升級的是 1.X 版本的控制面板，請改參考這份指南。這裡要先說明一下…
+- name: twitter:image
+  content: https://pterodactyl.tw/og/panel_1.0_legacy_upgrade.png
+---
 # 舊版升級
 
 本升級指南適用於**從 0.7.X 升級至 1.3.x** 的情境。如果你要升級的是 1.X 版本的控制面板，請改參考[這份指南](/panel/1.0/updating.md)。這裡要先說明一下：升級過程中控制面板會有幾段時間暫時無法使用，但別擔心，底層的遊戲伺服器執行個體並不會因此停止運作。
