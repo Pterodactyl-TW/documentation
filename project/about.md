@@ -95,20 +95,4 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKL873MsP1OFfffNC8n9WcVuOXOSW65/q26MIzib0K9k
 
 以上為官方（Pterodactyl）本身的簽署方式，僅適用於官方發行的原版程式。
 
-### Pterodactyl-TW（繁體中文化版本）的發行簽署
-
-我們維護的 [Wings 繁體中文化版本](https://github.com/Pterodactyl-TW/wings) 在 GitHub Releases 上發行的執行檔，皆透過 [Sigstore/cosign](https://www.sigstore.dev/) 進行 keyless（無金鑰）簽署，簽署過程由 GitHub Actions 自動完成，並將簽章記錄公開發布於 [Rekor 透明日誌](https://docs.sigstore.dev/logging/overview/)，任何人都可以公開查詢與驗證，我們本身也不需要保管任何私鑰。
-
-每個發行版本的執行檔（例如 `wings_linux_amd64`）都會附上對應的 `.cosign.bundle` 檔案。若要驗證下載的執行檔確實由我們的 GitHub Actions 建置、未遭竄改，可先安裝 [cosign](https://docs.sigstore.dev/system_config/installation/)，再執行：
-
-```bash
-cosign verify-blob \
-  --bundle wings_linux_amd64.cosign.bundle \
-  --certificate-identity-regexp "^https://github\.com/Pterodactyl-TW/wings/" \
-  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
-  wings_linux_amd64
-```
-
-驗證通過會顯示 `Verified OK`，代表這個檔案確實是由 Pterodactyl-TW 的官方 GitHub Actions 工作流程所建置與發布。
-
-透過 `go install github.com/Pterodactyl-TW/wings@latest` 安装的版本，則已由 Go 內建的[模組總和資料庫](https://sum.golang.org/)獨立驗證原始碼完整性，無需另外簽署。
+若你下載的是我們 Pterodactyl-TW 繁體中文化版本的發行版本，驗證方式不同，請參閱[繁體中文化版本的發行簽署](/project/release-signing.md)。

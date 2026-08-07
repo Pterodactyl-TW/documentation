@@ -158,6 +158,7 @@ module.exports = {
                     children: [
                         '/project/introduction.md',
                         '/project/about.md',
+                        '/project/release-signing.md',
                         '/project/terms.md',
                         '/project/community.md',
                     ]
