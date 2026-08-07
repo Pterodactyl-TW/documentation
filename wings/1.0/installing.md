@@ -107,7 +107,7 @@ sudo chmod u+x /usr/local/bin/wings
 
 或者更省事的做法是，直接點 Generate Token 按鈕，把它給你的 Bash 指令複製貼到終端機執行。
 
-![example image of wings configuration](./../../.vuepress/public/wings_configuration_example.png)
+![wings 設定範例圖片](./../../.vuepress/public/wings_configuration_example.png)
 
 ::: warning 警告
 如果你的 Panel 有啟用 SSL，那 Wings 的 FQDN 也需要一份對應的 SSL 憑證才行。繼續下一步之前，建議先看一下[建立 SSL 憑證](/tutorials/creating_ssl_certificates.html)這篇文件，了解怎麼把憑證準備好。
@@ -157,6 +157,6 @@ sudo systemctl enable --now wings
 
 配置（Allocation）指的是可以指派給伺服器使用的 IP 與連接埠組合，每一台建立出來的伺服器至少都需要一組配置才能運作。一般情況下，配置用的會是網路介面本身的 IP 位址；但如果你的機器是在 NAT 後方，那就會改用內部 IP。想建立新的配置，前往 Nodes > 你的節點 > Allocation 頁面即可。
 
-![example image of node allocations](../../.vuepress/public/node_allocations.png)
+![節點配置範例圖片](../../.vuepress/public/node_allocations.png)
 
 不確定該用哪個 IP 的話，可以執行 `hostname -I | awk '{print $1}'` 快速找出配置要用的 IP；如果想看所有可用的介面與位址，用 `ip addr | grep "inet "` 會列出完整清單。這裡要特別注意，127.0.0.1 不能拿來當作配置使用。

@@ -6,7 +6,7 @@
 
 如果你想架設 BungeeCord、Waterfall、HexaCord 之類的 Minecraft 代理伺服器，而且是想安全地運行，只要所有伺服器都放在同一個節點上，其實光靠 Pterodactyl 就能完成整套設定，不需要額外工具。這裡要提醒的是，這種架設方式跟傳統做法有幾個地方不太一樣，可能還需要額外開一些防火牆規則，接下來就一步一步說明。
 
-:::warning
+:::warning 警告
 以下設定有個前提：所有伺服器都必須位於同一個節點上。
 :::
 
@@ -58,7 +58,7 @@
 
 底下提供幾個常見防火牆的設定指令參考。`172.18.0.1` 是 Pterodactyl 網路預設拿來指向節點的位址；記得把指令中的 `<LOCALHOST_PORT>` 換成遊戲伺服器實際配置的 localhost 連接埠。
 
-:::warning
+:::warning 警告
 這裡要注意，以下指令會讓節點上的任何伺服器都能存取到已開放的那個連接埠，不是只限代理伺服器。
 :::
 
@@ -74,7 +74,7 @@ ufw allow in on pterodactyl0 to 172.18.0.1 port <LOCALHOST_PORT> proto tcp
 
 允許來自 Pterodactyl `pterodactyl0` 網路的連線存取 `pterodactyl0`。
 
-:::warning
+:::warning 警告
 這裡要特別小心，這條指令會讓任何伺服器都能存取節點上的所有連接埠，等於也能存取到其他伺服器，開之前務必評估清楚。
 :::
 
