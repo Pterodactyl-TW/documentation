@@ -1,0 +1,33 @@
+name: Update Version Info
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    name: Fetch latest release versions
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch version info
+        run: node scripts/fetch-version-info.mjs
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.name "Pterodactyl-TW CI"
+          git config --local user.email "ci@pterodactyl.tw"
+          git add .vuepress/public/releases/latest.json
+          git diff --staged --quiet || git commit -m "chore: 更新版本檢查資料"
+          git diff --staged --quiet || git push
