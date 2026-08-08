@@ -1,13 +1,14 @@
-# Pterodactyl-TW 繁體中文化版本的發行簽署
+# 發行簽署
 
 [[toc]]
 
-> [!NOTE]
-> 本頁說明的是 **Pterodactyl-TW 繁體中文化服務團隊** 自己發行版本的簽署與驗證方式，與 [關於頁面](/project/about.md#發行簽署) 中官方（Pterodactyl 原版）的 SSH 簽署金鑰是兩套完全獨立的機制，請不要混用。若你下載的是官方原版程式，請改用關於頁面上的官方簽署金鑰進行驗證。
+::: tip 與官方簽署金鑰無關
+本頁說明的是 **Pterodactyl-TW 繁體中文化服務團隊** 自己發行版本的簽署與驗證方式，與 [關於頁面](/project/about.md#發行簽署) 中官方（Pterodactyl 原版）的 SSH 簽署金鑰是兩套完全獨立的機制，請不要混用。若你下載的是官方原版程式，請改用關於頁面上的官方簽署金鑰進行驗證。
+:::
 
 ## 為什麼要另外簽署
 
-我們在 [Pterodactyl-TW](https://github.com/Pterodactyl-TW) 底下維護 Panel、Wings 的繁體中文化版本，並會在各自的 GitHub Releases 上發布編譯好的執行檔。為了讓大家可以確認下載到的執行檔確實是由我們的 GitHub Actions 建置、未遭第三方竄改，我們對發行的執行檔進行數位簽署。
+我們在 [Pterodactyl-TW](https://github.com/Pterodactyl-TW) 底下維護 Panel、Wings 的繁體中文化版本，並會在各自的 GitHub Releases 上發布編譯好的執行檔。為了讓大家可以確認下載到的檔案確實是由我們的 GitHub Actions 建置、未遭第三方竄改，我們對發行的檔案進行數位簽署。
 
 ## 簽署方式：Sigstore/cosign（Keyless 簽署）
 
