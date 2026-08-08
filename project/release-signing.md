@@ -51,7 +51,7 @@ sudo install -m 0755 cosign-linux-amd64 /usr/local/bin/cosign
 
 ### 2. 下載檔案
 
-除了主檔案，記得把同名、副檔名為 `.cosign.bundle` 的簽章檔也一起下載——這張憑證就是拿來證明檔案沒被改過的：
+除了主檔案，記得把同名、副檔名為 `.cosign.bundle` 的簽章檔也一起下載，這張憑證就是拿來證明檔案沒被改過的：
 
 | 專案 | 檔案 | 簽章檔 |
 |---|---|---|
@@ -93,4 +93,4 @@ cosign verify-blob \
 
 ## 透過 go install 安裝
 
-用 `go install github.com/Pterodactyl-TW/wings@latest` 安裝 Wings 的話不需要另外驗證——Go 內建的[模組總和資料庫](https://sum.golang.org/)已經會自動驗證原始碼有沒有被竄改。
+用 `go install github.com/Pterodactyl-TW/wings@latest` 安裝 Wings 的話不需要另外驗證，因為 Go 內建的[模組總和資料庫](https://sum.golang.org/)已經會自動驗證原始碼有沒有被竄改。
