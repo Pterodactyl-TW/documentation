@@ -20,17 +20,19 @@ cosign verify-blob \
   panel.tar.gz
 ```
 
-顯示 `Verified OK` 就沒問題，可以繼續安裝。想知道背後在幹嘛，往下看。
+顯示 `Verified OK` 就代表檔案沒問題，可以繼續安裝。想知道這是在驗證什麼，往下看。
 
-## 為什麼要簽署
+## 為什麼要驗證
 
-Panel 和 Wings 掌控你伺服器的完整權限，下載到被竄改過的版本會是很嚴重的事。我們在建置每一個發行版本時都會簽署，讓你能在安裝前先確認這個檔案真的是我們發布的，而不是被誰動過手腳。
+Panel 和 Wings 掌管你伺服器的完整權限。如果安裝到的是被動過手腳的版本，等於把伺服器直接交給別人控制。簽署跟驗證就是讓你在安裝前，先確認手上這個檔案跟我們發布的一模一樣，沒有人在中間偷偷改過內容。
 
-## 用的是 Sigstore/cosign
+## 怎麼確保沒有人能偽造
 
-我們用 [Sigstore/cosign](https://www.sigstore.dev/) 做 keyless 簽署，跟傳統 GPG/SSH 簽署最大的不同是不需要管理金鑰：GitHub Actions 建置時，用 GitHub 本身核發的身分憑證跟 Sigstore 換一張幾分鐘就會過期的憑證，簽完就丟，沒有金鑰可以外洩或被偷。每次簽署都會公開記錄到 [Rekor 透明日誌](https://docs.sigstore.dev/logging/overview/)，你可以到 [search.sigstore.dev](https://search.sigstore.dev/) 查到每個版本的簽署紀錄。
+比較舊式的做法是開發者自己保管一把私鑰，每次發布就用這把鑰匙簽名，大家再用對應的公鑰驗證。問題是這把私鑰一旦外洩或被偷，別人就能冒充我們簽出「看起來合法」的假檔案。
 
-Panel 和 Wings 的發行版本都用這套機制簽署。
+我們用的 [Sigstore/cosign](https://www.sigstore.dev/) 換了一種做法：**每次發布都用一張用完即丟的臨時憑證**，而不是一把長期保管的鑰匙。GitHub Actions 在建置的當下，會拿 GitHub 核發的身分證明去跟 Sigstore 換一張只有幾分鐘效期的憑證，簽完名這張憑證就失效了，沒有東西可以外洩或被偷。每一次簽署也都會公開留下紀錄在 [Rekor 透明日誌](https://docs.sigstore.dev/logging/overview/)，任何人都能上 [search.sigstore.dev](https://search.sigstore.dev/) 查證某個版本是不是真的出自我們的 GitHub Actions。
+
+Panel 和 Wings 的發行版本都是用這套方式簽署的。
 
 ## 如何驗證
 
@@ -45,11 +47,11 @@ curl -LO https://github.com/sigstore/cosign/releases/latest/download/cosign-linu
 sudo install -m 0755 cosign-linux-amd64 /usr/local/bin/cosign
 ```
 
-其他系統／架構參考 [cosign 官方安裝說明](https://docs.sigstore.dev/system_config/installation/)。
+其他系統／架構請參考 [cosign 官方安裝說明](https://docs.sigstore.dev/system_config/installation/)。
 
 ### 2. 下載檔案
 
-除了主檔案，記得連同 `.cosign.bundle` 一起下載：
+除了主檔案，記得把同名、副檔名為 `.cosign.bundle` 的簽章檔也一起下載——這張憑證就是拿來證明檔案沒被改過的：
 
 | 專案 | 檔案 | 簽章檔 |
 |---|---|---|
@@ -57,7 +59,7 @@ sudo install -m 0755 cosign-linux-amd64 /usr/local/bin/cosign
 | Wings | `wings_linux_arm64` | `wings_linux_arm64.cosign.bundle` |
 | Panel | `panel.tar.gz` | `panel.tar.gz.cosign.bundle` |
 
-### 3. 驗證
+### 3. 執行驗證
 
 ```bash
 # Wings
@@ -75,20 +77,20 @@ cosign verify-blob \
   panel.tar.gz
 ```
 
-`--certificate-identity-regexp` 限定簽署身分要來自 Pterodactyl-TW 對應的 repo，`--certificate-oidc-issuer` 限定要由 GitHub Actions 核發，兩個都是為了防止有人拿別處簽出來的憑證冒充。
+指令裡的兩個網址是拿來確認「這張憑證是不是真的來自 Pterodactyl-TW，而且是 GitHub Actions 發的」，避免有人拿別人 repo 簽出來的憑證來魚目混珠。
 
-顯示 `Verified OK` 就代表檔案沒被動過，也確實是我們的 GitHub Actions 建置發布的。
+看到 `Verified OK` 就代表這個檔案沒被改過，也確實是我們自己建置發布的。
 
 ## 驗證失敗怎麼辦
 
-沒有出現 `Verified OK` 的話先別安裝，檢查看看：
+如果沒看到 `Verified OK`，**先不要安裝**，照這個順序檢查：
 
-* 檔案是不是沒下載完整，重新下載一次
-* 主檔案跟 `.cosign.bundle` 是不是同一個 Release 版本
-* 是不是從第三方鏡像或論壇附件下載的——請只從 [Pterodactyl-TW 的 GitHub Releases](https://github.com/Pterodactyl-TW) 下載
+1. 檔案是不是沒下載完整？重新下載一次。
+2. 主檔案跟 `.cosign.bundle` 是不是同一個 Release 版本下載的？兩個必須配對。
+3. 是不是從論壇、第三方鏡像站下載的？請一律只從 [Pterodactyl-TW 的官方 GitHub Releases](https://github.com/Pterodactyl-TW) 下載。
 
-排除以上狀況還是驗證失敗，麻煩到 [Discord](https://pterodactyl.tw/discord) 跟我們說一聲。
+以上都排除了還是驗證失敗，代表可能真的有問題，麻煩到 [Discord](https://pterodactyl.tw/discord) 跟我們說一聲。
 
 ## 透過 go install 安裝
 
-用 `go install github.com/Pterodactyl-TW/wings@latest` 安裝 Wings 的話不需要另外驗證，Go 內建的[模組總和資料庫](https://sum.golang.org/)已經會驗證原始碼完整性。
+用 `go install github.com/Pterodactyl-TW/wings@latest` 安裝 Wings 的話不需要另外驗證——Go 內建的[模組總和資料庫](https://sum.golang.org/)已經會自動驗證原始碼有沒有被竄改。
