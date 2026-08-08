@@ -15,23 +15,31 @@
 
 * 簽署流程完全由 GitHub Actions 在發行版本建置時自動執行，透過 GitHub 的 OIDC 身分進行簽署，我們本身不需要保管、也不會保管任何私鑰。
 * 每一次簽署都會將憑證與簽章記錄公開發布至 [Rekor 透明日誌](https://docs.sigstore.dev/logging/overview/)，任何人都可以公開查詢、追溯每個發行版本的簽署來源。
-* 這套機制目前已套用在 **Wings**，未來 **Panel** 的發行版本也會採用相同方式簽署與發布。
+* 這套機制目前已套用在 **Wings** 與 **Panel**，兩者的發行版本都採用相同方式簽署與發布。
 
 ## 如何驗證
 
 1. 先安裝 [cosign](https://docs.sigstore.dev/system_config/installation/)。
-2. 從 GitHub Releases 下載執行檔，以及與它同名、副檔名為 `.cosign.bundle` 的簽章綑綁檔案（例如 `wings_linux_amd64` 會附上 `wings_linux_amd64.cosign.bundle`）。
-3. 執行以下指令（以 Wings 為例）：
+2. 從 GitHub Releases 下載檔案，以及與它同名、副檔名為 `.cosign.bundle` 的簽章綑綁檔案（例如 `wings_linux_amd64` 會附上 `wings_linux_amd64.cosign.bundle`，`panel.tar.gz` 會附上 `panel.tar.gz.cosign.bundle`）。
+3. 執行以下指令：
 
 ```bash
+# 以 Wings 為例
 cosign verify-blob \
   --bundle wings_linux_amd64.cosign.bundle \
   --certificate-identity-regexp "^https://github\.com/Pterodactyl-TW/wings/" \
   --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
   wings_linux_amd64
+
+# 以 Panel 為例
+cosign verify-blob \
+  --bundle panel.tar.gz.cosign.bundle \
+  --certificate-identity-regexp "^https://github\.com/Pterodactyl-TW/panel/" \
+  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+  panel.tar.gz
 ```
 
-若驗證通過，會顯示 `Verified OK`，代表這個檔案確實是由 Pterodactyl-TW 的官方 GitHub Actions 工作流程建置與發布。日後 Panel 發行版本上線後，驗證方式相同，只需將 `--certificate-identity-regexp` 換成對應的 `Pterodactyl-TW/panel` 儲存庫網址即可。
+若驗證通過，會顯示 `Verified OK`，代表這個檔案確實是由 Pterodactyl-TW 的官方 GitHub Actions 工作流程建置與發布。
 
 ## 透過 go install 安裝
 
