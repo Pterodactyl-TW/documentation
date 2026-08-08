@@ -10,7 +10,7 @@
 
 我們在 [Pterodactyl-TW](https://github.com/Pterodactyl-TW) 底下維護 Panel、Wings 的繁體中文化版本，並會在各自的 GitHub Releases 上發布編譯好的執行檔。為了讓大家可以確認下載到的檔案確實是由我們的 GitHub Actions 建置、未遭第三方竄改，我們對發行的檔案進行數位簽署。
 
-## 簽署方式：Sigstore/cosign（Keyless 簽署）
+## 簽署技術：Sigstore/cosign
 
 我們採用 [Sigstore/cosign](https://www.sigstore.dev/) 的 keyless（無金鑰）簽署機制：
 
