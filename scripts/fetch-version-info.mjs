@@ -44,6 +44,7 @@ async function main() {
     wings: ourWings || officialWings,
     wings_official: officialWings,
     discord: "https://pterodactyl.tw/discord",
+    donations: "https://pterodactyl.tw/discord",
   };
 
   writeFileSync(".vuepress/public/releases/latest.json", JSON.stringify(result, null, 2) + "\n");
