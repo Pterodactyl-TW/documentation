@@ -122,8 +122,8 @@ mariadb -u root -p
 # 若使用 MySQL
 mysql -u root -p
 ```
-```sql
 
+```sql
 # 記得把下方的 'yourPassword' 換成獨一無二的密碼
 CREATE USER 'pterodactyl'@'127.0.0.1' IDENTIFIED BY 'yourPassword';
 CREATE DATABASE panel;
