@@ -79,6 +79,12 @@ Pterodactyl® Copyright © 2015 Dane Everitt and contributors.
 
 ## 發行簽署
 
+::: warning 你下載的是 Pterodactyl-TW 版本嗎？
+下面列出的 SSH 簽署金鑰**只適用於官方（Pterodactyl 原版）** 的發行版本。
+
+如果你是從 [Pterodactyl-TW 的 GitHub Releases](https://github.com/Pterodactyl-TW) 下載繁體中文化版本的 Panel 或 Wings，官方金鑰**驗證不了**你下載的檔案（這是正常的，不代表檔案有問題），請直接跳到 [繁體中文化版本的發行簽署](/project/release-signing.md) 查看我們自己的驗證方式。
+:::
+
 若你想確認你下載的 Panel 或 Wings 執行檔／發行版本確實來自官方、未遭竄改，可以用以下 SSH 簽署金鑰進行驗證：
 
 Panel 與 Wings 自 v1.12.0 起（包含 v1.12.0）的所有發行版本，皆使用以下新的 SSH 簽署金鑰簽署：
@@ -95,4 +101,8 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKL873MsP1OFfffNC8n9WcVuOXOSW65/q26MIzib0K9k
 
 以上為官方（Pterodactyl）本身的簽署方式，僅適用於官方發行的原版程式。
 
-若你下載的是我們 Pterodactyl-TW 繁體中文化版本的發行版本，驗證方式不同，請參閱[繁體中文化版本的發行簽署](/project/release-signing.md)。
+::: tip 下載的是繁體中文化版本？花一分鐘驗證一下
+執行來路不明或遭竄改的伺服器管理面板，等於把伺服器的完整控制權交給別人。我們建置的每一個繁體中文化發行版本都經過數位簽署並公開留下可追溯的紀錄，驗證只需要一行指令、不用裝任何額外工具的私鑰。
+
+養成下載後先驗證的習慣，確認執行檔真的是我們的 GitHub Actions 建置、沒有被任何人動過手腳，再放心安裝到你的伺服器上。步驟請見 [繁體中文化版本的發行簽署](/project/release-signing.md)。
+:::
