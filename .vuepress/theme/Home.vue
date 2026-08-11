@@ -138,8 +138,8 @@
                     </div>
                     <div class="hidden md:block md:flex-1 md:pr-12">
                         <p><a class="text-grey-lightest" href="https://github.com/Pterodactyl-TW">GitHub</a></p>
-                        <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">贊助</a></p>
-                        <p><a class="text-grey-lightest" href="https://github.com/sponsors/pterodactyl">捐款</a></p>
+                        <p><a class="text-grey-lightest" href="https://pterodactyl.tw/discord">贊助</a></p>
+                        <p><a class="text-grey-lightest" href="https://pterodactyl.tw/discord">捐款</a></p>
                         <p><a class="text-grey-lightest" href="/panel/1.0/troubleshooting.html">疑難排解</a></p>
                         <p><a class="text-grey-lightest" href="https://eggs.pterodactyl.tw">其他遊戲設定</a></p>
                     </div>

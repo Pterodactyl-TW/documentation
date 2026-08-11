@@ -42,32 +42,46 @@ meta:
 
 ## 核心專案團隊
 
+本站為 Pterodactyl 繁體中文文件站，核心專案與翻譯維護成員如下：
+
+| 姓名 | Discord | 主要職責 |
+| :--- | :--- | :--- |
+| [Kevin28576](https://github.com/Kevin28576) | `krick_tw` | 主要負責人、專案維護人員 |
+| [AvianJay](https://github.com/AvianJay) | `nicko9487` | 共同負責人、Demo 專案維護人員 |
+| [creeperdevme](https://github.com/creeperdevme) | `creeperdev.me` | 共同負責人 |
+| [kusanagi-akane](https://github.com/kusanagi-akane) | `kusanagi_akane` | 共同負責人 |
+| [littlecommandcat](https://github.com/littlecommandcat) | `command_cat` | 共同負責人、Eggs 維護人員 |
+| [rise0313](https://github.com/rise0313) | `rise.0313` | 共同負責人 |
+
+專案團隊成員在 Pterodactyl Taiwan 官方 Discord 伺服器中使用紫色身分名稱。
+<details>
+<summary>點擊展開：查看 Pterodactyl 官方核心專案團隊</summary>
 這些是負責開發、維護 Pterodactyl 原始碼（Panel、Wings 等）的官方核心成員：
 
-| 姓名                                     | Discord 名稱    | 主要職責                        |
+| 姓名                                     | Discord 名稱    | 主要職責                            |
 | ---------------------------------------- | --------------- | ----------------------------------- |
 | [Dane Everitt](https://daneeveritt.com/) | `deveritt` | 創辦人暨專案維護者 |
 
 專案團隊成員在官方 Discord 伺服器中使用紅色使用者名稱。
+</details>
 
 ## 社群團隊
 
 如果沒有優秀的社群支援團隊協助，Pterodactyl 不會有今天的成就。你可以在官方 Discord 伺服器中找到這些成員，
 他們使用黃色使用者名稱以資識別。這是官方英文社群的支援團隊，與我們繁體中文化團隊是不同的一群人。
 
-## 贊助者
+## 贊助商
 
-以下公司協助資助 Pterodactyl 官方的開發工作。[有興趣成為贊助者嗎？](https://github.com/sponsors/pterodactyl)
+在此由衷感謝以下企業/個人協助資助 Pterodactyl Taiwan 的開發與維護。
+[有興趣成為贊助商嗎？](https://github.com/sponsors/pterodactyl)
 
-| 公司                                                      | 簡介                                                                                                                                                                                                                                                                 |
-| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [**Aussie Server Hosts**](https://aussieserverhosts.com/)    | 由澳洲人擁有並經營的高效能伺服器代管服務，不搞花俏噱頭，專為澳洲與紐西蘭地區最吃重效能的遊戲提供服務。                                                                                                                       |
-| [**CodeNode LLC**](https://codenode.gg/)                     | 想要簡單就好嗎？那你來對地方了！CodeNode 以每 GB 僅 $1.75 的超低價格滿足你的所有需求，包含位於美國德州達拉斯與荷蘭阿姆斯特丹的專用 IP。我們不只是好，我們是業界最頂尖的！ |
-| [**BisectHosting**](https://www.bisecthosting.com/)          | BisectHosting 自 2012 年起提供 Minecraft、Valheim 及其他伺服器代管服務，以最高的穩定性與極速的技術支援聞名。                                                                                                                       |
-| [**MineStrator**](https://minestrator.com/)                  | 尋找最頂尖的法國代管公司來架設你的 Minecraft 伺服器嗎？超過 24,000 名成員在我們的 Discord 中信賴我們，歡迎試試看！                                                                                                                       |
-| [**HostEZ**](https://hostez.io)                              | 提供美國與歐洲地區的 Rust 與 Minecraft 代管服務。具備 DDoS 防護的裸機主機、VPS 與共置服務，低延遲、高正常運行時間與最大可用性。就是這麼簡單！                                                                                                                           |
-| [**Blueprint**](https://blueprint.zip/?pterodactyl=true)     | 透過持續成長的 Blueprint 框架（Pterodactyl 專屬的套件管理工具）建立並安裝 Pterodactyl 附加元件與主題。可同時使用多項修改而不必擔心衝突問題，並運用龐大的擴充生態系。                       |
-| [**indifferent broccoli**](https://indifferentbroccoli.com/) | indifferent broccoli 是一家遊戲伺服器代管與租賃公司。與我們合作，你將獲得頂尖的運算效能來享受你的遊戲時光。我們消除延遲、卡頓與複雜的設定問題，讓你能專注在有趣的事情上。                                                    |
+| 公司/個人                                      | 介紹 |
+|:-----------------------------------------| :--- |
+| [**CloudXact**](https://cloudxact.com/)  | 專注於雲端服務、系統開發與自動化整合，為您打造穩定、清晰且能長期維護的數位服務體驗。 |
+| [**Lazco**](https://www.lazco.tw/)       | 提供一站式數位解決方案，從網站開發、雲端主機到技術諮詢與系統整合，助您將創意化為現實並在數位時代脫穎而出。 |
+| [**NyankoHost**](https://nyanko.host/)   | 「雲端貓居」為小憩貓語工作室旗下獨立營運的服務平台，致力於為各類用戶提供穩定且可靠的優質雲端服務。 |
+| [**NothingHost**](https://nothingh.com/) | 專為開發者打造的免費伺服器托管平台，提供輕量、快速且完全免費的部署環境，全面支援您喜愛的程式語言。 |
+
 
 ## 授權條款
 
@@ -76,6 +90,8 @@ Pterodactyl 軟體本身（Panel、Wings 等原始碼）的著作權屬於官方
 Pterodactyl® Copyright © 2015 Dane Everitt and contributors.
 
 程式碼採用 [MIT 授權條款](https://github.com/pterodactyl/panel/blob/1.0-develop/LICENSE.md)發布，你可以自由使用、修改與散布這套軟體，僅須保留原始授權聲明。
+
+同時，本中文文件站與相關翻譯內容之著作權屬於 Pterodactyl Taiwan。
 
 ## 發行簽署
 
