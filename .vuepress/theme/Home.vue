@@ -7,7 +7,7 @@
                         <img class="max-w-xl w-full inline-block" src="https://cdn.pterodactyl.io/logos/new/pterodactyl_logo_transparent.png" alt="Pterodactyl">
                     </div>
                     <div class="mt-4">
-                        <!-- <a class="btn hidden md:inline-block" href="https://demo.pterodactyl.io" target="_blank" rel="nofollow noopener">Demo</a> -->
+                        <a class="btn hidden md:inline-block" href="https://demo.pterodactyl.tw" target="_blank" rel="nofollow noopener">線上演示</a>
                         <router-link class="btn inline-block" to="/panel/1.0/getting_started.html">開始使用！</router-link>
                     </div>
                 </div>
