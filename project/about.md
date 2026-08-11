@@ -72,8 +72,8 @@ meta:
 
 ## 贊助商
 
-在此由衷感謝以下企業/個人協助資助 Pterodactyl Taiwan 的開發與維護。
-[有興趣成為贊助商嗎？](https://github.com/sponsors/pterodactyl)
+在此由衷感謝以下企業與個人，大力協助資助 Pterodactyl Taiwan 的開發與維護。
+[有興趣成為贊助商嗎？](https://pterodactyl.tw/discord)
 
 | 公司/個人                                      | 介紹 |
 |:-----------------------------------------| :--- |
