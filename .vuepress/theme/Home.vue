@@ -165,8 +165,8 @@
         components: { NavLink, Slick },
         mounted() {
             Swal.fire({
-                title: 'Pterodactyl TW',
-                text: '你現在看到的是 Pterodactyl TW，由 Pterodactyl 台灣翻譯團隊維護的非官方繁體中文化專案，裡面的內容可能會與官方的最新版有衝突，請以官方所描述的為主。',
+                title: 'Pterodactyl Taiwan',
+                text: '你現在看到的是 Pterodactyl Taiwan，由 Pterodactyl 台灣翻譯團隊維護的非官方繁體中文化專案，裡面的內容可能會與官方的最新版有衝突，請以官方所描述的為主。',
                 icon: 'info',
                 allowOutsideClick: false,
                 showDenyButton: true,

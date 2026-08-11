@@ -1,6 +1,6 @@
 module.exports = {
     base: '/',
-    title: 'Pterodactyl',
+    title: 'Pterodactyl Taiwan',
     description: 'Pterodactyl 是一款採用 PHP、React 與 Go 建置的開源遊戲伺服器管理面板。Pterodactyl 以安全性為設計核心，將所有遊戲伺服器執行於隔離的 Docker 容器中，同時為使用者提供美觀且直覺的使用者介面。',
     locales: {
         '/': {
