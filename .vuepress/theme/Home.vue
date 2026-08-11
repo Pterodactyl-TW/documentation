@@ -149,7 +149,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="footer">採用 MIT 授權條款 | Pterodactyl&reg; 版權所有 &copy; Dane Everitt 與貢獻者</div>
+                <div class="footer">本中文文件站採用 CC BY-SA 4.0 授權與 MIT 授權條款 | Pterodactyl&reg; 版權所有 &copy; Dane Everitt 與貢獻者 | 中文文件與翻譯內容版權所有 &copy; Pterodactyl Taiwan 及全體參與貢獻者所有</div>
             </div>
         </div>
     </div>
