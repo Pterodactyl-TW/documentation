@@ -85,13 +85,22 @@ meta:
 
 ## 授權條款
 
-Pterodactyl 軟體本身（Panel、Wings 等原始碼）的著作權屬於官方：
+### 軟體著作權（官方）
+Pterodactyl 軟體本身（Panel、Wings 等核心原始碼）之著作權屬於官方所有：
 
-Pterodactyl® Copyright © 2015 Dane Everitt and contributors.
+> Pterodactyl® Copyright © 2015 Dane Everitt and contributors.
 
-程式碼採用 [MIT 授權條款](https://github.com/pterodactyl/panel/blob/1.0-develop/LICENSE.md)發布，你可以自由使用、修改與散布這套軟體，僅須保留原始授權聲明。
+程式碼採用 [MIT 授權條款](https://github.com/pterodactyl/panel/blob/1.0-develop/LICENSE.md) 發布，您可以自由使用、修改與散布這套軟體，僅須保留原始授權聲明。
 
-同時，本中文文件站與相關翻譯內容之著作權屬於 Pterodactyl Taiwan。
+### 繁體中文文件授權（Pterodactyl Taiwan）
+
+本文件站之文字內容、翻譯成果與排版架構，著作權屬於 **Pterodactyl Taiwan** 及全體參與貢獻者所有：
+
+> Pterodactyl Taiwan Documentation Copyright © Pterodactyl Taiwan and contributors.
+
+* **內容授權**：本站所有中文文件內容採用 [CC BY-SA 4.0（創用 CC 姓名標示-相同方式分享 4.0 國際）](https://creativecommons.org/licenses/by-sa/4.0/deed.zh-TW) 授權條款發布。
+* **轉載與使用**：您可以自由閱讀、分享、轉載或修改本站內容，但請務必註明出處（Pterodactyl Taiwan），且衍生作品必須採用相同的授權條款發布。
+* **商標與免責聲明**：Pterodactyl® 為原作者 Dane Everitt 之商標。本站為社群自主營運之在地化翻譯專案，非官方直屬營利機構。
 
 ## 發行簽署
 
