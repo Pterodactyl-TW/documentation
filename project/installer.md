@@ -1,3 +1,22 @@
+---
+meta:
+- property: og:title
+  content: 一鍵安裝腳本 | Pterodactyl 繁體中文文件
+- property: og:description
+  content: 這支腳本可以幫你把繁體中文化版本的 Panel、Wings 自動裝好，相依套件、資料庫、Web 伺服器、佇列服務都會幫你設定完成。
+- property: og:image
+  content: https://pterodactyl.tw/og/project_installer.png
+- property: og:image:width
+  content: '1200'
+- property: og:image:height
+  content: '630'
+- name: twitter:title
+  content: 一鍵安裝腳本 | Pterodactyl 繁體中文文件
+- name: twitter:description
+  content: 這支腳本可以幫你把繁體中文化版本的 Panel、Wings 自動裝好，相依套件、資料庫、Web 伺服器、佇列服務都會幫你設定完成。
+- name: twitter:image
+  content: https://pterodactyl.tw/og/project_installer.png
+---
 # 一鍵安裝腳本
 
 [[toc]]
