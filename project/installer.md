@@ -8,7 +8,7 @@
 
 ## 這是什麼
 
-如果你不想照著 [Panel 安裝說明](/panel/1.0/getting_started.md) 或 [Wings 安裝說明](/wings/1.0/installing.md) 一步一步手動操作，這支腳本可以幫你把繁體中文化版本的 Panel、Wings 自動裝好——相依套件、資料庫、Web 伺服器、佇列服務都會幫你設定完成，過程中用互動問答的方式詢問你的設定，不需要自己動手改設定檔。
+如果你不想照著 [Panel 安裝說明](/panel/1.0/getting_started.md) 或 [Wings 安裝說明](/wings/1.0/installing.md) 一步一步手動操作，這支腳本可以幫你把繁體中文化版本的 Panel、Wings 自動裝好，相依套件、資料庫、Web 伺服器、佇列服務都會幫你設定完成，過程中用互動問答的方式詢問你的設定，不需要自己動手改設定檔。
 
 ## 快速開始
 
