@@ -30,13 +30,7 @@ Pterodactyl Panel 是設計來架設在你自己的網頁伺服器上的，所�
 :::
 
 ::: tip 一鍵安裝腳本
-如果你不想照著下面的步驟一步一步手動安裝，我們也維護了一支自動化安裝腳本，會幫你把相依套件、資料庫、佇列服務等都設定好。以 root 身分在你的伺服器上執行：
-
-```bash
-bash <(curl -s https://installer.pterodactyl.tw)
-```
-
-腳本會用互動的方式詢問你資料庫密碼、網域、SSL、遙測等設定，過程中也能選擇安裝 Wings，或是解除安裝既有的 Panel／Wings。原始碼放在 [Pterodactyl-TW/installer](https://github.com/Pterodactyl-TW/installer)，這支腳本不是官方 Pterodactyl 專案的一部分。
+如果你不想照著下面的步驟一步一步手動安裝，我們也維護了一支自動化安裝腳本，可以超簡單地把繁體中文化版本的 Panel（也能一起裝 Wings）裝好，相依套件、資料庫、佇列服務都會幫你設定完成。詳細說明與使用方式請參考[一鍵安裝腳本](/project/installer.md)。
 
 如果你想更了解每個步驟實際在做什麼，或是想手動調整某些設定，還是建議往下讀完整份手動安裝說明。
 :::
